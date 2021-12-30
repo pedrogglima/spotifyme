@@ -1,0 +1,5 @@
+<div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
+  <div class="">
+    <%= render(partial: "following", collection: @followings, cached: true) || 'You have no followings!' %>
+  </div>
+</div>

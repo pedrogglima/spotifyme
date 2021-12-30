@@ -1,0 +1,11 @@
+<div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
+  <div class="">
+    <%= render partial: "form" %>
+  </div>
+</div>
+
+<div class="mt-8 bg-white rounded-lg shadow px-5 py-6 sm:px-6">
+  <div class="">
+    <%= render(partial: "post", collection: @posts, cached: true) || 'You have no posts!' %>
+  </div>
+</div>
