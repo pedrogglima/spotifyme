@@ -13,8 +13,13 @@ Rails.application.routes.draw do
   end
 
   get 'profile', to: 'profile#show'
+
   resources :feeds, only: %i[index]
-  resources :invitations, only: %i[index]
+  resources :follow_invitations, only: %i[index update]
   resources :followers, only: %i[index]
   resources :followings, only: %i[index]
+
+  namespace :post_type do
+    resources :simples, only: [:create]
+  end
 end

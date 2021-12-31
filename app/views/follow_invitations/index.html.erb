@@ -1,0 +1,12 @@
+<%= turbo_stream_from "user_#{current_user.id}:follow_invitations" %>
+
+<div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
+  <div class="">
+    <%= turbo_frame_tag 'follow_invitations' do %>
+      <!-- TODO: fix msg 'You have...' for when a async invitation is added (msg still there) -->
+      <!--   uses before_action stimulus/hotwire to trigger func. for removing msg if present -->
+      <%= render(@invitations, cached: true) || 'You have no invitation!' %>
+    <% end %>
+  </div>
+</div>
+

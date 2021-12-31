@@ -11,7 +11,7 @@
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
               <%= link_to "Feed", feeds_path(user_id: current_user.id), class: "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium", aria: { current: "page" } %>
               <%= link_to "Profile", profile_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
-              <%= link_to "Invitations", invitations_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+              <%= link_to "Invitations", follow_invitations_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
               <%= link_to "Followers", followers_path(user_id: current_user.id), class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
               <%= link_to "Followings", followings_path(user_id: current_user.id), class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
             </div>

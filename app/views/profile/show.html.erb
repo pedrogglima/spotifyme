@@ -1,11 +1,17 @@
+<%= turbo_stream_from "user_#{current_user.id}:post_type_simples" %>
+
 <div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
   <div class="">
-    <%= render partial: "form" %>
+    <%= turbo_frame_tag 'post_type_simples_form' do %>
+      <%= render partial: "post_type/simples/form", locals: { simple: @post } %>
+    <% end %>
   </div>
 </div>
 
 <div class="mt-8 bg-white rounded-lg shadow px-5 py-6 sm:px-6">
   <div class="">
-    <%= render(partial: "post", collection: @posts, cached: true) || 'You have no posts!' %>
+    <%= turbo_frame_tag 'post_type_simples' do %>
+      <%= render(@posts, cached: true) || 'You have no posts!' %>
+    <% end %>
   </div>
 </div>

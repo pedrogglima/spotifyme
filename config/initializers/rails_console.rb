@@ -5,25 +5,56 @@ module Rails
     def first_user
       User.first
     end
+    alias user first_user
 
     def first_post
       Post.first
     end
+    alias post first_post
 
     def first_simple_post
       PostType::Simple.first
     end
+    alias simple_post first_simple_post
 
     def first_feed
       Feed.first
     end
+    alias feed first_feed
 
     def first_comment
       Comment.first
     end
+    alias comment first_comment
 
     def first_follow_invitation
       FollowInvitation.first
+    end
+    alias follow_invitation first_follow_invitation
+
+    def simple_posts(user = nil)
+      user ||= first_user
+      user.simple_posts
+    end
+
+    def followers(user = nil)
+      user ||= first_user
+      FollowInvitation.where(following: user, status: :accepted)
+    end
+
+    def followings(user = nil)
+      user ||= first_user
+      FollowInvitation.where(follower: user, status: :accepted)
+    end
+
+    def update_invitation_to_pending(user = nil)
+      user ||= first_user
+      FollowInvitation.update(status: :pending).where(following: user)
+    end
+
+    def update_invitation_to_accepted(user = nil)
+      user ||= first_user
+      FollowInvitation.update(status: :accepted).where(following: user)
     end
   end
 end
