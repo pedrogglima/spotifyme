@@ -10,7 +10,7 @@
 
 <div class="mt-8 bg-white rounded-lg shadow px-5 py-6 sm:px-6">
   <div class="">
-    <%= turbo_frame_tag 'post_type_simples' do %>
+    <%= turbo_frame_tag 'post_type_simples', class: "flex flex-col space-y-4" do %>
       <%= render(@posts, cached: true) || 'You have no posts!' %>
     <% end %>
   </div>
