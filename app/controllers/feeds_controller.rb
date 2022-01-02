@@ -10,6 +10,10 @@ class FeedsController < PrivateApplicationController
   private
 
   def set_current_user_feed
-    @current_user_feed = User.find(params[:user_id])
+    @current_user_feed = if params[:user_id]
+                           User.find(params[:user_id])
+                         else
+                           current_user
+                         end
   end
 end
