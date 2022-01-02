@@ -5,25 +5,25 @@ User.all.each do |user|
 
   followings.each do |following|
     case (rand * 100)
-    when 0..80
+    when 0..50
       FollowInvitation.create!(
         follower: user,
         following: following,
         status: :accepted
       )
-    when 81..90
+    when 51..85
       FollowInvitation.create!(
         follower: user,
         following: following,
         status: :pending
       )
-    when 90..94
+    when 86..92
       FollowInvitation.create!(
         follower: user,
         following: following,
         status: :rejected
       )
-    when 95..97
+    when 93..97
       FollowInvitation.create!(
         follower: user,
         following: following,
