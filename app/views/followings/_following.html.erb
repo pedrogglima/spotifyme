@@ -1,15 +1,22 @@
-<div class="grid grid-cols-1 gap-4 sm:grid-cols-1">
-  <div class="relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-    <div class="flex-shrink-0">
-      <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+<div class="bg-white shadow-md hover:shadow-lg rounded-lg ring-1 ring-black ring-opacity-5">
+  <%= link_to feeds_path(user_id: following.following_id), class: "flex-1 block" do %>
+    <div class="p-4">
+      <div class="flex items-center">
+        <div>
+          <img class="inline-block h-9 w-9 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+        </div>
+        <div class="ml-3">
+          <p class="text-md font-medium text-gray-700 group-hover:text-gray-900">
+            <%= following.nickname %>
+          </p>
+          <p class="text-sm mb-1 font-medium text-gray-600 group-hover:text-gray-900">
+            <%= following.username %>
+          </p>
+          <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+            View profile
+          </p>
+        </div>
+      </div>
     </div>
-    <div class="flex-1 min-w-0">
-      <a href="#" class="focus:outline-none">
-        <span class="absolute inset-0" aria-hidden="true"></span>
-        <p class="text-sm font-medium text-gray-900">
-          <%= following.username %> | <%= following.nickname %>
-        </p>
-      </a>
-    </div>
-  </div>
+  <% end %>
 </div>

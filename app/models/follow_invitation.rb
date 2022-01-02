@@ -20,11 +20,15 @@ class FollowInvitation < ApplicationRecord
   validates :following_id, presence: true
   validates :status, presence: true
 
-  def nickname
+  def follower_user_id
+    follower.id
+  end
+
+  def follower_nickname
     follower.nickname
   end
 
-  def username
+  def follower_username
     follower.username
   end
 end
