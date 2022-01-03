@@ -12,6 +12,8 @@
   <div class="">
     <%= turbo_frame_tag 'post_type_simples', class: "flex flex-col space-y-4" do %>
       <%= render(@posts, cached: true) || 'You have no posts!' %>
+
+      <%== pagy_nav(@pagy) %>
     <% end %>
   </div>
 </div>

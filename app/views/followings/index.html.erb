@@ -1,5 +1,7 @@
 <div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
   <div class="flex flex-col space-y-4">
     <%= render(partial: "following", collection: @followings, cached: true) || 'You have no followings!' %>
+    
+    <%== pagy_nav(@pagy) %>
   </div>
 </div>

@@ -1,5 +1,7 @@
 <div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
   <div class="">
     <%= render(partial: "feed", collection: @feeds, cached: true) || 'You have no feed!' %>
+
+    <%== pagy_nav(@pagy) %>
   </div>
 </div>
