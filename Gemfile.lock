@@ -217,6 +217,8 @@ GEM
     regexp_parser (2.2.0)
     reline (0.3.0)
       io-console (~> 0.5)
+    requestjs-rails (0.0.6)
+      rails (>= 6.0.0)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -324,6 +326,7 @@ DEPENDENCIES
   pundit-matchers
   rails (~> 7.0.0)
   redis (~> 4.0)
+  requestjs-rails
   rspec-expectations
   rspec-json_expectations
   rspec-rails
