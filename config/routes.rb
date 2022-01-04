@@ -20,6 +20,6 @@ Rails.application.routes.draw do
   resources :followings, only: %i[index]
 
   namespace :post_type do
-    resources :simples, only: [:create]
+    resources :simples, only: %i[create edit update destroy]
   end
 end

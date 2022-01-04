@@ -22,13 +22,8 @@
             </div>
             <div class="mt-3">
               <div class="flex">
-                <%= button_to "LIKE", "#", class: "block inline-flex shadow-sm text-sm leading-4 font-medium hover:bg-indigo-700" %>
-                <%= form_with(model: simple, url: "") do |f| %>
-                  <%= f.submit "EDIT", class: "ml-3 inline-flex shadow-sm text-sm leading-4 font-medium hover:bg-indigo-700" %>
-                <% end %>
-                <%= form_with(model: simple, url: "") do |f| %>
-                  <%= f.submit "DELETE", class: "ml-3 inline-flex shadow-sm text-sm leading-4 font-medium hover:bg-gray-50" %>
-                <% end %> 
+                <%= link_to "edit", edit_post_type_simple_path(simple), data: { turbo: false }, class: "py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                <%= button_to "delete", post_type_simple_path(simple), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
               </div>
             </div>
           </div>
