@@ -11,10 +11,6 @@ module PostType
                            locals: { current_user: post.user, simple: self }
     end
 
-    after_destroy_commit do
-      broadcast_remove_to "user_#{post.user_id}:post_type_simples"
-    end
-
     accepts_nested_attributes_for :post
 
     validates :content, presence: true, length: { maximum: 500 }
