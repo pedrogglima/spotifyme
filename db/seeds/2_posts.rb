@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-posts_per_user = rand(10..15)
+posts_per_user = rand(30..60)
 
 User.all.each do |user|
   posts_per_user.times do
