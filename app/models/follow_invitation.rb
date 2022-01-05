@@ -10,10 +10,6 @@ class FollowInvitation < ApplicationRecord
     broadcast_prepend_to "user_#{following_id}:follow_invitations"
   end
 
-  after_update_commit do
-    broadcast_remove_to "user_#{following_id}:follow_invitations" if status != :pending
-  end
-
   enum status: %i[pending accepted rejected ignored blocked]
 
   validates :follower_id, presence: true
