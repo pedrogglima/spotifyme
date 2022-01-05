@@ -6,11 +6,6 @@ module PostType
     has_many :likes, as: :likeable, class_name: 'PostLike', dependent: :destroy
     has_many :comments, as: :commentable, dependent: :destroy
 
-    after_create_commit do
-      broadcast_prepend_to "user_#{post.user_id}:post_type_simples",
-                           locals: { current_user: post.user, simple: self }
-    end
-
     accepts_nested_attributes_for :post
 
     validates :content, presence: true, length: { maximum: 500 }
