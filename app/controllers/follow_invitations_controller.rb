@@ -10,14 +10,10 @@ class FollowInvitationsController < PrivateApplicationController
 
   def update
     @resource = FollowInvitation.find(params[:id])
+    @resource.update(resource_params)
 
     respond_to do |format|
-      if @resource.update(resource_params)
-      end
-      format.turbo_stream do
-        # TODO: check for a better return value
-        render turbo_stream: ''
-      end
+      format.turbo_stream
     end
   end
 

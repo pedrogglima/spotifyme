@@ -1,0 +1,11 @@
+<% if @resource.valid? %>
+  <%= turbo_stream.remove(@resource) %>
+
+  <%= turbo_stream.append "flash" do %>
+    <%= render partial: "layouts/shared/flash", locals: { flash: { notice: "Tweet was successfully created."} } %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.append "flash" do %>
+    <%= render partial: "layouts/shared/flash", locals: { flash: { notice: "Error was successfully created."} } %>
+  <% end %>
+<% end %>
