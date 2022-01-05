@@ -1,11 +1,5 @@
-<%= turbo_stream_from "user_#{current_user.id}:post_type_simples" %>
-
 <div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
-  <div class="">
-    <%= turbo_frame_tag 'post_type_simples_form' do %>
-      <%= render partial: "post_type/simples/form", locals: { simple: @post } %>
-    <% end %>
-  </div>
+  <%= render partial: "post_type/simples/form", locals: { simple: @post } %>
 </div>
 
 <div class="mt-8 bg-white rounded-lg shadow px-5 py-6 sm:px-6">

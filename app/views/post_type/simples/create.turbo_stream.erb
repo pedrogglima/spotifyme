@@ -1,0 +1,20 @@
+<% if @resource.valid? %>
+  <%= turbo_stream.replace "post_type_simples_form" do %>
+    <%= render partial: "post_type/simples/form", locals: { simple: PostType::Simple.new } %>
+  <% end %>
+
+  <%= turbo_stream.prepend "post_type_simples" do %>
+    <%= render partial: "post_type/simples/simple", locals: { current_user: @resource.post.user, simple: @resource } %>
+  <% end %>
+
+  <%= turbo_stream.append "flash" do %>
+    <%= render partial: "layouts/shared/flash", locals: { flash: { notice: "Tweet was successfully created."} } %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.replace "post_type_simples_form" do %>
+    <%= render partial: "post_type/simples/form", locals: { simple: @resource } %>
+  <% end %>
+  <%= turbo_stream.append "flash" do %>
+    <%= render partial: "layouts/shared/flash", locals: { flash: { notice: "Error was successfully created."} } %>
+  <% end %>
+<% end %>

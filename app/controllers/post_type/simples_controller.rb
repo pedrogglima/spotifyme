@@ -18,21 +18,16 @@ module PostType
 
     def create
       @resource = PostType::Simple.build_with_post(resource_params, current_user)
+      @resource.save
+
       respond_to do |format|
-        if @resource.save
-          format.html { redirect_to profile_path, notice: 'Post was successfully created.' }
-        else
-          format.turbo_stream do
-            render turbo_stream: turbo_stream.replace(@resource,
-                                                      partial: 'post_type/simples/form',
-                                                      locals: { simple: @resource })
-          end
-        end
+        format.turbo_stream
       end
     end
 
     def destroy
       @resource.destroy
+      flash[:notice] = 'Deleted with success'
 
       respond_to do |format|
         format.turbo_stream do
