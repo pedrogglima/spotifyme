@@ -11,6 +11,9 @@
     <%= javascript_importmap_tags %>
   </head>
   <body class="h-full">
+    <%= turbo_frame_tag "flash" do %>
+      <%= render partial: "layouts/shared/flash" %>
+    <% end %>
     <div class="min-h-full">
       <div class="bg-gray-800 pb-32">
         <% if current_user %>
