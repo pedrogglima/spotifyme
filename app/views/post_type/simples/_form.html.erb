@@ -3,15 +3,7 @@
     <div class="min-w-0 flex-1">
       <%= form_with(model: simple, url: post_type_simples_path(simple), id: dom_id(simple), class: 'relative') do |f| %>
         <div class="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
-          <% if simple.errors.any? %>
-            <div class="form_error">
-              <ul>
-                <% simple.errors.full_messages.each do |msg| %>
-                  <li><%='Error: ' +  msg %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
+          
           
           <%= f.label :content, class: 'sr-only' %>
           <%= f.text_area :content, rows: 3, class: 'block w-full py-3 border-0 resize-none focus:ring-0 sm:text-sm', placeholder: "Add your comment..." %>
@@ -41,6 +33,9 @@
             <%= f.submit "Post", class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"  %>
           </div>
         </div>
+      <% end %>
+      <% if simple.errors.any? %>
+        <span class="mx-1 text-sm text-red-500"><%= simple.errors.full_messages.first %></span>
       <% end %>
     </div>
   </div>
