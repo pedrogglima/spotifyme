@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   resources :followers, only: %i[index]
   resources :followings, only: %i[index]
 
-  namespace :post_type do
+  scope module: :post_type, path: 'post' do
     resources :simples, only: %i[create edit update destroy]
   end
 end
