@@ -20,6 +20,10 @@ Rails.application.routes.draw do
   resources :followings, only: %i[index]
 
   scope module: :post_type, path: 'post' do
-    resources :simples, only: %i[create edit update destroy]
+    resources :simples, only: %i[create edit update destroy] do
+      scope module: :simples do
+        resources :likes, only: %i[create destroy]
+      end
+    end
   end
 end
