@@ -27,7 +27,6 @@ module PostType
 
     def destroy
       @resource.destroy
-      flash[:notice] = 'Deleted with success'
 
       respond_to do |format|
         format.turbo_stream do
