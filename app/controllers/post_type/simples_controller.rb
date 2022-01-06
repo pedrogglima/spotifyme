@@ -29,9 +29,7 @@ module PostType
       @resource.destroy
 
       respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.remove(@resource)
-        end
+        format.turbo_stream
       end
     end
 

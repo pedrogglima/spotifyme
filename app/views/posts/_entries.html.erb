@@ -1,0 +1,4 @@
+<%= turbo_frame_tag "posts", class: "flex flex-col space-y-4" do %>
+  
+  <%= render(@posts) || "You have no posts!" %>
+<% end %>

@@ -10,6 +10,13 @@ module PostType
 
     validates :content, presence: true, length: { maximum: 500 }
 
+    # Called when a new post is created.
+    # New posts are default as disliked - hence, nil.
+    # Method used on build partials for hotwire
+    def like_id
+      nil
+    end
+
     # Fix for nested attr. association polymorphic
     def post_attributes=(attribute_set)
       super(attribute_set.merge(postable: self))

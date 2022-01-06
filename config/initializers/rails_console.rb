@@ -56,5 +56,14 @@ module Rails
       user ||= first_user
       FollowInvitation.update(status: :accepted).where(following: user)
     end
+
+    def list_posts_with_likes_from_user(user = nil)
+      user ||= first_user
+      Post.by_user(user.id).each do |post|
+        puts "Post: #{post.id} | User: #{post.user_nickname} \
+        | Simples: #{post.simple_id} | Simples: #{post.simple_counter_likeable} \
+        | Likes: #{post.like_id} | Likes: #{post.like_user_id}"
+      end
+    end
   end
 end

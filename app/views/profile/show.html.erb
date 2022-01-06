@@ -8,7 +8,7 @@
     data-action="scroll@window->infinite-scroll#scroll"    
   >
     <div data-infinite-scroll-target="entries">
-      <%= render 'post_type/simples/posts' %>
+      <%= render 'posts/entries' %>
     </div>
     <div data-infinite-scroll-target="pagination" class="hidden">
       <%== pagy_nav(@pagy) %>
