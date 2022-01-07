@@ -18,6 +18,10 @@ class Comment < ApplicationRecord
     new(commentable_id: posts_user_id, commentable_type: 'Posts::User')
   end
 
+  def polymorphic_class_name
+    commentable_type.demodulize.downcase
+  end
+
   def user_id
     user.id
   end

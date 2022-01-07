@@ -29,7 +29,7 @@
                     <%= render partial: "likes/like", locals: { likeable_type: post.postable.class.name, likeable_id: post.id } %>
                   <% end %>
                 <% end %>
-                <%= link_to "comments", posts_user_comments_path(user_id: post.posts_user_id), data: { turbo: false }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                <%= link_to "comments", comments_path(commentable_type: post.postable.class.name, commentable_id: post.postable.id),  data: { turbo: false }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
                 <%= link_to "edit", edit_posts_user_path(post.posts_user_id), class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
                 <%= button_to "delete", posts_user_path(post.posts_user_id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
               </div>

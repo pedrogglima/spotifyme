@@ -1,4 +1,4 @@
-<%= turbo_frame_tag comment do %>
+<%= turbo_frame_tag "comment_#{comment.polymorphic_class_name}_#{comment.id}" do %>
   <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
     <div class="p-4">
       <div class="flex items-start">
@@ -22,8 +22,8 @@
             </div>
             <div class="mt-3">
               <div class="flex">
-                <%= link_to "edit", edit_posts_user_comment_path(comment, user_id: @posts_user), class: "py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
-                <%= button_to "delete", posts_user_comment_path(comment, user_id: @posts_user), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                <%= link_to "edit", edit_comment_path(comment), class: "py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                <%= button_to "delete", comment_path(comment), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
               </div>
             </div>
           </div>

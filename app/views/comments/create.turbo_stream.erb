@@ -1,10 +1,10 @@
 <% if @resource.valid? %>
   <%= turbo_stream.replace "comments_form" do %>
-    <%= render partial: "posts/users/comments/form", locals: { comment: @new_resource } %>
+    <%= render partial: "comments/form", locals: { comment: @new_resource } %>
   <% end %>
 
   <%= turbo_stream.prepend "comments" do %>
-    <%= render partial: "posts/users/comments/comment", locals: { comment: @resource } %>
+    <%= render partial: "comments/comment", locals: { comment: @resource } %>
   <% end %>
 
   <%= turbo_stream.append "flash" do %>
@@ -12,7 +12,7 @@
   <% end %>
 <% else %>
   <%= turbo_stream.replace "comments_form" do %>
-    <%= render partial: "posts/users/comments/form", locals: { comment: @resource } %>
+    <%= render partial: "comments/form", locals: { comment: @resource } %>
   <% end %>
   <%= turbo_stream.append "flash" do %>
     <%= render partial: "layouts/shared/flash", locals: { flash: { error: ""} } %>

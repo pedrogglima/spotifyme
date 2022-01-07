@@ -1,7 +1,7 @@
 <%= turbo_frame_tag 'comments_form' do %>
   <div class="flex items-start space-x-4">
     <div class="min-w-0 flex-1">
-      <%= form_with(model: comment, url: posts_user_comments_path(user_id: @posts_user), id: dom_id(comment), class: 'relative') do |f| %>
+      <%= form_with(model: comment, url: comments_path, id: dom_id(comment), class: 'relative') do |f| %>
         <div class="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
           <%= f.hidden_field :commentable_id, value: comment.commentable_id %>
           <%= f.hidden_field :commentable_type, value: comment.commentable_type %>
