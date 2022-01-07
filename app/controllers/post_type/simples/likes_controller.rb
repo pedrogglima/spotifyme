@@ -7,7 +7,7 @@ module PostType
       before_action :set_simple
 
       def create
-        @resource = PostLike.new_with_defaults(simple_id: @simple,
+        @resource = Like.new_with_defaults(simple_id: @simple,
                                                user_id: current_user.id)
         @resource.save
 
@@ -27,7 +27,7 @@ module PostType
       private
 
       def set_resource
-        @resource = PostLike.find(params[:id])
+        @resource = Like.find(params[:id])
       end
 
       def set_simple

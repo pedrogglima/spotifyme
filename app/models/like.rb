@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PostLike < ApplicationRecord
+class Like < ApplicationRecord
   belongs_to :user
   belongs_to :likeable, polymorphic: true, counter_cache: :counter_likeable
 

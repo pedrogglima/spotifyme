@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :simple_posts, through: :posts, source: :postable, source_type: 'PostType::Simple'
   has_many :comments, dependent: :destroy
-  has_many :likes, class_name: 'PostLike', dependent: :destroy
+  has_many :likes, class_name: 'Like', dependent: :destroy
   has_many :follow_invitations, foreign_key: 'follower_id', class_name: 'FollowInvitation'
   has_many :following_invitations, foreign_key: 'following_id', class_name: 'FollowInvitation'
 

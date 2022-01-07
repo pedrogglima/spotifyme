@@ -14,7 +14,7 @@ PostType::Simple.all.each do |post|
   end
 
   likes_per_post.times do |_i|
-    PostLike.create!(
+    Like.create!(
       likeable: post,
       user: User.all.sample
     )

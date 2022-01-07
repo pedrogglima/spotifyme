@@ -3,7 +3,7 @@
 module PostType
   class Simple < ApplicationRecord
     has_one :post, as: :postable, dependent: :destroy
-    has_many :likes, as: :likeable, class_name: 'PostLike', dependent: :destroy
+    has_many :likes, as: :likeable, class_name: 'Like', dependent: :destroy
     has_many :comments, as: :commentable, dependent: :destroy
 
     accepts_nested_attributes_for :post
