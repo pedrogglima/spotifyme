@@ -1,0 +1,21 @@
+<div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
+  <div class="flex items-start space-x-4">
+    <div class="min-w-0 flex-1">
+      <%= render partial: "post_type/simples/comments/form", locals: { comment: @resource } %>
+    </div>
+  </div>
+  
+  <div class="mt-8 bg-white rounded-lg shadow px-5 py-6 sm:px-6">
+    <div 
+      data-controller="infinite-scroll"
+      data-action="scroll@window->infinite-scroll#scroll"    
+    >
+      <div data-infinite-scroll-target="entries">
+        <%= render 'post_type/simples/comments/comments' %>
+      </div>
+      <div data-infinite-scroll-target="pagination" class="hidden">
+        <%== pagy_nav(@pagy) %>
+      </div>
+    </div>
+  </div>
+</div>

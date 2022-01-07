@@ -29,6 +29,7 @@
                     <%= render partial: "post_type/simples/likes/like", locals: { simple: post.simple_id } %>
                   <% end %>
                 <% end %>
+                <%= link_to "comments", simple_comments_path(simple_id: post.simple_id), data: { turbo: false }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
                 <%= button_to "edit", edit_simple_path(post.simple_id), data: { turbo: false }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
                 <%= button_to "delete", simple_path(post.simple_id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
               </div>

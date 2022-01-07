@@ -1,0 +1,61 @@
+<%= turbo_frame_tag @resource do %>
+  <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
+    <div class="p-4">
+      <div class="flex items-start">
+        <div class="flex-shrink-0 pt-0.5">
+          <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80" alt="">
+        </div>
+        <div class="ml-3 flex-1">
+          <div class="flex flex-col flex-wrap">
+            <div class="mb-3">
+              <div class="flex flex-col flex-wrap">
+                <p class="font-medium text-gray-900">
+                  <%= @resource.user_nickname %> 
+                </p>
+                <p class="text-sm font-medium text-gray-700">
+                  <%= @resource.user_name %> - <%= distance_of_time_in_words(Time.now, @resource.created_at) %>
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-4">
+              <div class="min-w-0 flex-1">
+                <%= form_with(model: @resource, url: simple_comment_path(simple_id: @simple), id: dom_id(@resource), class: 'relative') do |f| %>
+                  <div class="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
+                    <%= f.hidden_field :commentable_id, value: @resource.commentable_id %>
+                    <%= f.hidden_field :commentable_type, value: @resource.commentable_type %>
+                    
+                    <%= f.label :content, class: 'sr-only' %>
+                    <%= f.text_area :content, rows: 3, class: 'block w-full py-3 border-0 resize-none focus:ring-0 sm:text-sm', placeholder: "Add your @resource..." %>
+                    
+                    <!-- Spacer element to match the height of the toolbar -->
+                    <div class="py-2" aria-hidden="true">
+                      <!-- Matches height of button in toolbar (1px border + 36px content height) -->
+                      <div class="py-px">
+                        <div class="h-9"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="absolute bottom-0 inset-x-0 pl-3 pr-2 py-2 flex justify-between">
+                    <div class="flex-shrink-0">
+                      <%= f.submit "comment", class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"  %>
+                    </div>
+                  </div>
+                <% end %>
+                <% if @resource.errors.any? %>
+                  <span class="mx-1 text-sm text-red-500"><%= @resource.errors.full_messages.first %></span>
+                <% end %>
+              </div>
+            </div>
+            <div class="mt-3">
+              <div class="flex">
+                <%= link_to "edit", edit_simple_comment_path(@resource, simple_id: @simple), class: "py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                <%= button_to "delete", simple_comment_path(@resource, simple_id: @simple), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

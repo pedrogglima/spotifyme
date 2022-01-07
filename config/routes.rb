@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :simples, only: %i[create edit update destroy] do
       scope module: :simples do
         resources :likes, only: %i[create destroy]
+        resources :comments, only: %i[index edit create update destroy]
       end
     end
   end
