@@ -1,0 +1,11 @@
+<% if gte_three %>
+  <%= render(LikesHeartComponent.new) %>
+  <%= render(LikesHeartComponent.new) %>
+  <%= render(LikesHeartComponent.new) %>
+  <span class="mx-1 text-red-500 text-sm">(<%= @counter %>)</span>
+<% elsif eq_two %>
+  <%= render(LikesHeartComponent.new) %>
+  <%= render(LikesHeartComponent.new) %>
+<% elsif eq_one %>
+  <%= render(LikesHeartComponent.new) %>
+<% end %>
