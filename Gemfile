@@ -59,6 +59,7 @@ gem 'pagy'
 gem 'rails', '~> 7.0.0'
 gem 'requestjs-rails'
 gem 'rspotify'
+gem 'view_component'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
