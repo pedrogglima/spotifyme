@@ -3,8 +3,7 @@
 class FollowInvitationsController < PrivateApplicationController
   def index
     @pagy, @invitations = pagy(
-      FollowInvitation.invitations(current_user.id, :pending),
-      items: 10
+      FollowInvitation.invitations(current_user.id, :pending)
     )
   end
 

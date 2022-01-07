@@ -4,7 +4,7 @@ class FeedsController < PrivateApplicationController
   before_action :set_current_user_feed
 
   def index
-    @pagy, @feeds = pagy(Feed.by_user(params[:user_id]), items: 10)
+    @pagy, @feeds = pagy(Feed.by_user(params[:user_id]))
   end
 
   private
