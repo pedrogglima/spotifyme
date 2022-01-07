@@ -19,7 +19,7 @@
             </div>
             <div class="flex items-start space-x-4">
               <div class="min-w-0 flex-1">
-                <%= form_with(model: @resource, url: posts_user_path(@resource), class: 'relative') do |f| %>
+                <%= form_with(model: post, url: posts_user_path(post), class: 'relative') do |f| %>
                   <div class="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
                     <%= f.label :content, class: 'sr-only' %>
                     <%= f.text_area :content, rows: 3, class: 'block w-full py-3 border-0 resize-none focus:ring-0 sm:text-sm', placeholder: "Add your comment..." %>
@@ -50,8 +50,8 @@
                     </div>
                   </div>
                 <% end %>
-                <% if @resource.errors.any? %>
-                  <span class="mx-1 text-sm text-red-500"><%= @resource.errors.full_messages.first %></span>
+                <% if post.errors.any? %>
+                  <span class="mx-1 text-sm text-red-500"><%= post.errors.full_messages.first %></span>
                 <% end %>
               </div>
             </div>

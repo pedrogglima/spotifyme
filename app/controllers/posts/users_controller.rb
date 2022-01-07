@@ -2,23 +2,23 @@
 
 module Posts
   class UsersController < PrivateApplicationController
-    before_action :set_posts_user, only: %i[edit update destroy]
+    before_action :set_resource, only: %i[edit update destroy]
 
-    def edit; end
-
-    def update
-      respond_to do |format|
-        if @resource.update(resource_params)
-          format.html { redirect_to profile_path, notice: 'Post was successfully updated.' }
-        else
-          format.html { render :edit }
-        end
-      end
+    def edit
+      render :edit, locals: { post: @resource }
     end
 
     def create
       @resource = Posts::User.build_with_post(resource_params, current_user)
       @resource.save
+
+      respond_to do |format|
+        format.turbo_stream
+      end
+    end
+
+    def update
+      @resource.update(resource_params)
 
       respond_to do |format|
         format.turbo_stream
@@ -35,7 +35,7 @@ module Posts
 
     private
 
-    def set_posts_user
+    def set_resource
       @resource = Posts::User.find(params[:id])
     end
 
