@@ -22,6 +22,13 @@ class Comment < ApplicationRecord
     commentable_type.demodulize.downcase
   end
 
+  # Called when a new post is created.
+  # New posts are default as disliked - hence, nil.
+  # Method used on build partials for hotwire
+  def like_id
+    nil
+  end
+
   def user_id
     user.id
   end

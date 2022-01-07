@@ -14,7 +14,7 @@ module CommentQuery
       comments.commentable_id,
       comments.commentable_type,
       comments.content,
-      comments.like_count,
+      comments.counter_likeable,
       comments.created_at,
       comments.user_id,
       comments.created_at,

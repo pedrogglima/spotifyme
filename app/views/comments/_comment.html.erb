@@ -22,7 +22,14 @@
             </div>
             <div class="mt-3">
               <div class="flex">
-                <%= link_to "edit", edit_comment_path(comment), class: "py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                <%= turbo_frame_tag "like_comment_#{comment.id}" do %>
+                  <% if comment.like_id.present? %>
+                    <%= render partial: "likes/dislike", locals: { resource: comment.like_id } %>
+                  <% else %>
+                    <%= render partial: "likes/like", locals: { likeable_type: comment.class.name, likeable_id: comment.id } %>
+                  <% end %>
+                <% end %>
+                <%= link_to "edit", edit_comment_path(comment), class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
                 <%= button_to "delete", comment_path(comment), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
               </div>
             </div>
