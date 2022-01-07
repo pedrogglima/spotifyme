@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "like_posts_user_#{@posts_user}" do %>
+  <%= turbo_frame_tag "like_posts_user_#{@posts_user}" do %>
+    <%= render partial: "posts/users/likes/like", locals: { posts_user: @posts_user } %>
+  <% end %>
+<% end %>

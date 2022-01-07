@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-module PostType
-  module Simples
+module Posts
+  module Users
     class CommentsController < ApplicationController
       before_action :set_comment, only: %i[edit update destroy]
-      before_action :set_simple
+      before_action :set_posts_user
 
       def index
-        @resource = Comment.new_with_defaults(simple_id: params[:simple_id])
-        @pagy, @resources = pagy(Comment.by_simple(params[:simple_id]))
+        @resource = Comment.new_with_defaults(posts_user_id: @posts_user)
+        @pagy, @resources = pagy(Comment.by_posts_user(@posts_user))
 
         respond_to do |format|
           format.html
           format.json do
             render json: {
-              entries: render_to_string(partial: 'post_type/simples/comments/comments', formats: [:html]),
+              entries: render_to_string(partial: 'posts/users/comments/comments', formats: [:html]),
               pagination: view_context.pagy_nav(@pagy)
             }
           end
@@ -28,7 +28,7 @@ module PostType
       def create
         @resource = Comment.new(resource_params)
         @resource.save
-        @new_resource = Comment.new_with_defaults(simple_id: params[:simple_id])
+        @new_resource = Comment.new_with_defaults(posts_user_id: @posts_user)
 
         respond_to do |format|
           format.turbo_stream
@@ -57,8 +57,8 @@ module PostType
         @resource = Comment.find(params[:id])
       end
 
-      def set_simple
-        @simple = params[:simple_id]
+      def set_posts_user
+        @posts_user = params[:user_id]
       end
 
       def resource_params

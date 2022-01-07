@@ -19,9 +19,9 @@ Rails.application.routes.draw do
   resources :followers, only: %i[index]
   resources :followings, only: %i[index]
 
-  scope module: :post_type, path: 'post' do
-    resources :simples, only: %i[create edit update destroy] do
-      scope module: :simples do
+  namespace :posts do
+    resources :users, only: %i[create edit update destroy] do
+      scope module: :users do
         resources :likes, only: %i[create destroy]
         resources :comments, only: %i[index edit create update destroy]
       end

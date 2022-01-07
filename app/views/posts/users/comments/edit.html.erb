@@ -19,7 +19,7 @@
             </div>
             <div class="flex items-start space-x-4">
               <div class="min-w-0 flex-1">
-                <%= form_with(model: @resource, url: simple_comment_path(simple_id: @simple), id: dom_id(@resource), class: 'relative') do |f| %>
+                <%= form_with(model: @resource, url: posts_user_comment_path(user_id: @posts_user), id: dom_id(@resource), class: 'relative') do |f| %>
                   <div class="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
                     <%= f.hidden_field :commentable_id, value: @resource.commentable_id %>
                     <%= f.hidden_field :commentable_type, value: @resource.commentable_type %>
@@ -49,8 +49,8 @@
             </div>
             <div class="mt-3">
               <div class="flex">
-                <%= link_to "edit", edit_simple_comment_path(@resource, simple_id: @simple), class: "py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
-                <%= button_to "delete", simple_comment_path(@resource, simple_id: @simple), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                <%= link_to "edit", edit_posts_user_comment_path(@resource, user_id: @posts_user), class: "py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                <%= button_to "delete", posts_user_comment_path(@resource, user_id: @posts_user), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
               </div>
             </div>
           </div>

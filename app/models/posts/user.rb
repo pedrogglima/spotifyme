@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module PostType
-  class Simple < ApplicationRecord
+module Posts
+  class User < ApplicationRecord
     has_one :post, as: :postable, dependent: :destroy
     has_many :likes, as: :likeable, class_name: 'Like', dependent: :destroy
     has_many :comments, as: :commentable, dependent: :destroy

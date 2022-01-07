@@ -1,7 +1,7 @@
-<%= turbo_frame_tag 'simples_form' do %>
+<%= turbo_frame_tag 'posts_users_form' do %>
   <div class="flex items-start space-x-4">
     <div class="min-w-0 flex-1">
-      <%= form_with(model: simple, url: simples_path(simple), id: dom_id(simple), class: 'relative') do |f| %>
+      <%= form_with(model: posts_user, url: posts_users_path(posts_user), id: dom_id(posts_user), class: 'relative') do |f| %>
         <div class="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
           
           
@@ -34,8 +34,8 @@
           </div>
         </div>
       <% end %>
-      <% if simple.errors.any? %>
-        <span class="mx-1 text-sm text-red-500"><%= simple.errors.full_messages.first %></span>
+      <% if posts_user.errors.any? %>
+        <span class="mx-1 text-sm text-red-500"><%= posts_user.errors.full_messages.first %></span>
       <% end %>
     </div>
   </div>

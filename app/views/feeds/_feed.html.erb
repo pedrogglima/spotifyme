@@ -6,10 +6,10 @@
     <div class="flex-1 min-w-0">
       <span class="absolute inset-0" aria-hidden="true"></span>
       <p class="text-sm font-medium text-gray-900">
-        <%= feed.post_simple_content %>
+        <%= feed.post_posts_user_content %>
       </p>
       <p class="text-sm text-gray-500 truncate">
-        <%= link_to feed.user_nickname, feeds_path(user_id: feed.post_user_id) %> | <%= feed.created_at %>
+        <%= link_to feed.user_nickname, feeds_path(user_id: feed.posts_user_id) %> | <%= feed.created_at %>
       </p>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <% if @resource.valid? %>
-  <%= turbo_stream.replace "simples_form" do %>
-    <%= render partial: "post_type/simples/form", locals: { simple: PostType::Simple.new } %>
+  <%= turbo_stream.replace "posts_users_form" do %>
+    <%= render partial: "posts/users/form", locals: { posts_user: Posts::User.new } %>
   <% end %>
 
   <%= turbo_stream.prepend "posts" do %>
@@ -10,9 +10,9 @@
   <%= turbo_stream.append "flash" do %>
     <%= render partial: "layouts/shared/flash", locals: { flash: { notice: ""} } %>
   <% end %>
-<% else %>PostType::Simple_38
-  <%= turbo_stream.replace "simples_form" do %>
-    <%= render partial: "post_type/simples/form", locals: { simple: @resource } %>
+<% else %>Posts::User_38
+  <%= turbo_stream.replace "posts_users_form" do %>
+    <%= render partial: "posts/users/form", locals: { posts_user: @resource } %>
   <% end %>
   <%= turbo_stream.append "flash" do %>
     <%= render partial: "layouts/shared/flash", locals: { flash: { error: ""} } %>

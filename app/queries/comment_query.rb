@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module CommentQuery
-  def by_simple(simple_id)
+  def by_posts_user(posts_user_id)
     select(stringify_comments)
       .joins(:user)
-      .where(commentable_type: 'PostType::Simple', commentable_id: simple_id)
+      .where(commentable_type: 'Posts::User', commentable_id: posts_user_id)
       .order(created_at: :desc)
   end
 

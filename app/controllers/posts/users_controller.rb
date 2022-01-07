@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module PostType
-  class SimplesController < PrivateApplicationController
-    before_action :set_simple, only: %i[edit update destroy]
+module Posts
+  class UsersController < PrivateApplicationController
+    before_action :set_posts_user, only: %i[edit update destroy]
 
     def edit; end
 
@@ -17,7 +17,7 @@ module PostType
     end
 
     def create
-      @resource = PostType::Simple.build_with_post(resource_params, current_user)
+      @resource = Posts::User.build_with_post(resource_params, current_user)
       @resource.save
 
       respond_to do |format|
@@ -35,12 +35,12 @@ module PostType
 
     private
 
-    def set_simple
-      @resource = PostType::Simple.find(params[:id])
+    def set_posts_user
+      @resource = Posts::User.find(params[:id])
     end
 
     def resource_params
-      params.require(:post_type_simple).permit(:content)
+      params.require(:posts_user).permit(:content)
     end
   end
 end

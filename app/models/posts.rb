@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module PostType
+module Posts
   def self.table_name_prefix
-    'post_type_'
+    'posts_'
   end
 end

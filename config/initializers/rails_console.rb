@@ -12,10 +12,10 @@ module Rails
     end
     alias post first_post
 
-    def first_simple_post
-      PostType::Simple.first
+    def first_posts_user
+      Posts::User.first
     end
-    alias simple_post first_simple_post
+    alias posts_user_post first_posts_user
 
     def first_feed
       Feed.first
@@ -32,9 +32,9 @@ module Rails
     end
     alias follow_invitation first_follow_invitation
 
-    def simple_posts(user = nil)
+    def posts_user_posts(user = nil)
       user ||= first_user
-      user.simple_posts
+      user.posts_user_posts
     end
 
     def followers(user = nil)
@@ -61,7 +61,7 @@ module Rails
       user ||= first_user
       Post.by_user(user.id).each do |post|
         puts "Post: #{post.id} | User: #{post.user_nickname} \
-        | Simples: #{post.simple_id} | Simples: #{post.simple_counter_likeable} \
+        | Simples: #{post.posts_user_id} | Simples: #{post.posts_user_counter_likeable} \
         | Likes: #{post.like_id} | Likes: #{post.like_user_id}"
       end
     end

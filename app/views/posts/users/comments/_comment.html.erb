@@ -22,8 +22,8 @@
             </div>
             <div class="mt-3">
               <div class="flex">
-                <%= link_to "edit", edit_simple_comment_path(comment, simple_id: @simple), class: "py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
-                <%= button_to "delete", simple_comment_path(comment, simple_id: @simple), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                <%= link_to "edit", edit_posts_user_comment_path(comment, user_id: @posts_user), class: "py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                <%= button_to "delete", posts_user_comment_path(comment, user_id: @posts_user), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
               </div>
             </div>
           </div>

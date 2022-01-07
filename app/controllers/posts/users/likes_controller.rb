@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module PostType
-  module Simples
-    class LikesController < ApplicationController
+module Posts
+  module Users
+    class LikesController < PrivateApplicationController
       before_action :set_resource, only: :destroy
-      before_action :set_simple
+      before_action :set_posts_user
 
       def create
-        @resource = Like.new_with_defaults(simple_id: @simple,
+        @resource = Like.new_with_defaults(posts_user_id: @posts_user,
                                                user_id: current_user.id)
         @resource.save
 
@@ -30,8 +30,8 @@ module PostType
         @resource = Like.find(params[:id])
       end
 
-      def set_simple
-        @simple = params[:simple_id]
+      def set_posts_user
+        @posts_user = params[:user_id]
       end
     end
   end

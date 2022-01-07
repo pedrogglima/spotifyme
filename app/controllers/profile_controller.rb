@@ -4,7 +4,7 @@ class ProfileController < PrivateApplicationController
   before_action :set_current_user
 
   def show
-    @post = PostType::Simple.new
+    @post = Posts::User.new
     @pagy, @posts = pagy(Post.by_user(@current_user.id))
 
     respond_to do |format|

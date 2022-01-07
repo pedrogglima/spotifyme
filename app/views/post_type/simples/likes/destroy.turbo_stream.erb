@@ -1,5 +1,0 @@
-<%= turbo_stream.replace "like_simple_#{@simple}" do %>
-  <%= turbo_frame_tag "like_simple_#{@simple}" do %>
-    <%= render partial: "post_type/simples/likes/like", locals: { simple: @simple } %>
-  <% end %>
-<% end %>

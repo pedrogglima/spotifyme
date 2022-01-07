@@ -3,7 +3,7 @@
 comments_per_post = rand(0..15)
 likes_per_post = rand(0..20)
 
-PostType::Simple.all.each do |post|
+Posts::User.all.each do |post|
   comments_per_post.times do
     Comment.create!(
       commentable: post,

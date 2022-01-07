@@ -18,20 +18,20 @@
               </div>
             </div>
             <div class="mx-3">
-              <%= post.simple_content %>
+              <%= post.posts_user_content %>
             </div>
             <div class="mt-3">
               <div class="flex">
-                <%= turbo_frame_tag "like_simple_#{post.simple_id}" do %>
+                <%= turbo_frame_tag "like_posts_user_#{post.posts_user_id}" do %>
                   <% if post.like_id.present? %>
-                    <%= render partial: "post_type/simples/likes/dislike", locals: { resource: post.like_id, simple: post.simple_id } %>
+                    <%= render partial: "posts/users/likes/dislike", locals: { resource: post.like_id, posts_user: post.posts_user_id } %>
                   <% else %>
-                    <%= render partial: "post_type/simples/likes/like", locals: { simple: post.simple_id } %>
+                    <%= render partial: "posts/users/likes/like", locals: { posts_user: post.posts_user_id } %>
                   <% end %>
                 <% end %>
-                <%= link_to "comments", simple_comments_path(simple_id: post.simple_id), data: { turbo: false }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
-                <%= button_to "edit", edit_simple_path(post.simple_id), data: { turbo: false }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
-                <%= button_to "delete", simple_path(post.simple_id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                <%= link_to "comments", posts_user_comments_path(user_id: post.posts_user_id), data: { turbo: false }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                <%= link_to "edit", edit_posts_user_path(post.posts_user_id), data: { turbo: false }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                <%= button_to "delete", posts_user_path(post.posts_user_id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
               </div>
             </div>
           </div>
