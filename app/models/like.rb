@@ -13,4 +13,8 @@ class Like < ApplicationRecord
   def self.new_with_defaults(posts_user_id:, user_id:)
     new(likeable_id: posts_user_id, likeable_type: 'Posts::User', user_id: user_id)
   end
+
+  def polymorphic_class_name
+    likeable_type.demodulize.downcase
+  end
 end

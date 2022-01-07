@@ -39,6 +39,10 @@ class User < ApplicationRecord
                                   .where(follow_invitations: { status: FollowInvitation.statuses[:rejected] })
                               }
 
+  def self.class_name
+    self.class.demodulize.downcase
+  end
+
   def feeds_visiable
     Feed.where(user_id: id, visiable: true)
   end

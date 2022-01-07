@@ -1,0 +1,11 @@
+<% if @resource.valid? %>
+  <%= turbo_stream.replace "like_#{@resource.polymorphic_class_name}_#{@resource.likeable.id}" do %>
+    <%= turbo_frame_tag "like_#{@resource.polymorphic_class_name}_#{@resource.likeable.id}" do %>
+      <%= render partial: "likes/dislike", locals: { resource: @resource } %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.append "flash" do %>
+    <%= render partial: "layouts/shared/flash", locals: { flash: { error: "" } } %>
+  <% end %>
+<% end %>

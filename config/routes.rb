@@ -18,11 +18,11 @@ Rails.application.routes.draw do
   resources :follow_invitations, only: %i[index update]
   resources :followers, only: %i[index]
   resources :followings, only: %i[index]
+  resources :likes, only: %i[create destroy]
 
   namespace :posts do
     resources :users, only: %i[create edit update destroy] do
       scope module: :users do
-        resources :likes, only: %i[create destroy]
         resources :comments, only: %i[index edit create update destroy]
       end
     end
