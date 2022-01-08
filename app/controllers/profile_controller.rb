@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class ProfileController < PrivateApplicationController
-  before_action :set_current_user
+  before_action :set_profile_user
 
   def show
     @post = Posts::User.new
-    @pagy, @posts = pagy(Post.by_user(@current_user.id))
+    @pagy, @posts = pagy(Post.by_user(@profile_user.id))
 
     respond_to do |format|
       format.html
@@ -18,8 +18,8 @@ class ProfileController < PrivateApplicationController
     end
   end
 
-  def set_current_user
-    @current_user = if params[:user_id]
+  def set_profile_user
+    @profile_user = if params[:user_id]
                       User.find(params[:user_id])
                     else
                       current_user
