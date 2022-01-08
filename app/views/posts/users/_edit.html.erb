@@ -2,9 +2,11 @@
   <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
     <div class="p-4">
       <div class="flex items-start">
+
         <div class="flex-shrink-0 pt-0.5">
           <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80" alt="">
         </div>
+
         <div class="ml-3 flex-1">
           <div class="flex flex-col flex-wrap">
             <div class="mb-3">
@@ -57,19 +59,19 @@
             </div>
             <div class="mt-3">
               <div class="flex">
-                <%= turbo_frame_tag "like_posts_user_#{post.id}" do %>
-                  <% if post.like_id.present? %>
-                    <%= render partial: "posts/users/likes/dislike", locals: { resource: post.like_id, posts_user: post.id } %>
-                  <% else %>
-                    <%= render partial: "posts/users/likes/like", locals: { posts_user: post.id } %>
-                  <% end %>
-                <% end %>
-                <%= link_to "comments", posts_user_comments_path(user_id: post.id), data: { turbo: false }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
-                <%= link_to "edit", edit_posts_user_path(post.id), class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
-                <%= button_to "delete", posts_user_path(post.id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="flex-shrink-0 pt-0.5">
+          <%  %>
+          <% if current_user.id == post.user_id %>
+            <%= render(VerticalMenuComponent.new(links: [
+              { link: link_to("edit", edit_posts_user_path(post.id), class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100") },
+              { link: button_to("delete", posts_user_path(post.id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "block px-4 py-2 text-sm text-gray-700", form_class: "hover:bg-gray-100") }
+            ])) %>
+          <% end %>
         </div>
       </div>
     </div>

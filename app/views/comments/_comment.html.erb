@@ -5,6 +5,7 @@
         <div class="flex-shrink-0 pt-0.5">
           <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80" alt="">
         </div>
+        
         <div class="ml-3 flex-1">
           <div class="flex flex-col flex-wrap">
             <div class="mb-3">
@@ -21,7 +22,10 @@
               <%= comment.content %>
             </div>
             <div class="mt-3">
-              <div class="flex">
+              <div class="flex mb-1">
+                <%= render(LikesCounterComponent.new(counter: comment.counter_likeable)) %>
+              </div>
+              <div class="flex pt-2 border-t">
                 <%= turbo_frame_tag "like_comment_#{comment.id}" do %>
                   <% if comment.like_id.present? %>
                     <%= render partial: "likes/dislike", locals: { resource: comment.like_id } %>
@@ -29,13 +33,18 @@
                     <%= render partial: "likes/like", locals: { likeable_type: comment.class.name, likeable_id: comment.id } %>
                   <% end %>
                 <% end %>
-                <% if current_user.id == comment.user_id %>
-                  <%= link_to "edit", edit_comment_path(comment), class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
-                  <%= button_to "delete", comment_path(comment), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm leading-4 text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
-                <% end %>
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="flex-shrink-0 pt-0.5">
+          <% if current_user.id == comment.user_id %>
+            <%= render(VerticalMenuComponent.new(links: [
+              { link: link_to("edit", edit_comment_path(comment), class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100") },
+              { link: button_to("delete", comment_path(comment), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "block px-4 py-2 text-sm text-gray-700", form_class: "hover:bg-gray-100") }
+            ])) %>
+          <% end %>
         </div>
       </div>
     </div>

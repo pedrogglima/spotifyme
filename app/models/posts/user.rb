@@ -17,6 +17,10 @@ module Posts
       nil
     end
 
+    def user_id
+      post.user.id
+    end
+
     def user_name
       post.user.username
     end
