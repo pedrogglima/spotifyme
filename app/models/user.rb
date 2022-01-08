@@ -100,4 +100,12 @@ class User < ApplicationRecord
   def username
     uid
   end
+
+  def self.find_visitor(id)
+    find(id).visitor
+  end
+
+  def visitor
+    Visitor.new(self)
+  end
 end
