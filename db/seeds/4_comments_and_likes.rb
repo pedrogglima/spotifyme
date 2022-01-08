@@ -9,7 +9,6 @@ Posts::User.all.each do |post|
       commentable: post,
       user: User.all.sample,
       content: Faker::Lorem.paragraph_by_chars(number: 250, supplemental: false),
-      like_count: rand(0..50)
     )
   end
 

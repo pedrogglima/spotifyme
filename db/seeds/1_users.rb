@@ -12,7 +12,7 @@ User.create!(
   uid: 'peedrogomes'
 )
 
-users = 40
+users = 30
 
 users.times do |index|
   unique_name = "#{Faker::Name.unique.name}#{index}"
