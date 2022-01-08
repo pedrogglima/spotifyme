@@ -3,6 +3,8 @@
 class Post < ApplicationRecord
   extend PostQuery
 
+  ALLOWED_TYPES = %w[Posts::User].freeze
+
   belongs_to :user
   belongs_to :postable, polymorphic: true, dependent: :destroy
   # TODO: fix queries
@@ -11,6 +13,7 @@ class Post < ApplicationRecord
 
   validates :user_id, presence: true
   validates :postable, presence: true
+  validates :postable_type, presence: true, inclusion: { in: ALLOWED_TYPES }
 
   def posts_user_id
     postable.id
