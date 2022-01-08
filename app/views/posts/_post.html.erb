@@ -24,7 +24,9 @@
             </div>
             <div class="mt-3">
               <div class="flex mb-1">
-                <%= render(LikesCounterComponent.new(counter: post.postable.counter_likeable)) %>
+                <%= turbo_frame_tag "likes_#{post.posts_user_id}" do %>
+                  <%= render(LikesCounterComponent.new(counter: post.postable.counter_likeable)) %>
+                <% end %>
               </div>
               <div class="flex pt-2 border-t">
                 <%= turbo_frame_tag "like_user_#{post.posts_user_id}" do %>

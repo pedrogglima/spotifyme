@@ -1,3 +1,5 @@
+<%= turbo_stream_from "user_#{current_user.id}:posts" %>
+
 <div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
   <%= render partial: "posts/users/form", locals: { posts_user: @post } %>
 </div>

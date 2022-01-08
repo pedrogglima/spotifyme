@@ -6,6 +6,28 @@ class Like < ApplicationRecord
 
   ALLOWED_TYPES = %w[Posts::User Comment].freeze
 
+  after_create_commit do
+    if likeable.counter_likeable <= 3
+      broadcast_replace_to(
+        broadcast_channel,
+        target: "likes_#{likeable.id}",
+        partial: 'likes/likes',
+        locals: { resource: self }
+      )
+    end
+  end
+
+  after_destroy_commit do
+    if likeable.counter_likeable <= 3
+      broadcast_replace_to(
+        broadcast_channel,
+        target: "likes_#{likeable.id}",
+        partial: 'likes/likes',
+        locals: { resource: self }
+      )
+    end
+  end
+
   validates :user_id, presence: true
   validates :likeable_id, presence: true
   validates :likeable_type, presence: true, inclusion: { in: ALLOWED_TYPES }
@@ -16,5 +38,14 @@ class Like < ApplicationRecord
 
   def polymorphic_class_name
     likeable_type.demodulize.downcase
+  end
+
+  def broadcast_channel
+    case likeable_type
+    when 'Posts::User'
+      "user_#{user.id}:posts"
+    when 'Comment'
+      "user_#{user.id}:comments"
+    end
   end
 end
