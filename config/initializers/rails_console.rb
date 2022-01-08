@@ -65,5 +65,17 @@ module Rails
         | Likes: #{post.like_id} | Likes: #{post.like_user_id}"
       end
     end
+
+    def delete_likes(post)
+      post.likes.destroy_all
+    end
+
+    def increment_likes_counter(post)
+      post.increment!(:counter_likeable)
+    end
+
+    def decrement_likes_counter(post)
+      post.decrement!(:counter_likeable)
+    end
   end
 end
