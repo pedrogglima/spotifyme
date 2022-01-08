@@ -7,7 +7,7 @@ class FollowInvitation < ApplicationRecord
   belongs_to :following, class_name: 'User', foreign_key: 'following_id'
 
   after_create_commit do
-    broadcast_prepend_to "user_#{following_id}:follow_invitations"
+    broadcast_prepend_later_to "user_#{following_id}:follow_invitations"
   end
 
   enum status: %i[pending accepted rejected ignored blocked]
