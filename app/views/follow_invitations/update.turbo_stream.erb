@@ -2,7 +2,7 @@
   <%= turbo_stream.remove(@resource) %>
 
   <%= turbo_stream.append "flash" do %>
-    <%= render partial: "layouts/shared/flash", locals: { flash: { alert: ""} } %>
+    <%= render partial: "layouts/shared/flash", locals: { flash: { notice: ""} } %>
   <% end %>
 <% else %>
   <%= turbo_stream.append "flash" do %>
