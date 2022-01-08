@@ -8,7 +8,7 @@ Posts::User.all.each do |post|
     Comment.create!(
       commentable: post,
       user: User.all.sample,
-      content: Faker::Lorem.paragraph_by_chars(number: 250, supplemental: false),
+      content: Faker::Lorem.paragraph_by_chars(number: 250, supplemental: false)
     )
   end
 
