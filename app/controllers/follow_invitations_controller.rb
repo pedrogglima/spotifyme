@@ -9,6 +9,7 @@ class FollowInvitationsController < PrivateApplicationController
 
   def create
     @resource = FollowInvitation.new(resource_params)
+    @resource.follower = current_user
     @resource.save
 
     respond_to do |format|
@@ -26,8 +27,6 @@ class FollowInvitationsController < PrivateApplicationController
   end
 
   def resource_params
-    params.require(:follow_invitation)
-          .permit(:following_id, :status)
-          .merge(follower_id: current_user.id)
+    params.require(:follow_invitation).permit(:following_id, :status)
   end
 end
