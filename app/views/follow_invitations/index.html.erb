@@ -1,12 +1,29 @@
 <div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
   <div class="">
     <%= turbo_frame_tag 'follow_invitations', class: "flex flex-col space-y-4" do %>
-        <!-- TODO: fix msg 'You have...' for when a async invitation is added (msg still there) -->
-        <!--   uses before_action stimulus/hotwire to trigger func. for removing msg if present -->
-        <%= render(@invitations, cached: true) || 'You have no invitation!' %>
+      <% if @invitations.present? %>
+        <%= render(@invitations, cached: true) %>
 
         <%== pagy_nav(@pagy) %>
-      </div>
+      <% else %>
+        <div class="h-full text-center pb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z" />
+          </svg>
+          <h3 class="mt-2 text-sm font-medium text-gray-900">No invitations</h3>
+          <p class="mt-1 text-sm text-gray-500">
+            You may find new followers by following new people!
+          </p>
+          <div class="mt-6">
+          <%= link_to profile_path, class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+            </svg>
+            Start Following
+          <% end %>
+        </div>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
