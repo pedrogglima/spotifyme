@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  def current_visitor
-    @visitor
+  def current_visited
+    @visited
   end
 
   def current_user_profile?
-    current_visitor.nil? ? true : false
+    current_visited.nil? ? true : false
   end
-  helper_method :current_user_profile?, :current_visitor
+  helper_method :current_user_profile?, :current_visited
 end

@@ -1,0 +1,3 @@
+<%= turbo_frame_tag 'follow_invitation_form' do %>
+  <%= render(HeaderInviteComponent.new(current_visited: resource.following, status: 'sent', deactivated: true)) %>
+<% end %>

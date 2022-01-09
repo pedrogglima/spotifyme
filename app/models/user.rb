@@ -55,6 +55,10 @@ class User < ApplicationRecord
     FollowInvitation.where(following_id: id, status: :accepted)
   end
 
+  def follow(user)
+    @follow ||= FollowInvitation.find_by(follower: self, following: user)
+  end
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   # devise :database_authenticatable, :registerable,
@@ -99,13 +103,5 @@ class User < ApplicationRecord
 
   def username
     uid
-  end
-
-  def self.find_visitor(id)
-    find(id).visitor
-  end
-
-  def visitor
-    Visitor.new(self)
   end
 end

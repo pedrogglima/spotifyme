@@ -20,16 +20,29 @@
           <%= render partial: 'layouts/navbar' %>
         <% end %>
         <header class="py-10">
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold text-white">
-              <% if current_visitor %>
-                <%= current_visitor.nickname %> (@<%= current_visitor.username %>)
+          <div class="flex items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex-shrink-0">
+              <% if current_visited %>
+                <%= render(HeaderTitleComponent.new(title: current_visited.nickname, subtitle: current_visited.username)) %>
               <% elsif current_user %>
-                <%= current_user.nickname %>
+                <%= render(HeaderTitleComponent.new(title: current_user.nickname, subtitle: current_user.username)) %>
               <% else %>
-                Spotifyme
+                <%= render(HeaderTitleComponent.new(title: 'Spotifyme')) %>
               <% end %>
-            </h1>
+            </div>
+            <div class="flex-1">
+            </div> 
+            <div class="flex-shrink-0">
+              <%= turbo_frame_tag 'follow_invitation_form' do %>
+                <% if current_user && !current_user.follow(current_visited) %>
+                  <%= render(HeaderInviteComponent.new(current_visited: current_visited, status: 'add')) %>
+                <% elsif current_user && current_user.follow(current_visited).accepted? %>
+                  <%= render(HeaderInviteComponent.new(current_visited: current_visited, status: 'following', deactivated: true)) %>
+                <% else %>
+                  <%= render(HeaderInviteComponent.new(current_visited: current_visited, status: 'sent', deactivated: true)) %>
+                <% end %>
+              <% end %>
+            </div>    
           </div>
         </header>
       </div>

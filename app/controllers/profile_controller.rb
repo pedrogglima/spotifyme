@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class ProfileController < PrivateApplicationController
-  before_action :set_visitor
+  before_action :set_visited
 
   def show
     @post = Posts::User.new
 
-    profile_user_id = current_visitor ? current_visitor.id : current_user.id
+    profile_user_id = current_visited ? current_visited.id : current_user.id
 
     @pagy, @posts = pagy(Post.by_user(profile_user_id))
 
@@ -21,8 +21,8 @@ class ProfileController < PrivateApplicationController
     end
   end
 
-  def set_visitor
-    @visitor = User.find_visitor(params[:user_id]) if params[:user_id].present? &&
-                                                      params[:user_id].to_i != current_user.id
+  def set_visited
+    @visited = User.find(params[:user_id]) if params[:user_id].present? &&
+                                              params[:user_id].to_i != current_user.id
   end
 end

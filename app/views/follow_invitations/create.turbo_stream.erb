@@ -1,0 +1,13 @@
+<% if @resource.valid? %>
+  <%= turbo_stream.replace 'follow_invitation_form' do %>
+    <%= render partial: "follow_invitations/form", locals: { resource: @resource } %>
+  <% end %>
+
+  <%= turbo_stream.append "flash" do %>
+    <%= render partial: "layouts/shared/flash", locals: { flash: { notice: ""} } %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.append "flash" do %>
+    <%= render partial: "layouts/shared/flash", locals: { flash: { error: ""} } %>
+  <% end %>
+<% end %>

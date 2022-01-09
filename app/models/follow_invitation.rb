@@ -10,11 +10,17 @@ class FollowInvitation < ApplicationRecord
     broadcast_prepend_later_to "user_#{following_id}:follow_invitations"
   end
 
+  before_create :set_status
+
   enum status: %i[pending accepted rejected ignored blocked]
 
   validates :follower_id, presence: true
   validates :following_id, presence: true
   validates :status, presence: true
+
+  def set_status
+    self.status = :pending
+  end
 
   def follower_user_id
     follower.id
