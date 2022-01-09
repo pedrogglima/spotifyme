@@ -27,7 +27,7 @@
                     <%= f.hidden_field :commentable_type, value: comment.commentable_type %>
                     
                     <%= f.label :content, class: 'sr-only' %>
-                    <%= f.text_area :content, rows: 3, class: 'block w-full py-3 border-0 resize-none focus:ring-0 sm:text-sm', placeholder: "Add your comment..." %>
+                    <%= f.text_area :content, rows: 3, class: 'block break-words w-full py-3 border-0 resize-none focus:ring-0 sm:text-sm', placeholder: "Add your comment..." %>
                     
                     <!-- Spacer element to match the height of the toolbar -->
                     <div class="py-2" aria-hidden="true">
