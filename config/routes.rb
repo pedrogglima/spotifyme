@@ -12,8 +12,10 @@ Rails.application.routes.draw do
     root to: 'users/sessions#show'
   end
 
-  get 'profile', to: 'profile#show'
+  get 'profile', to: 'home#profile'
+  get 'settings', to: 'home#settings'
 
+  resources :settings, only: %i[update]
   resources :feeds, only: %i[index]
   resources :follow_invitations, only: %i[index create update]
   resources :followers, only: %i[index]

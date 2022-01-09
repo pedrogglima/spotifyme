@@ -1,14 +1,10 @@
 <% if @resource.valid? %>
-  <%= turbo_stream.replace "user_#{@resource.id}" do %>
-    <%= render partial: "posts/post", locals: { post: @resource.post } %>
-  <% end %>
-
   <%= turbo_stream.append "flash" do %>
     <%= render partial: "layouts/shared/flash", locals: { flash: { notice: ""} } %>
   <% end %>
 <% else %>
-  <%= turbo_stream.replace "user_#{@resource.id}" do %>
-    <%= render partial: "posts/users/edit", locals: { post: @resource } %>
+  <%= turbo_stream.replace @resource do %>
+    <%= render partial: "settings/form", locals: { resource: @resource } %>
   <% end %>
   
   <%= turbo_stream.append "flash" do %>

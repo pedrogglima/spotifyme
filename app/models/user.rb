@@ -70,13 +70,19 @@ class User < ApplicationRecord
          :omniauthable,
          omniauth_providers: %i[spotify]
 
+  ALLOWED_TYPES = %w[spotify].freeze
+
+  validates :provider, presence: true, inclusion: { in: ALLOWED_TYPES }
+  validates :uid, presence: true, uniqueness: true
+  validates :nickname, presence: true
+
   def self.from_omniauth(params)
     find_or_create_by(uid: params[:uid]) do |new_user|
       new_user.provider = params[:provider]
       new_user.uid = params[:uid]
       new_user.email = params[:email]
       new_user.password = Devise.friendly_token[0, 20]
-      new_user.nickname = params[:nickname]
+      new_user.nickname = params[:nickname].present? ? params[:nickname] : params[:uid]
       # .new_user.birthdate = params[:birthdate]
       new_user.country = params[:country]
       new_user.account_type = params[:account_type]

@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-class ProfileController < PrivateApplicationController
-  before_action :set_visited
+class HomeController < PrivateApplicationController
+  before_action :set_visited, only: %i[profile]
+  before_action :set_settings, only: %i[settings]
 
-  def show
+  def profile
     @post = Posts::User.new
 
     profile_user_id = current_visited ? current_visited.id : current_user.id
@@ -21,8 +22,16 @@ class ProfileController < PrivateApplicationController
     end
   end
 
+  def settings; end
+
+  private
+
   def set_visited
     @visited = User.find(params[:user_id]) if params[:user_id].present? &&
                                               params[:user_id].to_i != current_user.id
+  end
+
+  def set_settings
+    @settings = current_user
   end
 end
