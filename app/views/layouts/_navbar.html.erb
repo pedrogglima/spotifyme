@@ -7,13 +7,20 @@
             <img class="h-8 w-8" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
           </div>
           <div class="hidden md:block">
-            <div class="ml-10 flex items-baseline space-x-4">
+            <div 
+              data-controller="selected-link"
+              data-selected-link-path-class="feeds profile follow_invitations followers followings"
+              data-selected-link-selected-class="bg-gray-900 text-white"
+              data-selected-link-unselected-class="text-gray-300 hover:bg-gray-700 hover:text-white"
+              class="ml-10 flex items-baseline space-x-4"
+            >
+            
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <%= link_to "Feed", feeds_path, class: "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium", aria: { current: "page" } %>
-              <%= link_to "Profile", profile_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
-              <%= link_to "Invitations", follow_invitations_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
-              <%= link_to "Followers", followers_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
-              <%= link_to "Followings", followings_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+              <%= link_to "Feed", feeds_path, data: { 'selected-link-target': 'links', path: 'feeds' }, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+              <%= link_to "Profile", profile_path, data: { 'selected-link-target': 'links', path: 'profile' }, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+              <%= link_to "Invitations", follow_invitations_path, data: { 'selected-link-target': 'links', path: 'follow_invitations' }, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+              <%= link_to "Followers", followers_path, data: { 'selected-link-target': 'links', path: 'followers' }, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+              <%= link_to "Followings", followings_path, data: { 'selected-link-target': 'links', path: 'followings' }, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
             </div>
           </div>
         </div>
