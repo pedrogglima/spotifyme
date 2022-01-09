@@ -10,7 +10,7 @@
   <%= turbo_stream.append "flash" do %>
     <%= render partial: "layouts/shared/flash", locals: { flash: { notice: ""} } %>
   <% end %>
-<% else %>Posts::User_38
+<% else %>
   <%= turbo_stream.replace "posts_users_form" do %>
     <%= render partial: "posts/users/form", locals: { posts_user: @resource } %>
   <% end %>
