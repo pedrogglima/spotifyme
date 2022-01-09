@@ -10,8 +10,8 @@ class FollowInvitation < ApplicationRecord
 
   enum status: %i[pending accepted rejected ignored blocked]
 
-  validates :follower_id, presence: true
-  validates :following_id, presence: true
+  validates :follower_id, presence: true, uniqueness: { scope: :following_id }
+  validates :following_id, presence: true, uniqueness: { scope: :follower_id }
   validates :status, presence: true
 
   def set_status
