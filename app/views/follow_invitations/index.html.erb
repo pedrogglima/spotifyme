@@ -1,5 +1,3 @@
-<%= turbo_stream_from "user_#{current_user.id}:follow_invitations" %>
-
 <div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
   <div class="">
     <%= turbo_frame_tag 'follow_invitations', class: "flex flex-col space-y-4" do %>
