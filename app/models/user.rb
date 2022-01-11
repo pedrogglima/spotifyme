@@ -72,8 +72,12 @@ class User < ApplicationRecord
 
   ALLOWED_TYPES = %w[spotify].freeze
 
-  validates :provider, presence: true, inclusion: { in: ALLOWED_TYPES }
-  validates :uid, presence: true, uniqueness: true
+  validates :provider,
+            presence: true,
+            inclusion: { in: ALLOWED_TYPES },
+            uniqueness: { scope: :uid }
+
+  validates :uid, presence: true
   validates :nickname, presence: true
 
   def self.from_omniauth(params)
