@@ -24,6 +24,8 @@ class HomeController < PrivateApplicationController
 
   def settings; end
 
+  def search; end
+
   private
 
   def set_visited

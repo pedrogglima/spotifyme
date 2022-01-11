@@ -1,0 +1,35 @@
+<div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
+  <%= form_with(url: users_path, method: :get, class: 'flex justify-center', data: { 'turbo-frame': "search_users" }) do |f| %>
+    <div class="">
+      <%= f.label :search, class: "sr-only" %>
+      <div class="relative text-gray-400 focus-within:text-gray-600">
+        <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
+          <!-- Heroicon name: solid/search -->
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <%= f.text_field :uid, class: "block w-full bg-white py-2 pl-10 pr-3 border border-transparent rounded-md leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white focus:border-white sm:text-sm", placeholder: "e.g @johnwick", type: "search" %>
+      </div>
+    </div>
+
+    <div class="">
+      <%= f.submit 'Search', class: "ml-3 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="mt-8 bg-white rounded-lg shadow px-5 py-6 sm:px-6">
+  <%= turbo_frame_tag 'search_users' do %>
+    <div class="h-full text-center pb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z" />
+      </svg>
+      <h3 class="mt-2 text-sm font-medium text-gray-900">Seach for new followings!</h3>
+      <p class="mt-1 text-sm text-gray-500">
+        Get started by searching for the username found on Spotify!
+      </p>
+    </div>
+  <% end %>
+</div>
+
