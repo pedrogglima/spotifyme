@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  has_many :feeds, dependent: :destroy
-  has_many :posts, dependent: :destroy
-  has_many :posts_users, through: :posts, source: :postable, source_type: 'Posts::User'
   has_many :comments, dependent: :destroy
-  has_many :likes, class_name: 'Like', dependent: :destroy
+  has_many :feeds, dependent: :destroy
   has_many :follow_invitations, foreign_key: 'follower_id', class_name: 'FollowInvitation'
   has_many :following_invitations, foreign_key: 'following_id', class_name: 'FollowInvitation'
+  has_many :likes, class_name: 'Like', dependent: :destroy
+  has_many :notifications, foreign_key: 'destinatary_id', class_name: 'Notification'
+  has_many :posts, dependent: :destroy
+  has_many :posts_users, through: :posts, source: :postable, source_type: 'Posts::User'
 
   scope :followers, lambda {
                       joins(:follow_invitations)
