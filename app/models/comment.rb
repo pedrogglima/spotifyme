@@ -27,16 +27,4 @@ class Comment < ApplicationRecord
   def like_id
     nil
   end
-
-  def user_id
-    user.id
-  end
-
-  def user_nickname
-    user.nickname
-  end
-
-  def user_name
-    user.username
-  end
 end

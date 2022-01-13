@@ -4,7 +4,7 @@
   <% end %>
 
   <%= turbo_stream.prepend "comments" do %>
-    <%= render partial: "comments/comment", locals: { comment: @resource } %>
+    <%= render partial: "comments/comment", locals: { comment: @resource, ar: false } %>
   <% end %>
 
   <%= turbo_stream.append "flash" do %>
