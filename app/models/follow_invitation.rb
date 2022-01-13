@@ -17,16 +17,4 @@ class FollowInvitation < ApplicationRecord
   def set_status
     self.status = :pending
   end
-
-  def follower_user_id
-    follower.id
-  end
-
-  def follower_nickname
-    follower.nickname
-  end
-
-  def follower_username
-    follower.username
-  end
 end

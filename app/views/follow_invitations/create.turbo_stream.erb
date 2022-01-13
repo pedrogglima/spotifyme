@@ -1,6 +1,6 @@
 <% if @resource.valid? %>
   <%= turbo_stream.replace 'follow_invitation_form' do %>
-    <%= render partial: "follow_invitations/form", locals: { resource: @resource } %>
+    <%= render partial: "follow_invitations/form", locals: { resource: @resource, ar: false } %>
   <% end %>
 
   <%= turbo_stream.append "flash" do %>

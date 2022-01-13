@@ -2,7 +2,7 @@
   <div class="">
     <%= turbo_frame_tag 'follow_invitations', class: "flex flex-col space-y-4" do %>
       <% if @invitations.present? %>
-        <%= render(@invitations, cached: true) %>
+        <%= render(@invitations, ar: true) %>
 
         <%== pagy_nav(@pagy) %>
       <% else %>
