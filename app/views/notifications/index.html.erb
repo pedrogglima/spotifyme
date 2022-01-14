@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "notifications", class: "flex flex-col" do %>
   <% if @resources.present? %>
-    <%= render(@resources, cache: false) %>
+    <%= render(@resources) %>
     <%== pagy_nav(@pagy) %>
   <% else %>
     <div class="px-5 py-6 sm:px-6">

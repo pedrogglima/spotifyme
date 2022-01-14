@@ -2,10 +2,9 @@
 
 module Generators
   class LikeNotification < Base
-    def initialize(post_id:)
-      @post = Post.find(post_id)
-      @last_notification = ::Notification.where(notificable_type: 'Notifications::OfLike',
-                                                destinatary_id: @post.user_id).joins(:notificable).last
+    def initialize(params)
+      @post = Post.find(params[:post_id])
+      @last_notification = ::Notification.of_like_last_notification(@post.user.id, @post.id).first
     end
 
     def delivery_from(sender_id)
@@ -13,10 +12,22 @@ module Generators
 
       sender = User.find(sender_id)
 
-      ::Notification.create(
-        destinatary: @post.user,
-        notificable: ::Notification::OfLike.create(content: "#{sender.name} liked your post")
+      ::Notifications::OfLike.create(
+        post: @post,
+        content: liked_message(@post, sender),
+        notification_attributes: {
+          destinatary: sender,
+          notificable_type: 'Notifications::OfLike'
+        }
       )
+    end
+
+    def liked_message(post, follower)
+      if post.postable.counter_likeable >= 3
+        "#{follower.username} and #{post.postable.counter_likeable} persons liked your post"
+      else
+        "#{follower.username} liked your post"
+      end
     end
 
     private

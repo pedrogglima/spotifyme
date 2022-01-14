@@ -2,9 +2,7 @@
 
 class NotificationsController < PrivateApplicationController
   def index
-    @pagy, @resources = pagy(current_user.notifications
-                                         .order(created_at: :desc)
-                                         .limit(30))
+    @pagy, @resources = pagy(Notification.of_like(current_user.id))
 
     render :index
   end
