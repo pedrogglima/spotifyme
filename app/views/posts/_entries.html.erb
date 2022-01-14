@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "posts", class: "flex flex-col space-y-4" do %>
   <% if @posts.present? %>
-    <%= render(@posts, cache: false) %>
+    <%= render(@posts, ar: true) %>
   <% else %>
     <%= render(InformativeComponent.new(title: 'No posts', 
                                           text: "Get started by creating a new one!",

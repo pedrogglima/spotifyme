@@ -5,7 +5,7 @@ module Posts
     before_action :set_resource, only: %i[edit update destroy]
 
     def edit
-      render :edit, locals: { post: @resource }
+      render :edit, locals: { resource: @resource }
     end
 
     def create

@@ -1,9 +1,5 @@
 <% if @resource.valid? %>
-  <%= turbo_stream.replace "posts_users_form" do %>
-    <%= render partial: "posts/users/form", locals: { posts_user: Posts::User.new } %>
-  <% end %>
-
-  <%= turbo_stream.prepend "posts" do %>
+  <%= turbo_stream.replace "posts_#{@resource.post.polymorphic_class_name}_#{@resource.id}" do %>
     <%= render partial: "posts/post", locals: { post: @resource.post, ar: false } %>
   <% end %>
 
@@ -11,9 +7,10 @@
     <%= render partial: "layouts/shared/flash", locals: { flash: { notice: ""} } %>
   <% end %>
 <% else %>
-  <%= turbo_stream.replace "posts_users_form" do %>
-    <%= render partial: "posts/users/form", locals: { posts_user: @resource } %>
+  <%= turbo_stream.replace "posts_#{@resource.polymorphic_class_name}_#{@resource.id}" do %>
+    <%= render partial: "posts/users/edit", locals: { resource: @resource } %>
   <% end %>
+  
   <%= turbo_stream.append "flash" do %>
     <%= render partial: "layouts/shared/flash", locals: { flash: { error: ""} } %>
   <% end %>

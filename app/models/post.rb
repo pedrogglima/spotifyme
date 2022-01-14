@@ -15,31 +15,7 @@ class Post < ApplicationRecord
   validates :postable, presence: true
   validates :postable_type, presence: true, inclusion: { in: ALLOWED_TYPES }
 
-  def posts_user_id
-    postable.id
-  end
-
-  def posts_user_content
-    postable.content
-  end
-
-  def posts_user_counter_likeable
-    postable.counter_likeable
-  end
-
-  def user_id
-    user.id
-  end
-
-  def user_name
-    user.uid
-  end
-
-  def user_nickname
-    user.nickname
-  end
-
-  def like_id
-    postable.like_id
+  def polymorphic_class_name
+    postable_type.demodulize.downcase
   end
 end

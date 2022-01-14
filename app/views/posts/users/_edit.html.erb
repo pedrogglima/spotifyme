@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "user_#{post.id}" do %>
+<%= turbo_frame_tag "posts_#{resource.post.polymorphic_class_name}_#{resource.post.postable_id}" do %>
   <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
     <div class="p-4">
       <div class="flex items-start">
@@ -12,16 +12,16 @@
             <div class="mb-3">
               <div class="flex flex-col flex-wrap">
                 <p class="font-medium text-gray-900">
-                  <%= post.user_name %> 
+                  <%= resource.post.user.nickname %> 
                 </p>
                 <p class="text-sm font-medium text-gray-700">
-                  <%= post.user_nickname %> - <%= distance_of_time_in_words(Time.now, post.created_at) %>
+                  <%= resource.post.user.username %> - <%= distance_of_time_in_words(Time.now, resource.created_at) %>
                 </p>
               </div>
             </div>
             <div class="flex items-start space-x-4">
               <div class="min-w-0 flex-1">
-                <%= form_with(model: post, url: posts_user_path(post), class: 'relative') do |f| %>
+                <%= form_with(model: resource, url: posts_user_path(resource), class: 'relative') do |f| %>
                   <div class="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
                     <%= f.label :content, class: 'sr-only' %>
                     <%= f.text_area :content, rows: 3, class: 'block break-words w-full py-3 border-0 resize-none focus:ring-0 sm:text-sm', placeholder: "Add your comment..." %>
@@ -52,8 +52,8 @@
                     </div>
                   </div>
                 <% end %>
-                <% if post.errors.any? %>
-                  <span class="mx-1 text-sm text-red-500"><%= post.errors.full_messages.first %></span>
+                <% if resource.errors.any? %>
+                  <span class="mx-1 text-sm text-red-500"><%= resource.errors.full_messages.first %></span>
                 <% end %>
               </div>
             </div>
@@ -66,10 +66,10 @@
 
         <div class="flex-shrink-0 pt-0.5">
           <%  %>
-          <% if current_user.id == post.user_id %>
+          <% if current_user.id == resource.post.user_id %>
             <%= render(VerticalMenuComponent.new(links: [
-              { link: link_to("edit", edit_posts_user_path(post.id), class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100") },
-              { link: button_to("delete", posts_user_path(post.id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "block px-4 py-2 text-sm text-gray-700", form_class: "hover:bg-gray-100") }
+              { link: link_to("edit", edit_posts_user_path(resource.id), class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100") },
+              { link: button_to("delete", posts_user_path(resource.id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "block px-4 py-2 text-sm text-gray-700", form_class: "hover:bg-gray-100") }
             ])) %>
           <% end %>
         </div>

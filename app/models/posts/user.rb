@@ -17,18 +17,6 @@ module Posts
       nil
     end
 
-    def user_id
-      post.user.id
-    end
-
-    def user_name
-      post.user.username
-    end
-
-    def user_nickname
-      post.user.nickname
-    end
-
     # Fix for nested attr. association polymorphic
     def post_attributes=(attribute_set)
       super(attribute_set.merge(postable: self))
