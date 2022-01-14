@@ -8,7 +8,7 @@
   <% end %>
 <% else %>
   <%= turbo_stream.replace "comment_#{@resource.polymorphic_class_name}_#{@resource.id}" do %>
-    <%= render partial: "comments/edit", locals: { comment: @resource } %>
+    <%= render partial: "comments/edit", locals: { resource: @resource } %>
   <% end %>
   
   <%= turbo_stream.append "flash" do %>
