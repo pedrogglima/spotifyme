@@ -16,7 +16,7 @@ module PostQuery
       posts.postable_type,
       posts.postable_id,
       posts.created_at,
-      posts_users as posts_user_id,
+      posts_users.id as posts_user_id,
       posts_users.content as posts_user_content,
       posts_users.counter_likeable as posts_user_counter_likeable,
       users.id as user_id,
