@@ -77,5 +77,10 @@ module Rails
     def decrement_likes_counter(post)
       post.decrement!(:counter_likeable)
     end
+
+    def notifications(user = nil)
+      user ||= first_user
+      user.notifications
+    end
   end
 end

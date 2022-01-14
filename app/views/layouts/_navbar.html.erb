@@ -27,18 +27,10 @@
         </div>
         <div class="hidden md:block">
           <div class="ml-4 flex items-center md:ml-6">
-            <button type="button" class="bg-gray-800 p-1 text-gray-400 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-              <span class="sr-only">View notifications</span>
-              <!-- Heroicon name: outline/bell -->
-              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-              </svg>
-            </button>
-
-            <!-- Profile dropdown -->
+            <!-- Notification dropdown -->
             <div class="ml-3 relative"
               data-controller="dropdown"
-              data-dropdown-active-target="#dropdown-button"
+              data-dropdown-active-target="#dropdown-notification-button"
               data-dropdown-active-class="bg-teal-600"
               data-dropdown-invisible-class="opacity-0 scale-95"
               data-dropdown-visible-class="opacity-100 scale-100"
@@ -48,10 +40,56 @@
               data-dropdown-leave-timeout="75">  
               <div>
                 <button 
-                  id="dropdown-button"
+                  id="dropdown-notification-button"
                   data-action="click->dropdown#toggle click@window->dropdown#hide" 
                   data-dropdown-target="button"
-                  data-role="button" 4
+                  data-role="button"
+                  tabindex="0"
+                  type="button" 
+                  class="bg-gray-800 p-1 text-gray-400 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                  <span class="sr-only">View notifications</span>
+                  <!-- Heroicon name: outline/bell -->
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-resourceslinecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                  </svg>
+                </button>
+              </div>
+              <div
+                  data-dropdown-target="menu" 
+                  class="hidden origin-top-right z-10 absolute overflow-y-auto right-0 mt-2 w-96 h-96 max-h-96 rounded-md shadow-lg py-1 bg-gray-50 ring-1 ring-black ring-opacity-5 focus:outline-none"
+                >
+                
+                <!-- <div 
+                  data-controller="content-loader"
+                  data-content-loader-url-value="<%= notifications_path %>"
+                  class="bg-white rounded overflow-hidden"
+                  aria-orientation="vertical" 
+                  aria-labelledby="user-menu-button" 
+                  tabindex="-1"
+                  > 
+                </div> -->
+
+                <%= turbo_frame_tag "notifications", src: notifications_path %>
+              </div>
+            </div>
+            
+            <!-- Profile dropdown -->
+            <div class="ml-3 relative"
+              data-controller="dropdown"
+              data-dropdown-active-target="#dropdown-profile-button"
+              data-dropdown-active-class="bg-teal-600"
+              data-dropdown-invisible-class="opacity-0 scale-95"
+              data-dropdown-visible-class="opacity-100 scale-100"
+              data-dropdown-entering-class="ease-out duration-100"
+              data-dropdown-enter-timeout="100"
+              data-dropdown-leaving-class="ease-in duration-75"
+              data-dropdown-leave-timeout="75">  
+              <div>
+                <button 
+                  id="dropdown-profile-button"
+                  data-action="click->dropdown#toggle click@window->dropdown#hide" 
+                  data-dropdown-target="button"
+                  data-role="button"
                   tabindex="0"
                   type="button" 
                   class="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
@@ -72,7 +110,8 @@
                   >
                   <%= link_to "Settings", settings_path, class: "block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1", id: "user-menu-item-1" %>
                   <%= button_to "Sign Out", destroy_user_session_path(current_user, format: :html), method: :delete, class: "block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1", id: "user-menu-item-2" %>
-                </div>
+                </div> 
+              </div>
             </div>
           </div>
         </div>
