@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.3'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
+gem 'rails', '~> 7.0.0'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
@@ -16,8 +17,7 @@ gem 'pg', '~> 1.1'
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
 
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem 'importmap-rails'
+gem 'jsbundling-rails'
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem 'turbo-rails'
@@ -56,10 +56,17 @@ gem 'devise'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-spotify'
 gem 'pagy'
-gem 'rails', '~> 7.0.0'
 gem 'requestjs-rails'
 gem 'rspotify'
 gem 'view_component'
+
+# Use by shrine
+gem 'aws-sdk-s3', '~> 1.14'
+gem 'fastimage'
+gem 'image_processing', '~> 1.12'
+gem 'marcel'
+gem 'shrine', '~> 3.4'
+gem 'uppy-s3_multipart', '~> 1.1'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
