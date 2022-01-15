@@ -3,8 +3,9 @@
 module Rails
   module ConsoleMethods
     def first_user
-      User.first
+      User.find_by(uid: 'peedrogomes', provider: 'spotify')
     end
+
     alias user first_user
 
     def first_post
