@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include AvatarUploader::Attachment(:avatar)
+
   has_many :comments, dependent: :destroy
   has_many :feeds, dependent: :destroy
   has_many :follow_invitations, foreign_key: 'follower_id', class_name: 'FollowInvitation'

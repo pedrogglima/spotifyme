@@ -14,7 +14,7 @@ require 'action_mailbox/engine'
 require 'action_text/engine'
 require 'action_view/railtie'
 require 'action_cable/engine'
-# require "rails/test_unit/railtie"
+# require 'rails/test_unit/railtie'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -35,5 +35,14 @@ module Spotifyme
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # supports :s3, :s3_multipart, or :app
+    config.upload_server = if ENV['UPLOAD_SERVER'].present?
+                             ENV['UPLOAD_SERVER'].to_sym
+                           elsif Rails.env.production?
+                             :s3
+                           else
+                             :app
+                           end
   end
 end

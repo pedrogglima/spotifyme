@@ -30,7 +30,30 @@
             <label for="photo" class="block text-sm font-medium text-gray-700">
               Photo
             </label>
-            <div class="mt-1 sm:mt-0 sm:col-span-2">
+            <div data-controller="single-upload" data-single-upload-types-value="<%= ImageUploader::ALLOWED_TYPES.to_json %>" data-single-upload-server-value="<%= upload_server %>">
+              <div class="mb-3">
+                <%= f.label :avatar, class: "form-label" %>
+
+                <!-- will be replaced by Uppy -->
+                <%= f.file_field :avatar,
+                  class: "form-control",
+                  data: { single_upload_target: "input" } %>
+
+                <!-- for storing cover photo uploaded file data -->
+                <%= f.hidden_field :avatar,
+                  value: @user.cached_avatar_data,
+                  data: { single_upload_target: "result" } %>
+              </div>
+
+              <div class="d-inline-block mt-1 mb-3">
+                <!-- static link to the thumbnail generated on attachment -->
+                <%= image_tag @user.avatar_url(:medium).to_s,
+                  width: 300,
+                  class: "img-thumbnail file-upload-preview",
+                  data: { single_upload_target: "preview" } %>
+              </div>
+            </div>
+            <!--<div class="mt-1 sm:mt-0 sm:col-span-2">
               <div class="flex items-center">
                 <span class="h-12 w-12 rounded-full overflow-hidden bg-gray-100">
                   <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
@@ -41,7 +64,7 @@
                   Change
                 </button>
               </div>
-            </div>
+            </div>-->
           </div>
 
           <!-- bg image -->
