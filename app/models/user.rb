@@ -5,10 +5,19 @@ class User < ApplicationRecord
 
   has_many :comments, dependent: :destroy
   has_many :feeds, dependent: :destroy
-  has_many :follow_invitations, foreign_key: 'follower_id', class_name: 'FollowInvitation'
-  has_many :following_invitations, foreign_key: 'following_id', class_name: 'FollowInvitation'
+  has_many :follow_invitations,
+           foreign_key: 'follower_id',
+           class_name: 'FollowInvitation',
+           dependent: :destroy
+  has_many :following_invitations,
+           foreign_key: 'following_id',
+           class_name: 'FollowInvitation',
+           dependent: :destroy
   has_many :likes, class_name: 'Like', dependent: :destroy
-  has_many :notifications, foreign_key: 'destinatary_id', class_name: 'Notification'
+  has_many :notifications,
+           foreign_key: 'destinatary_id',
+           class_name: 'Notification',
+           dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :posts_users, through: :posts, source: :postable, source_type: 'Posts::User'
 
@@ -84,7 +93,10 @@ class User < ApplicationRecord
   validates :nickname, presence: true
 
   def self.from_omniauth(params)
+    byebug
     find_or_create_by(uid: params[:uid]) do |new_user|
+      byebug
+
       new_user.provider = params[:provider]
       new_user.uid = params[:uid]
       new_user.email = params[:email]
