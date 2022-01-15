@@ -1,0 +1,7 @@
+<% if picture? %>
+  <%= image_tag @user.avatar_url(:small).to_s, class: "z-0 #{@style} rounded-full", alt: "Avatar of #{@username}" %>
+<% else %>
+  <div class="z-0 <%= @style %> grid text-center align-middle bg-black text-gray-300 rounded-full">
+    <span class="my-auto block text-lg font-bold"><%= first_letter %></span>  
+  </div>  
+<% end %>
