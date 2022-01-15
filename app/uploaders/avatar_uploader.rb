@@ -5,11 +5,11 @@
 class AvatarUploader < Shrine
   ALLOWED_TYPES  = %w[image/jpeg image/png image/webp].freeze
   MAX_SIZE       = 10 * 1024 * 1024 # 10 MB
-  MAX_DIMENSIONS = [5000, 5000].freeze # 5000x5000
+  MAX_DIMENSIONS = [2000, 2000].freeze # 5000x5000
 
   THUMBNAILS = {
-    small: [300, 300],
-    medium: [600, 600],
+    small: [40, 40],
+    medium: [200, 200],
     large: [800, 800]
   }.freeze
 
@@ -29,7 +29,7 @@ class AvatarUploader < Shrine
   # Thumbnails processor (requires `derivatives` plugin)
   Attacher.derivatives do |original|
     THUMBNAILS.transform_values do |(width, height)|
-      GenerateThumbnail.call(original, width, height) # lib/generate_thumbnail.rb
+      ::ImgProcessing::GenerateThumbnail.call(original, width, height) # lib/generate_thumbnail.rb
     end
   end
 
@@ -40,6 +40,6 @@ class AvatarUploader < Shrine
 
   # Dynamic thumbnail definition (requires `derivation_endpoint` plugin)
   derivation :thumbnail do |file, width, height|
-    GenerateThumbnail.call(file, width.to_i, height.to_i) # lib/generate_thumbnail.rb
+    ::ImgProcessing::GenerateThumbnail.call(file, width.to_i, height.to_i) # lib/generate_thumbnail.rb
   end
 end

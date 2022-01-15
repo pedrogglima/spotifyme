@@ -30,41 +30,29 @@
             <label for="photo" class="block text-sm font-medium text-gray-700">
               Photo
             </label>
-            <div data-controller="single-upload" data-single-upload-types-value="<%= ImageUploader::ALLOWED_TYPES.to_json %>" data-single-upload-server-value="<%= upload_server %>">
-              <div class="mb-3">
-                <%= f.label :avatar, class: "form-label" %>
-
-                <!-- will be replaced by Uppy -->
-                <%= f.file_field :avatar,
-                  class: "form-control",
-                  data: { single_upload_target: "input" } %>
-
-                <!-- for storing cover photo uploaded file data -->
-                <%= f.hidden_field :avatar,
-                  value: @user.cached_avatar_data,
-                  data: { single_upload_target: "result" } %>
-              </div>
-
-              <div class="d-inline-block mt-1 mb-3">
+            <div 
+              data-controller="single-upload" 
+              data-single-upload-types-value="<%= AvatarUploader::ALLOWED_TYPES.to_json %>" 
+              data-single-upload-server-value="<%= upload_server %>">
+              <div class="grid justify-items-center mt-1 mb-3">
                 <!-- static link to the thumbnail generated on attachment -->
-                <%= image_tag @user.avatar_url(:medium).to_s,
-                  width: 300,
-                  class: "img-thumbnail file-upload-preview",
+                <%= image_tag resource.avatar_url(:medium).to_s,
+                  class: "h-48 w-48 min-h-full rounded-full #{'invisible' unless current_user.avatar_data}",
                   data: { single_upload_target: "preview" } %>
               </div>
-            </div>
-            <!--<div class="mt-1 sm:mt-0 sm:col-span-2">
-              <div class="flex items-center">
-                <span class="h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                  <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                </span>
-                <button type="button" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                  Change
-                </button>
+              
+              <div class="grid justify-items-center">
+                <!-- will be replaced by Uppy -->
+                <%= f.file_field :avatar,
+                  class: "W",
+                  data: { single_upload_target: "input" } %>
+
+                <!-- for storing avatar uploaded file data -->
+                <%= f.hidden_field :avatar,
+                  value: resource.cached_avatar_data,
+                  data: { single_upload_target: "result" } %>
               </div>
-            </div>-->
+            </div>
           </div>
 
           <!-- bg image -->

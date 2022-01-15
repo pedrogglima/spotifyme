@@ -17,6 +17,7 @@ module FeedQuery
       feeds.created_at,
       users.uid as user_name,
       users.nickname as user_nickname,
+      users.avatar_data as user_avatar,
       posts.user_id as posts_user_id,
       posts_users.content as post_posts_user_content
     ".squish.freeze

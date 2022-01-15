@@ -25,7 +25,10 @@
 !/tmp/storage/
 !/tmp/storage/.keep
 
+
 /public/assets
+# shrine images
+/public/uploads 
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key

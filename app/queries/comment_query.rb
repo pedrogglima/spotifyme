@@ -19,7 +19,8 @@ module CommentQuery
       comments.user_id,
       comments.created_at,
       users.uid as user_name,
-      users.nickname as user_nickname
+      users.nickname as user_nickname,
+      users.avatar_data as user_avatar
     ".squish.freeze
   end
 end

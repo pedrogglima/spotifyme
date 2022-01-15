@@ -22,6 +22,7 @@ module PostQuery
       users.id as user_id,
       users.uid as user_name,
       users.nickname as user_nickname,
+      users.avatar_data as user_avatar,
       likes.id as like_id
     ".squish.freeze
   end

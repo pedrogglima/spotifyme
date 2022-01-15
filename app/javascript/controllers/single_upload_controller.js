@@ -7,7 +7,7 @@ export default class extends Controller {
   static values = { types: Array, server: String };
 
   connect() {
-    this.inputTarget.classList.add("d-none");
+    this.inputTarget.classList.add("hidden");
 
     this.uppy = this.createUppy();
   }
@@ -21,10 +21,15 @@ export default class extends Controller {
       id: this.inputTarget.id,
       types: this.typesValue,
       server: this.serverValue,
+      allowMultipleUploadBatches: false,
+      restrictions: {
+        maxNumberOfFiles: 1,
+        allowedFileTypes: this.typesValue,
+      },
     })
       .use(FileInput, {
         target: this.inputTarget.parentNode,
-        locale: { strings: { chooseFiles: "Choose file" } },
+        locale: { strings: { chooseFiles: "Upload Avatar" } },
       })
       .use(Informer, {
         target: this.inputTarget.parentNode,
@@ -47,6 +52,8 @@ export default class extends Controller {
 
     uppy.on("thumbnail:generated", (file, preview) => {
       this.previewTarget.src = preview;
+      this.previewTarget.classList.remove("invisible");
+      this.previewTarget.classList.add("visible");
     });
 
     return uppy;

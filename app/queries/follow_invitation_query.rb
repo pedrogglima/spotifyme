@@ -26,7 +26,8 @@ module FollowInvitationQuery
       follow_invitations.created_at,
       users.uid as user_name,
       users.nickname as user_nickname,
-      users.email as user_email
+      users.email as user_email,
+      users.avatar_data as user_avatar
     ".squish.freeze
   end
 end
