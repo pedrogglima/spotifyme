@@ -5,7 +5,7 @@
 class AvatarUploader < Shrine
   ALLOWED_TYPES  = %w[image/jpeg image/png image/webp].freeze
   MAX_SIZE       = 10 * 1024 * 1024 # 10 MB
-  MAX_DIMENSIONS = [2000, 2000].freeze # 5000x5000
+  MAX_DIMENSIONS = [5000, 5000].freeze # 5000x5000
 
   THUMBNAILS = {
     small: [40, 40],
