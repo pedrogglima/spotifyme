@@ -12,11 +12,11 @@ Rails.application.routes.draw do
     root to: 'users/sessions#show'
   end
 
+  get 'feed',          to: 'home#feed'
   get 'profile',       to: 'home#profile'
   get 'settings',      to: 'home#settings'
   get 'search',        to: 'home#search'
 
-  resources :feeds, only: %i[index]
   resources :follow_invitations, only: %i[index create update]
   resources :followers, only: %i[index]
   resources :followings, only: %i[index]

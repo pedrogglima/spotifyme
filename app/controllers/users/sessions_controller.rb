@@ -22,7 +22,7 @@ module Users
     protected
 
     def if_sign_in_redirect_to
-      redirect_to feeds_path if current_user
+      redirect_to feed_path if current_user
     end
 
     def after_sign_out_path_for(_resource_or_scope)

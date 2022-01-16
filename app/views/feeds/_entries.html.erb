@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "feeds", class: "flex flex-col space-y-4" do %>
+  <% if @resources.present? %>
+    <%= render(@resources, ar: true) %>
+  <% else %>
+    <%= render(InformativeComponent.new(title: 'No feeds', 
+                                        text: "Get started by creating a new one!",
+                                        )) %>
+  <% end %>
+<% end %>

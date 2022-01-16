@@ -4,6 +4,20 @@ class HomeController < PrivateApplicationController
   before_action :set_visited, only: %i[profile]
   before_action :set_settings, only: %i[settings]
 
+  def feed
+    @pagy, @resources = pagy(Feed.by_user(current_user.id))
+
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: {
+          entries: render_to_string(partial: 'feeds/entries', formats: [:html]),
+          pagination: view_context.pagy_nav(@pagy)
+        }
+      end
+    end
+  end
+
   def profile
     @post = Posts::User.new
 
@@ -22,9 +36,9 @@ class HomeController < PrivateApplicationController
     end
   end
 
-  def settings; end
-
   def search; end
+
+  def settings; end
 
   private
 

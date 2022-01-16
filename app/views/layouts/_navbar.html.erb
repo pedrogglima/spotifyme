@@ -9,14 +9,14 @@
           <div class="hidden md:block">
             <div 
               data-controller="selected-link"
-              data-selected-link-path-class="feeds profile search follow_invitations followers followings"
+              data-selected-link-path-class="feed profile search follow_invitations followers followings"
               data-selected-link-selected-class="bg-gray-900 text-white"
               data-selected-link-unselected-class="text-gray-300 hover:bg-gray-700 hover:text-white"
               class="ml-10 flex items-baseline space-x-4"
             >
             
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <%= link_to "Feed", feeds_path, data: { 'selected-link-target': 'links', path: 'feeds' }, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+              <%= link_to "Feed", feed_path, data: { 'selected-link-target': 'links', path: 'feed' }, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
               <%= link_to "Profile", profile_path, data: { 'selected-link-target': 'links', path: 'profile' }, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
               <%= link_to "Search", search_path, data: { 'selected-link-target': 'links', path: 'search' }, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
               <%= link_to "Invitations", follow_invitations_path, data: { 'selected-link-target': 'links', path: 'follow_invitations' }, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
