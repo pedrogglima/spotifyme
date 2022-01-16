@@ -10,4 +10,8 @@ export default class extends Controller {
   dismiss() {
     this.element.remove();
   }
+
+  disconnect() {
+    this.dismiss();
+  }
 }
