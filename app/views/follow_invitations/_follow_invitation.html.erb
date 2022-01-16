@@ -2,7 +2,7 @@
   <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
     <div class="p-4">
       <div class="flex items-start">
-        <div class="flex-shrink-0 pt-0.5">
+        <div class="flex-shrink-0 my-auto">
           <% if ar %>
             <%= render(AvatarComponent.new(user: follow_invitation.user_avatar, username: follow_invitation.user_name)) %>
           <% else %>
@@ -17,9 +17,9 @@
                   <%= ar ? follow_invitation.user_nickname : follow_invitation.follower.nickname %> 
                 </p>
                 <p class="text-sm font-medium text-gray-700">
-                  (<%= ar ? follow_invitation.user_name : follow_invitation.follower.username %>)
+                  <%= ar ? follow_invitation.user_name : follow_invitation.follower.username %>
                 </p>
-                <p class="mt-1 text-sm text-gray-500">
+                <p class="mt-1 text-xs text-gray-500">
                   Wants to follow you.
                 </p>
               </div>
