@@ -13,15 +13,11 @@
           <div class="flex flex-row flex-wrap">
             <div class="flex-shrink-0 flex-wrap">
               <div class="flex flex-col flex-wrap">
-                <p class="font-medium text-gray-900">
-                  <%= ar ? follow_invitation.user_nickname : follow_invitation.follower.nickname %> 
-                </p>
-                <p class="text-sm font-medium text-gray-700">
-                  <%= ar ? follow_invitation.user_name : follow_invitation.follower.username %>
-                </p>
-                <p class="mt-1 text-xs text-gray-500">
-                  Wants to follow you.
-                </p>
+                <% if ar %>
+                  <%= render(ProfileIdComponent.new(nickname: follow_invitation.user_nickname, username: follow_invitation.user_name, informative: 'Wants to follow you.' )) %>
+                <% else %>
+                  <%= render(ProfileIdComponent.new(nickname: follow_invitation.user.nickname, username: follow_invitation.user.username, informative: 'Wants to follow you.' )) %>
+                <% end %>
               </div>
             </div>
             <div class="mt-4 flex-1">

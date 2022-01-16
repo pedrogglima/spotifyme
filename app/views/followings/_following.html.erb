@@ -6,15 +6,7 @@
           <%= render(AvatarComponent.new(user: following.user_avatar, username: following.user_name)) %>
         </div>
         <div class="ml-3">
-          <p class="text-md font-medium text-gray-700 group-hover:text-gray-900">
-            <%= following.user_nickname %>
-          </p>
-          <p class="text-sm mb-1 font-medium text-gray-600 group-hover:text-gray-900">
-            <%= following.user_name %>
-          </p>
-          <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
-            View profile
-          </p>
+          <%= render(ProfileIdComponent.new(nickname: following.user_nickname, username: following.user_name, informative: 'View profile' )) %>
         </div>
       </div>
     </div>
