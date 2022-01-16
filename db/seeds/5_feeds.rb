@@ -19,12 +19,6 @@ User.all.each do |user|
           post: post,
           visiable: false
         )
-      else
-        Feed.create!(
-          user: invitation.following,
-          post: post,
-          visiable: true
-        )
       end
     end
   end
