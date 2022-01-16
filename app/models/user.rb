@@ -93,37 +93,45 @@ class User < ApplicationRecord
   validates :nickname, presence: true
 
   def self.from_omniauth(params)
-    byebug
-    find_or_create_by(uid: params[:uid]) do |new_user|
-      byebug
+    user = User.find_by(provider: params[:provider], uid: params[:uid])
 
-      new_user.provider = params[:provider]
-      new_user.uid = params[:uid]
-      new_user.email = params[:email]
-      new_user.password = Devise.friendly_token[0, 20]
-      new_user.nickname = params[:nickname].present? ? params[:nickname] : params[:uid]
-      # .new_user.birthdate = params[:birthdate]
-      new_user.country = params[:country]
-      new_user.account_type = params[:account_type]
-      new_user.account_product = params[:account_product]
-      new_user.account_images = params[:account_images]
+    if user
+      user.update(
+        email: params[:email],
+        country: params[:country],
+        account_type: params[:account_type],
+        account_product: params[:account_product],
+
+        # trackable
+        sign_in_count: user.sign_in_count + 1,
+        last_sign_in_ip: user.current_sign_in_ip,
+        current_sign_in_ip: params[:current_sign_in_ip],
+        last_sign_in_at: user.current_sign_in_at,
+        current_sign_in_at: Time.now
+      )
+
+      user
+    else
+      User.create(
+        provider: params[:provider],
+        uid: params[:uid],
+        email: params[:email],
+        password: Devise.friendly_token[0, 20],
+        nickname: params[:nickname].present? ? params[:nickname] : params[:uid],
+        # .birthdate: params[:birthdate]
+        country: params[:country],
+        account_type: params[:account_type],
+        account_product: params[:account_product],
+        account_images: params[:account_images],
+
+        # trackable
+        sign_in_count: 1,
+        current_sign_in_ip: params[:current_sign_in_ip],
+        last_sign_in_ip: nil,
+        current_sign_in_at: Time.now,
+        last_sign_in_at: nil
+      )
     end
-
-    # If user already exist the find_or_create_by block won't be call
-    # TODO: update user if already exist in db
-    # if user.persisted?
-    # user.update(
-    #   email: params[:email],
-    #   password: Devise.friendly_token[0, 20],
-    #   nickname: params[:nickname],
-    #   birthdate: params[:birthdate],
-    #   country: params[:country],
-    #   account_type: params[:account_type],
-    #   account_product: params[:account_product],
-    #   account_images: params[:account_images]
-    # )
-
-    # user
   end
 
   def username
