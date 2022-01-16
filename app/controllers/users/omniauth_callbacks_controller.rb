@@ -4,12 +4,14 @@ module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     def spotify
       @user = User.from_omniauth(from_provider_params)
-      if @user.persisted?
+
+      if @user.valid?
         sign_out_all_scopes
-        flash_message_success('Twitter')
+        flash_message_success
         sign_in_and_redirect @user, event: :authentication
       else
-        flash_message_failure('Twitter', auth.info.email)
+        logger.error "User.from_omniauth failed: #{@user.errors.full_messages}"
+        flash_message_failure
         redirect_to new_user_session_url
       end
     end
@@ -22,14 +24,13 @@ module Users
 
     private
 
-    def flash_message_success(kind)
-      flash[:success] = t 'devise.omniauth_callbacks.success', kind: kind
+    def flash_message_success
+      flash[:notice] = t 'devise.omniauth_callbacks.success'
     end
 
-    def flash_message_failure(kind, email)
+    def flash_message_failure
       flash[:alert] = t 'devise.omniauth_callbacks.failure',
-                        kind: kind,
-                        reason: "#{email} não está autorizado."
+                        reason: 'Something went wrong.'
     end
 
     def from_provider_params
@@ -43,12 +44,20 @@ module Users
         # birthdate: auth.birthdate,
         country: auth.country,
         account_product: auth.product,
-        account_images: auth.images.present? ? auth.images.first.url : nil
+        account_images: user_avatar,
+        current_sign_in_ip: request.remote_ip
       }
     end
 
     def auth
       @auth ||= RSpotify::User.new(request.env['omniauth.auth'])
+    end
+
+    def user_avatar
+      return [] unless auth.images.present? &&
+                       auth.images.is_a?(Array)
+
+      [auth.images.first[:url]]
     end
   end
 end
