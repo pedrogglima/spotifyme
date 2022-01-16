@@ -1,0 +1,11 @@
+<p class="text-md font-medium text-gray-700 group-hover:text-gray-900">
+  <%= @nickname %>
+</p>
+<p class="text-sm mb-1 font-medium text-gray-600 group-hover:text-gray-900">
+  <%= @username %>
+</p>
+<% if @informative %>
+  <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+    <%= @informative %>
+  </p>
+<% end %>
