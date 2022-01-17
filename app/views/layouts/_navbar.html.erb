@@ -108,8 +108,8 @@
                   aria-labelledby="user-menu-button" 
                   tabindex="-1"
                   >
-                  <%= link_to "Settings", settings_path, class: "block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1", id: "user-menu-item-1" %>
-                  <%= button_to "Sign Out", destroy_user_session_path(current_user, format: :html), method: :delete, class: "block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1", id: "user-menu-item-2" %>
+                  <%= link_to "Settings", settings_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", role: "menuitem", tabindex: "-1", id: "user-menu-item-1" %>
+                  <%= button_to "Sign Out", destroy_user_session_path(current_user, format: :html), method: :delete, class: "block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", role: "menuitem", tabindex: "-1", id: "user-menu-item-2" %>
                 </div> 
               </div>
             </div>
