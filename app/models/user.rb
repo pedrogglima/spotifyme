@@ -68,6 +68,8 @@ class User < ApplicationRecord
   end
 
   def follow(user)
+    return if user.nil? || user.id == id
+
     @follow ||= FollowInvitation.find_by(follower: self, following: user)
   end
 
