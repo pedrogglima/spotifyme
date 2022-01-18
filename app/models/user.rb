@@ -93,6 +93,7 @@ class User < ApplicationRecord
 
   validates :uid, presence: true
   validates :nickname, presence: true
+  validates :bio, presence: false, length: { maximum: 150 }
 
   def self.from_omniauth(params)
     user = User.find_by(provider: params[:provider], uid: params[:uid])

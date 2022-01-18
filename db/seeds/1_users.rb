@@ -9,7 +9,8 @@ u = User.create!(
   password_confirmation: default_password,
   nickname: 'pedrogomes',
   provider: provider,
-  uid: 'peedrogomes'
+  uid: 'peedrogomes',
+  bio: Faker::Lorem.paragraph_by_chars(number: rand(0..150), supplemental: false)
 )
 
 u.avatar = File.open(Rails.root.join('app', 'assets', 'images', 'avatars', 'example-0-avatar.jpeg'), 'rb')
@@ -27,7 +28,8 @@ users.times do |index|
     password_confirmation: default_password,
     nickname: unique_name,
     provider: provider,
-    uid: unique_name
+    uid: unique_name,
+    bio: Faker::Lorem.paragraph_by_chars(number: rand(0..150), supplemental: false)
   )
 
   next unless [true, false].sample
