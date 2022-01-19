@@ -26,6 +26,20 @@
             </div>
           </div>
 
+          <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+            <%= f.label :country, 'Country', class: 'block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2' %>
+            <div class="mt-1 sm:mt-0 sm:col-span-2">
+              <%= f.text_field :country, class: 'max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md', placeholder: 'Brazil' %>
+            </div>
+          </div>
+
+          <div class="sm:grid sm:grid-cols-12 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+            <%= f.label :state, 'State', class: 'block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2' %>
+            <div class="mt-1 sm:mt-0 sm:col-start-5 sm:col-end-6">
+              <%= f.text_field :state, class: 'w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md', placeholder: 'SP' %>
+            </div>
+          </div>
+
           <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-gray-200 sm:pt-5">
             <label for="photo" class="block text-sm font-medium text-gray-700">
               Photo
@@ -52,6 +66,30 @@
                   value: resource.cached_avatar_data,
                   data: { single_upload_target: "result" } %>
               </div>
+            </div>
+          </div>
+
+          <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+            <%= f.label :bio, 'Bio', class: 'block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2' %>
+            <div 
+              class="relative mt-1 sm:mt-0 sm:col-span-2" 
+              data-controller='counter-chars'
+              data-counter-chars-counter-char-value="150"
+              data-counter-chars-over-limit-class='text-gray-500'
+              data-counter-chars-under-limit-class='text-gray-500'
+            >
+              <%= f.text_area :bio, rows: 5, data: { counter_chars_target: 'field', action: 'keydown->counter-chars#limit keyup->counter-chars#change' }, class: 'max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md' %>
+              <div class="absolute bottom-0 inset-x-0 pl-3 pr-2 py-2 flex justify-items-end">
+                <div class="flex-shrink-0"></div>
+                <span data-counter-chars-target="output" class="flex-1 pt-4 pr-1 text-gray-400 text-sm"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+            <%= f.label :profile_url, 'Profile URL', class: 'block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2' %>
+            <div class="mt-1 sm:mt-0 sm:col-span-2">
+              <%= f.text_field :profile_url, class: 'max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md', placeholder: 'mywebsite.com' %>
             </div>
           </div>
 
@@ -83,6 +121,7 @@
         </div>
       </div>
 
+      <!-- 
       <div class="divide-y divide-gray-200 pt-8 space-y-6 sm:pt-10 sm:space-y-5">
         <div>
           <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -116,6 +155,7 @@
           </div>
         </div>
       </div>
+      -->
     </div>
 
     <div class="pt-5">

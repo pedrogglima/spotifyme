@@ -86,6 +86,11 @@ class User < ApplicationRecord
 
   ALLOWED_TYPES = %w[spotify].freeze
 
+  # Country from Spotify API comes with name abreviated
+  # before_create { self.country = account_country.capitalize if account_country.present? }
+  before_save { self.country = country.capitalize if country.present? }
+  before_save { self.state = state.upcase if state.present? }
+
   validates :provider,
             presence: true,
             inclusion: { in: ALLOWED_TYPES },
@@ -94,6 +99,8 @@ class User < ApplicationRecord
   validates :uid, presence: true
   validates :nickname, presence: true
   validates :bio, presence: false, length: { maximum: 150 }
+  validates :country, presence: false, length: { maximum: 30 }
+  validates :state, presence: false, length: { maximum: 3 }
 
   def self.from_omniauth(params)
     user = User.find_by(provider: params[:provider], uid: params[:uid])
@@ -122,7 +129,7 @@ class User < ApplicationRecord
         password: Devise.friendly_token[0, 20],
         nickname: params[:nickname].present? ? params[:nickname] : params[:uid],
         # .birthdate: params[:birthdate]
-        country: params[:country],
+        account_country: params[:account_country],
         account_type: params[:account_type],
         account_product: params[:account_product],
         account_images: params[:account_images],
@@ -139,5 +146,13 @@ class User < ApplicationRecord
 
   def username
     uid
+  end
+
+  def location
+    if country.present? && state.present?
+      "#{state}, #{country}"
+    elsif country.present?
+      country.to_s
+    end
   end
 end

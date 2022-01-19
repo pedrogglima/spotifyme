@@ -42,7 +42,7 @@ module Users
         nickname: auth.display_name,
         email: auth.email,
         # birthdate: auth.birthdate,
-        country: auth.country,
+        account_country: auth.country,
         account_product: auth.product,
         account_images: user_avatar,
         current_sign_in_ip: request.remote_ip

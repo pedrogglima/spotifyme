@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_15_232950) do
+ActiveRecord::Schema.define(version: 2022_01_18_123657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 2022_01_15_232950) do
     t.string "account_type"
     t.string "nickname", null: false
     t.datetime "birthdate", precision: 6
-    t.string "country"
+    t.string "account_country"
     t.string "account_product"
     t.string "account_images", default: [], array: true
     t.text "avatar_data"
@@ -122,6 +122,12 @@ ActiveRecord::Schema.define(version: 2022_01_15_232950) do
     t.datetime "last_sign_in_at", precision: 6
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
+    t.integer "counter_follower", default: 0
+    t.integer "counter_following", default: 0
+    t.text "bio"
+    t.string "profile_url"
+    t.string "country"
+    t.string "state"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

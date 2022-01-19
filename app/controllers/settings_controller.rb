@@ -20,6 +20,6 @@ class SettingsController < PrivateApplicationController
   end
 
   def resource_params
-    params.require(:user).permit(:avatar, :nickname, :privated_profile)
+    params.require(:user).permit(:avatar, :nickname, :bio, :country, :state, :profile_url)
   end
 end

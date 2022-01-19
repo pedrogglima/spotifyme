@@ -16,10 +16,10 @@ class HeaderInviteComponent < ViewComponent::Base
   end
 
   def activate_class
-    'py-1 px-2 text-gray-700 bg-gray-300 border rounded-sm hover:bg-gray-300 hover:text-gray-900'
+    'py-1 px-2 text-white border rounded-full z-0'
   end
 
   def deactivate_class
-    'py-1 px-2 text-gray-800 bg-gray-300 border rounded-sm z-0 opacity-50 cursor-not-allowed'
+    'py-1 px-2 text-white border rounded-full z-0 opacity-50 cursor-not-allowed'
   end
 end
