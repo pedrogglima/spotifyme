@@ -378,6 +378,7 @@ DEPENDENCIES
   rubocop
   shoulda-matchers
   shrine (~> 3.4)
+  sidekiq (~> 6.3)
   sprockets-rails
   stimulus-rails
   tailwindcss-rails
