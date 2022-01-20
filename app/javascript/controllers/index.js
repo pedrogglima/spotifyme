@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import ClickableController from "./clickable_controller.js"
+application.register("clickable", ClickableController)
+
 import ConfirmationController from "./confirmation_controller.js"
 application.register("confirmation", ConfirmationController)
 
