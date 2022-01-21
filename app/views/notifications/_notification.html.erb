@@ -1,11 +1,11 @@
 <div class="w-full bg-gray-50 border-t first:border-0 last:border-b">
   <div class="p-4">
-    <p>
+    <span class="text-gray-700">
       <% if notification.notificable_type == Notifications::OfLike.to_s %>
         <%= notification.of_like_content %>
       <% else %>
         <%= notification.of_invite_content %>
       <% end %>
-    </p>
+    </span>
   </div>
 </div>
