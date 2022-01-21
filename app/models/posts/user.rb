@@ -27,8 +27,7 @@ module Posts
       new_params = params.to_h
                          .deep_merge!(
                            post_attributes: {
-                             user_id: current_user.id,
-                             postable_type: name
+                             user_id: current_user.id
                            }
                          )
 
