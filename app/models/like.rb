@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 class Like < ApplicationRecord
-  belongs_to :user
+  belongs_to :follower, class_name: 'User', foreign_key: 'user_id'
   belongs_to :likeable, polymorphic: true, counter_cache: :counter_likeable
 
-  ALLOWED_TYPES = %w[Posts::User Comment].freeze
+  after_create_commit { ::Notifications::LikeWorker.perform_async(likeable.post.id, user_id) }
 
   after_create_commit do
     if likeable.counter_likeable <= 3
       broadcast_replace_to(
         broadcast_channel,
-        target: "likes_#{likeable.id}",
+        target: "likes_#{polymorphic_class_name}_#{likeable_id}",
         partial: 'likes/likes',
         locals: { resource: self }
       )
@@ -21,12 +21,14 @@ class Like < ApplicationRecord
     if likeable.counter_likeable <= 3
       broadcast_replace_to(
         broadcast_channel,
-        target: "likes_#{likeable.id}",
+        target: "likes_#{polymorphic_class_name}_#{likeable_id}",
         partial: 'likes/likes',
         locals: { resource: self }
       )
     end
   end
+
+  ALLOWED_TYPES = %w[Posts::User Comment].freeze
 
   validates :user_id, presence: true
   validates :likeable_id, presence: true
