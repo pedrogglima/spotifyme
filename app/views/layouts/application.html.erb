@@ -28,9 +28,9 @@
             <div class="flex">
               <div class="flex-1">
                 <% if current_visited %>
-                  <%= render(AvatarComponent.new(user: current_visited, username: current_visited.username, style: 'border-2 border-gray-300 w-24 h-24')) %>
+                  <%= render(AvatarComponent.new(user: current_visited, username: current_visited.username, style: 'border-2 border-gray-300 w-24 h-24', size: :medium)) %>
                 <% elsif current_user %>
-                  <%= render(AvatarComponent.new(user: current_user, username: current_user.username, style: 'border-2 border-gray-300 w-24 h-24')) %>
+                  <%= render(AvatarComponent.new(user: current_user, username: current_user.username, style: 'border-2 border-gray-300 w-24 h-24', size: :medium)) %>
                 <% end %>                
               </div>
               <div class="flex-shrink-0">
