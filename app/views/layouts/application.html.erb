@@ -11,6 +11,10 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
   <body class="h-full">
+    <% if current_user %>
+      <%= turbo_stream_from "user_#{current_user.id}:all" %>
+    <% end %>
+
     <%= turbo_frame_tag "flash" do %>
       <%= render partial: "layouts/shared/flash" %>
     <% end %>
