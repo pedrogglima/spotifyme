@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class AvatarComponent < ViewComponent::Base
-  def initialize(user:, username: 'U', style: 'w-10 h-10')
+  def initialize(user:, username: 'U', style: 'w-10 h-10', size: :small)
     @user = normalize_user(user)
     @username = username
     @style = style
+    @size = size
   end
 
   def normalize_user(user)
