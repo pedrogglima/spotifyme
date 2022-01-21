@@ -3,8 +3,8 @@
 module Generators
   class Base
     class << self
-      def with(params)
-        new(params)
+      def with(args)
+        new(args)
       end
     end
   end
