@@ -4,7 +4,7 @@ module NotificationQuery
   def by_user(user_id)
     select(stringify_all_types)
       .joins("LEFT JOIN notifications_of_likes AS of_likes ON notifications.notificable_type = 'Notifications::OfLike' AND notifications.notificable_id = of_likes.id")
-      .joins("LEFT JOIN notifications_of_invites AS of_invites ON notifications.notificable_type = 'Notifications::OfInvites' AND notifications.notificable_id = of_invites.id")
+      .joins("LEFT JOIN notifications_of_invites AS of_invites ON notifications.notificable_type = 'Notifications::OfInvite' AND notifications.notificable_id = of_invites.id")
       .where(destinatary_id: user_id)
       .order(created_at: :desc)
   end
