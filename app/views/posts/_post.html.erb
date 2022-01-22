@@ -1,5 +1,12 @@
 <%= turbo_frame_tag "posts_#{post.polymorphic_class_name}_#{post.postable_id}" do %>
-  <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
+  <% if ar %>
+    <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
+  <% else %>
+    <div
+      data-controller="list-new-item"
+      class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5"
+    >
+  <% end %>
     <div class="p-4">
       <div class="flex items-start">
 

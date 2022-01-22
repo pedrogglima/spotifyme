@@ -8,10 +8,11 @@
 
 <div class="<%= "mt-6" unless current_user_profile? %>mt-6 bg-white rounded-lg shadow px-5 py-6 sm:px-6">
   <div 
-    data-controller="infinite-scroll"
-    data-action="scroll@window->infinite-scroll#scroll"    
+    data-controller="infinite-scroll list"
+    data-action="scroll@window->infinite-scroll#scroll addListItem->list#removeEmptyMessageOnList"
   >
-    <div data-infinite-scroll-target="entries">
+    <div 
+      data-infinite-scroll-target="entries">
       <%= render 'posts/entries' %>
     </div>
     <div data-infinite-scroll-target="pagination" class="hidden">
