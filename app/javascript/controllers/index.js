@@ -25,6 +25,12 @@ application.register("flash", FlashController)
 import InfiniteScrollController from "./infinite_scroll_controller.js"
 application.register("infinite-scroll", InfiniteScrollController)
 
+import ListController from "./list_controller.js"
+application.register("list", ListController)
+
+import ListNewItemController from "./list_new_item_controller.js"
+application.register("list-new-item", ListNewItemController)
+
 import SelectedLinkController from "./selected_link_controller.js"
 application.register("selected-link", SelectedLinkController)
 
