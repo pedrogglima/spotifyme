@@ -34,5 +34,8 @@ application.register("list-new-item", ListNewItemController)
 import SelectedLinkController from "./selected_link_controller.js"
 application.register("selected-link", SelectedLinkController)
 
+import SelectedNavbarLinkController from "./selected_navbar_link_controller.js"
+application.register("selected-navbar-link", SelectedNavbarLinkController)
+
 import SingleUploadController from "./single_upload_controller.js"
 application.register("single-upload", SingleUploadController)
