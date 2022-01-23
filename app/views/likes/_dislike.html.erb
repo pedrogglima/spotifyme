@@ -1,7 +1,7 @@
-<%= button_to like_path(id: resource), 
+<%= button_to like_path(id: resource_id), 
               method: :delete, 
-              params: {likeable_type: resource.postable_type,
-                       likeable_id: resource.postable_id
+              params: {likeable_type: likeable.class.name,
+                       likeable_id: likeable.id
                       }, 
               class: "py-1 px-2 inline-flex shadow-md text-red-600 border rounded-lg hover:shadow-xl" do %>
   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

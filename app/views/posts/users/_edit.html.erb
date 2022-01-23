@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "posts_#{resource.post.polymorphic_class_name}_#{resource.post.postable_id}" do %>
+<%= turbo_frame_tag "posts_user_#{resource.id}" do %>
   <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
     <div class="p-4">
       <div class="flex items-start">
@@ -12,10 +12,10 @@
             <div class="mb-3">
               <div class="flex flex-col flex-wrap">
                 <p class="font-medium text-gray-900">
-                  <%= resource.post.user.nickname %> 
+                  <%= resource.user.nickname %> 
                 </p>
                 <p class="text-sm font-medium text-gray-700">
-                  <%= resource.post.user.username %> - <%= distance_of_time_in_words(Time.now, resource.created_at) %>
+                  <%= resource.user.username %> - <%= distance_of_time_in_words(Time.now, resource.created_at) %>
                 </p>
               </div>
             </div>

@@ -1,13 +1,13 @@
 <% if @resource.valid? %>
-  <%= turbo_stream.replace "posts_#{@resource.post.polymorphic_class_name}_#{@resource.id}" do %>
-    <%= render partial: "posts/post", locals: { post: @resource.post, ar: false } %>
+  <%= turbo_stream.replace "posts_user_#{@resource.id}" do %>
+    <%= render partial: "posts/users/user", locals: { posts_user: @resource, ar: false } %>
   <% end %>
 
   <%= turbo_stream.append "flash" do %>
     <%= render partial: "layouts/shared/flash", locals: { flash: { notice: ""} } %>
   <% end %>
 <% else %>
-  <%= turbo_stream.replace "posts_#{@resource.polymorphic_class_name}_#{@resource.id}" do %>
+  <%= turbo_stream.replace "posts_user_#{@resource.id}" do %>
     <%= render partial: "posts/users/edit", locals: { resource: @resource } %>
   <% end %>
   

@@ -1,0 +1,20 @@
+<% if current_user_profile? %>
+  <div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
+    <%= render partial: "posts/users/form", locals: { posts_user: @posts_user } %>
+  </div>
+<% end %>
+
+<div class="<%= "mt-6" unless current_user_profile? %>mt-6 bg-white rounded-lg shadow px-5 py-6 sm:px-6">
+  <div 
+    data-controller="infinite-scroll list"
+    data-action="scroll@window->infinite-scroll#scroll addListItem->list#removeEmptyMessageOnList"
+  >
+    <div 
+      data-infinite-scroll-target="entries">
+      <%= render 'posts/users/entries' %>
+    </div>
+    <div data-infinite-scroll-target="pagination" class="hidden">
+      <%== pagy_nav(@pagy) %>
+    </div>
+  </div>
+</div>

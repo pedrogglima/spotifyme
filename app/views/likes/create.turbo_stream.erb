@@ -1,7 +1,7 @@
 <% if @resource.valid? %>
-  <%= turbo_stream.replace "like_#{@resource.polymorphic_class_name}_#{@resource.likeable.id}" do %>
-    <%= turbo_frame_tag "like_#{@resource.polymorphic_class_name}_#{@resource.likeable.id}" do %>
-      <%= render partial: "likes/dislike", locals: { resource: @resource } %>
+  <%= turbo_stream.replace "like_#{@resource.polymorphic_class_name}_#{@resource.likeable_id}" do %>
+    <%= turbo_frame_tag "like_#{@resource.polymorphic_class_name}_#{@resource.likeable_id}" do %>
+      <%= render partial: "likes/dislike", locals: { resource_id: @resource.id, likeable: @resource.likeable } %>
     <% end %>
   <% end %>
 <% else %>

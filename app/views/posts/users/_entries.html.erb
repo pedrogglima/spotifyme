@@ -1,6 +1,6 @@
-<%= turbo_frame_tag "posts", class: "flex flex-col space-y-4" do %>
-  <% if @posts.present? %>
-    <%= render(@posts, ar: true) %>
+<%= turbo_frame_tag "posts_user", class: "flex flex-col space-y-4" do %>
+  <% if @posts_users.present? %>
+    <%= render(partial: 'posts/users/user', collection: @posts_users, as: :posts_user, locals: { ar: true }) %>
   <% else %>
     <%= render(InformativeComponent.new(title: 'No posts', 
                                           text: "Get started by creating a new one!",

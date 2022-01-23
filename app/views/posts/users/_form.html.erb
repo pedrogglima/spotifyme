@@ -1,4 +1,4 @@
-<%= turbo_frame_tag 'posts_users_form' do %>
+<%= turbo_frame_tag 'posts_user_form' do %>
   <div class="flex items-start space-x-4">
     <div class="min-w-0 flex-1">
       <%= form_with(model: posts_user, url: posts_users_path(posts_user), id: dom_id(posts_user), data: { controller: 'counter-chars', counter_chars_counter_char_value: 500, counter_chars_over_limit_class: 'text-gray-500', counter_chars_under_limit_class: 'text-gray-500' }, class: 'relative') do |f| %>

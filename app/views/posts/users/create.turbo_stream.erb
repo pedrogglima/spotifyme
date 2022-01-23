@@ -1,17 +1,17 @@
 <% if @resource.valid? %>
-  <%= turbo_stream.replace "posts_users_form" do %>
+  <%= turbo_stream.replace "posts_user_form" do %>
     <%= render partial: "posts/users/form", locals: { posts_user: Posts::User.new } %>
   <% end %>
 
-  <%= turbo_stream.prepend "posts" do %>
-    <%= render partial: "posts/post", locals: { post: @resource.post, ar: false } %>
+  <%= turbo_stream.prepend "posts_user" do %>
+    <%= render partial: "posts/users/user", locals: { posts_user: @resource, ar: false } %>
   <% end %>
 
   <%= turbo_stream.append "flash" do %>
     <%= render partial: "layouts/shared/flash", locals: { flash: { notice: ""} } %>
   <% end %>
 <% else %>
-  <%= turbo_stream.replace "posts_users_form" do %>
+  <%= turbo_stream.replace "posts_user_form" do %>
     <%= render partial: "posts/users/form", locals: { posts_user: @resource } %>
   <% end %>
   <%= turbo_stream.append "flash" do %>
