@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :likes, only: %i[create destroy]
   resources :notifications, only: %i[index]
   resources :settings, only: %i[update]
+
   resources :users, only: %i[index]
 
   scope :posts do
@@ -30,6 +31,8 @@ Rails.application.routes.draw do
   end
 
   namespace :posts do
+    resources :albums, only: %i[index]
+    resources :tracks, only: %i[index]
     resources :users, only: %i[create edit update destroy]
   end
 
