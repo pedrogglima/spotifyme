@@ -1,37 +1,58 @@
-<%= turbo_stream_from "user_#{current_user.id}:posts" %>
 
-<nav class="-mb-px mb-6 grid grid-cols-3 justify-items-center">
-  <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
-  <a href="#" class="w-full text-center border-transparent text-gray-300 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap pb-5 border-b-2 font-medium text-sm">
-    Posts
-  </a>
+<div
+  data-controller="selected-navbar-link"
+  data-selected-navbar-link-selected-start-index-value="0"
+  data-selected-navbar-link-selected-current-index-value="0"
+  data-selected-navbar-link-selected-class="border-red-500 text-white whitespace-nowrap"
+  data-selected-navbar-link-unselected-class="border-transparent text-gray-300 hover:text-gray-700 hover:border-gray-300"
+>
+  <nav class="-mb-px mb-6 grid grid-cols-3 justify-items-center">
+    <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
+    <%= link_to "Posts", 
+      '',
+      class: "w-full text-center border-transparent text-gray-300 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap pb-5 border-b-2 font-medium text-sm",
+      data: { 'action': 'selected-navbar-link#select', 'selected-navbar-link-target': 'links', 'index': '0', 'turbo-frame': 'posts_users' }
+    %>
 
-  <a href="#" class="w-full text-center border-transparent text-gray-300 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap pb-5 border-b-2 font-medium text-sm">
-    Tracks
-  </a>
+    <%= link_to "Tracks", 
+      posts_tracks_path(params[:user_id]),
+      class: "w-full text-center border-transparent text-gray-300 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap pb-5 border-b-2 font-medium text-sm",
+      data: { 'action': 'selected-navbar-link#select', 'selected-navbar-link-target': 'links', 'index': '1', 'turbo-frame': 'posts_tracks' }
+    %>
 
-  <a href="#" class="w-full text-center border-red-500 text-white whitespace-nowrap pb-5 border-b-4 font-medium text-sm" aria-current="page">
-    Albums
-  </a>
-</nav>
+    <%= link_to "Albums", 
+      posts_albums_path(params[:user_id]),
+      class: "w-full text-center border-transparent text-gray-300 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap pb-5 border-b-2 font-medium text-sm",
+      data: { 'action': 'selected-navbar-link#select', 'selected-navbar-link-target': 'links', 'index': '2', 'turbo-frame': 'posts_albums' }
+    %>
+  </nav>
 
-<% if current_user_profile? %>
-  <div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
-    <%= render partial: "posts/users/form", locals: { posts_user: @post } %>
-  </div>
-<% end %>
+  <%= turbo_frame_tag 'posts_users', class: 'hidden', data: { 'selected-navbar-link-target': 'contents', 'downloaded': 'true' } do %>
+    <% if current_user_profile? %>
+      <div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
+        <%= render partial: "posts/users/form", locals: { posts_user: @posts_user } %>
+      </div>
+    <% end %>
 
-<div class="<%= "mt-6" unless current_user_profile? %>mt-6 bg-white rounded-lg shadow px-5 py-6 sm:px-6">
-  <div 
-    data-controller="infinite-scroll list"
-    data-action="scroll@window->infinite-scroll#scroll addListItem->list#removeEmptyMessageOnList"
-  >
-    <div 
-      data-infinite-scroll-target="entries">
-      <%= render 'posts/entries' %>
+    <div class="<%= "mt-6" unless current_user_profile? %>mt-6 bg-white rounded-lg shadow px-5 py-6 sm:px-6">
+      <div 
+        data-controller="infinite-scroll list"
+        data-action="scroll@window->infinite-scroll#scroll addListItem->list#removeEmptyMessageOnList"
+      >
+        <div 
+          data-infinite-scroll-target="entries">
+          <%= render 'posts/users/entries' %>
+        </div>
+        <div data-infinite-scroll-target="pagination" class="hidden">
+          <%== pagy_nav(@pagy) %>
+        </div>
+      </div>
     </div>
-    <div data-infinite-scroll-target="pagination" class="hidden">
-      <%== pagy_nav(@pagy) %>
-    </div>
-  </div>
+  <% end %>
+
+  <%= turbo_frame_tag 'posts_tracks', class: 'hidden', data: { 'selected-navbar-link-target': 'contents', 'downloaded': 'false' } do %>
+  <% end %>
+
+  <%= turbo_frame_tag 'posts_albums', class: 'hidden', data: { 'selected-navbar-link-target': 'contents', 'downloaded': 'false' } do %>
+  <% end %>
 </div>
