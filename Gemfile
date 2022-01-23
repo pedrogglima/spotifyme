@@ -55,11 +55,15 @@ gem 'bootsnap', require: false
 gem 'sidekiq', '~> 6.3'
 
 gem 'devise'
+
+# Required ominiauth constant for rails_csrf_protection
+gem 'omniauth'
 gem 'omniauth-rails_csrf_protection'
-gem 'omniauth-spotify'
+# Wrapper for Spotify API & define Oauth2 Strategy for devise
+gem 'rspotify'
+
 gem 'pagy'
 gem 'requestjs-rails'
-gem 'rspotify'
 gem 'view_component'
 
 # Use by shrine
