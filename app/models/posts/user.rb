@@ -2,6 +2,10 @@
 
 module Posts
   class User < ApplicationRecord
+    extend PostsUserQuery
+
+    # user assoc. validating on notification
+    belongs_to :user, class_name: '::User', foreign_key: 'user_id', optional: true
     has_one :post, as: :postable, dependent: :destroy
     has_many :likes, as: :likeable, class_name: 'Like', dependent: :destroy
     has_many :comments, as: :commentable, dependent: :destroy
@@ -10,11 +14,12 @@ module Posts
 
     validates :content, presence: true, length: { maximum: 500 }
 
-    # Called when a new post is created.
-    # New posts are default as disliked - hence, nil.
-    # Method used on build partials for hotwire
     def like_id
-      nil
+      likes.where(follower: user).first
+    end
+
+    def polymorphic_class_name
+      self.class.name.demodulize.downcase
     end
 
     # Fix for nested attr. association polymorphic
@@ -25,12 +30,12 @@ module Posts
     # Fix for nested attr. association polymorphic
     def self.build_with_post(params, current_user)
       new_params = params.to_h
+                         .merge!(user_id: current_user.id)
                          .deep_merge!(
                            post_attributes: {
                              user_id: current_user.id
                            }
                          )
-
       new(new_params)
     end
   end
