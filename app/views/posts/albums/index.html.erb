@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "posts_albums", class: "flex flex-col space-y-4" do %>
+  <% if @posts_albums.present? %>
+    <%#= render(partial: 'posts/albums/album', collection: @posts_albums, as: :posts_track, locals: { ar: true }) %>
+  <% else %>
+    <%= render(InformativeComponent.new(title: 'No albums', 
+                                          text: "Get started by listening music on Spotify",
+                                        )) %>
+  <% end %>
+<% end %>
