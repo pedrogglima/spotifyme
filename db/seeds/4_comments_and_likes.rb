@@ -15,7 +15,7 @@ Posts::User.all.each do |post|
   likes_per_post.times do |_i|
     Like.create!(
       likeable: post,
-      user: User.all.sample
+      follower: User.all.sample
     )
   end
 end

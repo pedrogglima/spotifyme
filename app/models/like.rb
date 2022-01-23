@@ -45,9 +45,9 @@ class Like < ApplicationRecord
   def broadcast_channel
     case likeable_type
     when 'Posts::User'
-      "user_#{user.id}:posts"
+      "user_#{follower.id}:posts_users"
     when 'Comment'
-      "user_#{user.id}:comments"
+      "user_#{follower.id}:comments"
     end
   end
 end
