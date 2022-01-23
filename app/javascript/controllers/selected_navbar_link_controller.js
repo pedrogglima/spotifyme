@@ -1,21 +1,23 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["links"];
+  static targets = ["links", "contents"];
   static values = { startIndex: Number, currentIndex: Number };
 
   connect() {
-    // this.startIndex = this.startIndexValue || 0;
-    // this.currentIndex = this.currentIndexValue || this.startIndexValue;
     this.selectedClass = this.data.get("selectedClass") || null;
     this.unselectedClass = this.data.get("unselectedClass") || null;
+    this.invisibleClass = this.data.get("invisibleClass") || "hidden";
 
     this._applyStyleOnStart();
   }
 
   select(event) {
-    event.preventDefault();
+    if (event.target.dataset.downloaded == "true") {
+      event.preventDefault();
+    }
 
+    event.target.dataset.downloaded = "true";
     this.currentIndexValue = event.target.dataset.index;
   }
 
@@ -39,6 +41,14 @@ export default class extends Controller {
         );
       }
     });
+
+    this.contentsTargets.forEach((element, index) => {
+      if (this.currentIndexValue === index) {
+        element.classList.remove(this.invisibleClass);
+      } else {
+        element.classList.add(this.invisibleClass);
+      }
+    });
   }
 
   _applyStyleOnStart() {
@@ -53,6 +63,12 @@ export default class extends Controller {
         this._unselectedClassList[0].forEach((klass) =>
           element.classList.remove(klass)
         );
+      }
+    });
+
+    this.contentsTargets.forEach((element, index) => {
+      if (this.startIndexValue === index) {
+        element.classList.remove(this.invisibleClass);
       }
     });
   }
