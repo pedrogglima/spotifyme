@@ -5,6 +5,7 @@ class Post < ApplicationRecord
 
   belongs_to :user
   belongs_to :postable, polymorphic: true, dependent: :destroy
+  has_many :feeds, dependent: :destroy
   has_many :like_notifications,
            class_name: 'Notifications::OfLike',
            dependent: :destroy
