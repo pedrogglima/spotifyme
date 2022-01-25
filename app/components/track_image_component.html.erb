@@ -1,0 +1,7 @@
+<% if picture? %>
+  <%= image_tag @track.image_url(@size).to_s, class: "z-0 #{@style} rounded-lg border border-gray-300", data: { turbo: false }, alt: "Image of #{@trackname}" %>
+<% else %>
+  <div class="z-0 <%= @style %> grid text-center align-middle bg-black text-gray-300 rounded-md">
+    <span class="my-auto block text-lg font-bold"><%= first_letter %></span>  
+  </div>  
+<% end %>
