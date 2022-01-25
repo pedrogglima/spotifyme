@@ -34,7 +34,7 @@
               <div class="flex pt-2 border-t">
                 <%= turbo_frame_tag "like_comment_#{comment.id}" do %>
                   <% if (ar ? comment.comment_like_id : comment.like_id) %>
-                    <%= render partial: "likes/dislike", locals: { resource_id: (ar ? comment.comment_like_id : comment.like_id), likeable: comment } %>
+                    <%= render partial: "likes/dislike", locals: { resource_id: (ar ? comment.comment_like_id : comment.like_id), likeable_type: comment.class.name, likeable_id: comment.id } %>
                   <% else %>
                     <%= render partial: "likes/like", locals: { likeable_type: comment.class.name, likeable_id: comment.id } %>
                   <% end %>

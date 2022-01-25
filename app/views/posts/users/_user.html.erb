@@ -42,7 +42,7 @@
               <div class="flex pt-2 border-t">
                 <%= turbo_frame_tag "like_#{posts_user.polymorphic_class_name}_#{posts_user.id}" do %>
                   <% if (ar ? posts_user.posts_user_like_id : posts_user.like_id) %>
-                    <%= render partial: "likes/dislike", locals: { resource_id: (ar ? posts_user.posts_user_like_id : posts_user.like_id), likeable: posts_user } %>
+                    <%= render partial: "likes/dislike", locals: { resource_id: (ar ? posts_user.posts_user_like_id : posts_user.like_id), likeable_type: posts_user.class.name, likeable_id: posts_user.id } %>
                   <% else %>
                     <%= render partial: "likes/like", locals: { likeable_type: posts_user.class.name, likeable_id: posts_user.id } %>
                   <% end %>
