@@ -4,7 +4,9 @@ class Like < ApplicationRecord
   belongs_to :follower, class_name: 'User', foreign_key: 'user_id'
   belongs_to :likeable, polymorphic: true, counter_cache: :counter_likeable
 
-  after_create_commit { ::Notifications::LikeWorker.perform_async(likeable.post.id, user_id) }
+  after_create_commit do
+    ::Notifications::LikeWorker.perform_async(likeable.post.id, user_id) unless likeable.is_a?(Comment)
+  end
 
   after_create_commit do
     if likeable.counter_likeable <= 3
