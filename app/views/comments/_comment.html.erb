@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "comment_#{comment.polymorphic_class_name}_#{comment.id}" do %>
+<%= turbo_frame_tag "comment_#{comment.polymorphic_class_name}_#{comment.commentable_id}_#{comment.id}" do %>
   <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
     <div class="p-4">
       <div class="flex items-start">
@@ -27,14 +27,14 @@
             </div>
             <div>
               <div class="flex min-h-min h-4 mb-3">
-                <%= turbo_frame_tag "likes_#{comment.id}" do %>
+                <%= turbo_frame_tag "likes_comment_#{comment.id}" do %>
                   <%= render(LikesCounterComponent.new(counter: comment.counter_likeable)) %>
                 <% end %>
               </div>
               <div class="flex pt-2 border-t">
                 <%= turbo_frame_tag "like_comment_#{comment.id}" do %>
-                  <% if comment.like_id.present? %>
-                    <%= render partial: "likes/dislike", locals: { resource: comment.like_id } %>
+                  <% if (ar ? comment.comment_like_id : comment.like_id) %>
+                    <%= render partial: "likes/dislike", locals: { resource_id: (ar ? comment.comment_like_id : comment.like_id), likeable: comment } %>
                   <% else %>
                     <%= render partial: "likes/like", locals: { likeable_type: comment.class.name, likeable_id: comment.id } %>
                   <% end %>

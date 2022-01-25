@@ -1,23 +1,15 @@
-<%= turbo_stream_from "user_#{current_user.id}:comments" %>
-
-<div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
-  <div class="flex items-start space-x-4">
-    <div class="min-w-0 flex-1">
-      <%= render partial: "comments/form", locals: { comment: @resource } %>
-    </div>
-  </div>
-  
-  <div class="mt-6 bg-white rounded-lg shadow px-5 py-6 sm:px-6">
-    <div 
-      data-controller="infinite-scroll"
-      data-action="scroll@window->infinite-scroll#scroll"    
-    >
-      <div data-infinite-scroll-target="entries">
-        <%= render 'comments/comments' %>
-      </div>
-      <div data-infinite-scroll-target="pagination" class="hidden">
-        <%== pagy_nav(@pagy) %>
+<%= turbo_frame_tag "comments_#{@resource.polymorphic_class_name}_#{@resource.commentable_id}_entry" do %>
+  <div class="bg-white px-5 py-6">
+    <div class="flex items-start space-x-4">
+      <div class="min-w-0 flex-1">
+        <%= render partial: "comments/form", locals: { comment: @resource } %>
       </div>
     </div>
+    
+    <div class="mt-6 bg-white">
+      <%= turbo_frame_tag "comments_#{@resource.polymorphic_class_name}_#{@resource.commentable_id}", class: "flex flex-col space-y-4" do %>
+        <%= render(@resources, ar: true) || "You have no comments!" %>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>

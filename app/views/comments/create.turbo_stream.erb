@@ -1,9 +1,9 @@
 <% if @resource.valid? %>
-  <%= turbo_stream.replace "comments_form" do %>
+  <%= turbo_stream.replace "comments_#{@resource.polymorphic_class_name}_#{@resource.commentable_id}_form" do %>
     <%= render partial: "comments/form", locals: { comment: @new_resource } %>
   <% end %>
 
-  <%= turbo_stream.prepend "comments" do %>
+  <%= turbo_stream.prepend "comments_#{@resource.polymorphic_class_name}_#{@resource.commentable_id}" do %>
     <%= render partial: "comments/comment", locals: { comment: @resource, ar: false } %>
   <% end %>
 
@@ -11,7 +11,7 @@
     <%= render partial: "layouts/shared/flash", locals: { flash: { notice: ""} } %>
   <% end %>
 <% else %>
-  <%= turbo_stream.replace "comments_form" do %>
+  <%= turbo_stream.replace "comments_#{@resource.polymorphic_class_name}_#{@resource.commentable_id}_form" do %>
     <%= render partial: "comments/form", locals: { comment: @resource } %>
   <% end %>
   <%= turbo_stream.append "flash" do %>

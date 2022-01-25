@@ -1,10 +1,10 @@
-<%= turbo_frame_tag "comment_#{resource.polymorphic_class_name}_#{resource.id}" do %>
+<%= turbo_frame_tag "comment_#{resource.polymorphic_class_name}_#{resource.commentable_id}_#{resource.id}" do %>
   <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
     <div class="p-4">
       <div class="flex items-start">
 
         <div class="flex-shrink-0 pt-0.5">
-          <%= render(AvatarComponent.new(user: comment.user, username: comment.user.username)) %>
+          <%= render(AvatarComponent.new(user: resource.user, username: resource.user.username)) %>
         </div>
         
         <div class="ml-3 flex-1">

@@ -5,17 +5,9 @@ class CommentsController < PrivateApplicationController
 
   def index
     @resource = Comment.new(commentable_id: params[:commentable_id], commentable_type: params[:commentable_type])
-    @pagy, @resources = pagy(Comment.by_posts_user(@resource.commentable_id))
+    @pagy, @resources = pagy(Comment.by_posts_user(@resource.commentable_type, @resource.commentable_id))
 
-    respond_to do |format|
-      format.html
-      format.json do
-        render json: {
-          entries: render_to_string(partial: 'comments/comments', formats: [:html]),
-          pagination: view_context.pagy_nav(@pagy)
-        }
-      end
-    end
+    render :index
   end
 
   def edit

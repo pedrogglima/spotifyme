@@ -1,1 +1,1 @@
-<%= turbo_stream.remove "comment_#{@resource.polymorphic_class_name}_#{@resource.id}" %>
+<%= turbo_stream.remove "comment_#{@resource.polymorphic_class_name}_#{@resource.commentable_id}_#{@resource.id}" %>
