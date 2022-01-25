@@ -15,7 +15,7 @@ module Posts
     private
 
     def set_resource
-      @resource = Posts::User.find(params[:id])
+      @resource = Posts::Track.find(params[:id])
     end
   end
 end
