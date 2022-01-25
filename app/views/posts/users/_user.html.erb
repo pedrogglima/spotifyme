@@ -47,7 +47,10 @@
                     <%= render partial: "likes/like", locals: { likeable_type: posts_user.class.name, likeable_id: posts_user.id } %>
                   <% end %>
                 <% end %>
-                <%= link_to "comments", comments_path(commentable_type: posts_user.class.name, commentable_id: posts_user.id),  data: { turbo: false }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                <%= link_to "comments", 
+                            comments_path(commentable_type: posts_user.class.name, commentable_id: posts_user.id),
+                            data: { 'turbo-frame': "comments_#{posts_user.polymorphic_class_name}_#{posts_user.id}_entry" }, 
+                            class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
               </div>
             </div>
           </div>
@@ -62,6 +65,8 @@
           <% end %>
         </div>
       </div>
+      <%= turbo_frame_tag "comments_#{posts_user.polymorphic_class_name}_#{posts_user.id}_entry" do %>
+      <% end %>
     </div>
   </div>
 <% end %>
