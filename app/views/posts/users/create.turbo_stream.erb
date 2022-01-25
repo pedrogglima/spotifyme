@@ -3,7 +3,7 @@
     <%= render partial: "posts/users/form", locals: { posts_user: Posts::User.new } %>
   <% end %>
 
-  <%= turbo_stream.prepend "posts_user" do %>
+  <%= turbo_stream.prepend "posts_users" do %>
     <%= render partial: "posts/users/user", locals: { posts_user: @resource, ar: false } %>
   <% end %>
 

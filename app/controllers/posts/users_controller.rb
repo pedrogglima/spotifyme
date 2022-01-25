@@ -4,6 +4,24 @@ module Posts
   class UsersController < PrivateApplicationController
     before_action :set_resource, only: %i[edit update destroy]
 
+    def index
+      @posts_user = Posts::User.new
+
+      profile_user_id = current_visited ? current_visited.id : current_user.id
+
+      @pagy, @posts_users = pagy(Posts::User.by_user(profile_user_id))
+
+      respond_to do |format|
+        format.html
+        format.json do
+          render json: {
+            entries: render_to_string(partial: 'posts/users/entries', formats: [:html]),
+            pagination: view_context.pagy_nav(@pagy)
+          }
+        end
+      end
+    end
+
     def edit
       render :edit, locals: { resource: @resource }
     end

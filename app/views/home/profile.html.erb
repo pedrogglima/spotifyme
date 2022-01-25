@@ -6,42 +6,30 @@
   data-selected-navbar-link-selected-class="border-red-500 text-white whitespace-nowrap"
   data-selected-navbar-link-unselected-class="border-transparent text-gray-300 hover:text-gray-700 hover:border-gray-300"
 >
-  <nav class="-mb-px mb-6 grid grid-cols-3 justify-items-center">
+  <nav class="-mb-px mb-6 grid grid-cols-2 justify-items-center">
     <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
-    <%= link_to "Posts", 
+    <%= link_to "Tracks", 
       '',
       class: "w-full text-center border-transparent text-gray-300 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap pb-5 border-b-2 font-medium text-sm",
-      data: { 'action': 'selected-navbar-link#select', 'selected-navbar-link-target': 'links', 'index': '0', 'turbo-frame': 'posts_users' }
+      data: { 'action': 'selected-navbar-link#select', 'selected-navbar-link-target': 'links', 'index': '0', 'turbo-frame': 'posts_tracks_entry' }
     %>
 
-    <%= link_to "Tracks", 
-      posts_tracks_path(params[:user_id]),
+    <%= link_to "Posts", 
+      posts_users_path(params[:user_id]),
       class: "w-full text-center border-transparent text-gray-300 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap pb-5 border-b-2 font-medium text-sm",
-      data: { 'action': 'selected-navbar-link#select', 'selected-navbar-link-target': 'links', 'index': '1', 'turbo-frame': 'posts_tracks' }
-    %>
-
-    <%= link_to "Albums", 
-      posts_albums_path(params[:user_id]),
-      class: "w-full text-center border-transparent text-gray-300 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap pb-5 border-b-2 font-medium text-sm",
-      data: { 'action': 'selected-navbar-link#select', 'selected-navbar-link-target': 'links', 'index': '2', 'turbo-frame': 'posts_albums' }
+      data: { 'action': 'selected-navbar-link#select', 'selected-navbar-link-target': 'links', 'index': '1', 'turbo-frame': 'posts_users_entry' }
     %>
   </nav>
 
-  <%= turbo_frame_tag 'posts_users', class: 'hidden', data: { 'selected-navbar-link-target': 'contents', 'downloaded': 'true' } do %>
-    <% if current_user_profile? %>
-      <div class="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
-        <%= render partial: "posts/users/form", locals: { posts_user: @posts_user } %>
-      </div>
-    <% end %>
-
-    <div class="<%= "mt-6" unless current_user_profile? %>mt-6 bg-white rounded-lg shadow px-5 py-6 sm:px-6">
+  <%= turbo_frame_tag 'posts_tracks_entry', class: 'hidden', data: { 'selected-navbar-link-target': 'contents', 'downloaded': 'false' } do %>
+    <div class="mt-6 bg-white rounded-lg shadow px-5 py-6 sm:px-6">
       <div 
         data-controller="infinite-scroll list"
         data-action="scroll@window->infinite-scroll#scroll addListItem->list#removeEmptyMessageOnList"
       >
         <div 
           data-infinite-scroll-target="entries">
-          <%= render 'posts/users/entries' %>
+          <%= render 'posts/tracks/entries' %>
         </div>
         <div data-infinite-scroll-target="pagination" class="hidden">
           <%== pagy_nav(@pagy) %>
@@ -50,9 +38,6 @@
     </div>
   <% end %>
 
-  <%= turbo_frame_tag 'posts_tracks', class: 'hidden', data: { 'selected-navbar-link-target': 'contents', 'downloaded': 'false' } do %>
-  <% end %>
-
-  <%= turbo_frame_tag 'posts_albums', class: 'hidden', data: { 'selected-navbar-link-target': 'contents', 'downloaded': 'false' } do %>
+  <%= turbo_frame_tag 'posts_users_entry', class: 'hidden', data: { 'selected-navbar-link-target': 'contents', 'downloaded': 'false' } do %>
   <% end %>
 </div>

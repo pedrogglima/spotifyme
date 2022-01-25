@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "posts_user", class: "flex flex-col space-y-4" do %>
+<%= turbo_frame_tag "posts_users", class: "flex flex-col space-y-4" do %>
   <% if @posts_users.present? %>
     <%= render(partial: 'posts/users/user', collection: @posts_users, as: :posts_user, locals: { ar: true }) %>
   <% else %>
