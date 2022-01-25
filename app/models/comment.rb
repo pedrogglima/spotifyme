@@ -5,6 +5,7 @@ class Comment < ApplicationRecord
 
   belongs_to :commentable, polymorphic: true
   belongs_to :user
+  has_many :likes, as: :likeable, class_name: 'Like', dependent: :destroy
 
   ALLOWED_TYPES = %w[Posts::User Posts::Track].freeze
 
@@ -13,18 +14,11 @@ class Comment < ApplicationRecord
   validates :user_id, presence: true
   validates :content, presence: true, length: { maximum: 250 }
 
-  def self.new_with_defaults(posts_user_id:)
-    new(commentable_id: posts_user_id, commentable_type: 'Posts::User')
-  end
-
   def polymorphic_class_name
     commentable_type.demodulize.downcase
   end
 
-  # Called when a new post is created.
-  # New posts are default as disliked - hence, nil.
-  # Method used on build partials for hotwire
   def like_id
-    nil
+    likes.where(follower: user).first
   end
 end
