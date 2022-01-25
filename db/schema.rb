@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_22_210640) do
+ActiveRecord::Schema.define(version: 2022_01_23_223913) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,40 @@ ActiveRecord::Schema.define(version: 2022_01_22_210640) do
     t.index ["user_id", "created_at"], name: "index_posts_on_user_id_and_created_at"
   end
 
+  create_table "posts_albums", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name", null: false
+    t.string "album_url"
+    t.integer "popularity"
+    t.integer "track_number"
+    t.datetime "release_date", precision: 6
+    t.text "image_data"
+    t.integer "counter_likeable", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_posts_albums_on_user_id"
+  end
+
+  create_table "posts_tracks", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name", null: false
+    t.datetime "played_at", precision: 6, null: false
+    t.integer "duration_ms"
+    t.integer "popularity"
+    t.string "track_url"
+    t.string "album_name", null: false
+    t.string "album_url"
+    t.string "artists_name", default: [], array: true
+    t.string "artists_url", default: [], array: true
+    t.text "image_data"
+    t.integer "counter_likeable", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "created_at"], name: "index_posts_tracks_on_user_id_and_created_at"
+    t.index ["user_id", "played_at"], name: "index_posts_tracks_on_user_id_and_played_at"
+    t.index ["user_id"], name: "index_posts_tracks_on_user_id"
+  end
+
   create_table "posts_users", force: :cascade do |t|
     t.text "content", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -144,5 +178,7 @@ ActiveRecord::Schema.define(version: 2022_01_22_210640) do
   add_foreign_key "notifications", "users", column: "destinatary_id"
   add_foreign_key "notifications_of_likes", "posts"
   add_foreign_key "posts", "users"
+  add_foreign_key "posts_albums", "users"
+  add_foreign_key "posts_tracks", "users"
   add_foreign_key "posts_users", "users"
 end

@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-module PostsUserQuery
+module PostsAlbumQuery
   def by_user(user_id)
-    select(stringify_profile)
+    select(stringify_feeds)
       .joins(:user)
       .joins("LEFT JOIN likes AS likes ON likes.likeable_type = 'Posts::User' AND likes.likeable_id = posts_users.id AND likes.user_id = #{user_id}")
       .where(user_id: user_id)
       .order(created_at: :desc)
   end
 
-  def stringify_profile
+  def stringify_feeds
     "
       posts_users.id,
       posts_users.content,
