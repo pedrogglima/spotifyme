@@ -19,17 +19,15 @@ class HomeController < PrivateApplicationController
   end
 
   def profile
-    @posts_user = Posts::User.new
-
     profile_user_id = current_visited ? current_visited.id : current_user.id
 
-    @pagy, @posts_users = pagy(Posts::User.by_user(profile_user_id))
+    @pagy, @posts_tracks = pagy(Posts::Track.by_user(profile_user_id))
 
     respond_to do |format|
       format.html
       format.json do
         render json: {
-          entries: render_to_string(partial: 'posts/users/entries', formats: [:html]),
+          entries: render_to_string(partial: 'posts/tracks/entries', formats: [:html]),
           pagination: view_context.pagy_nav(@pagy)
         }
       end
