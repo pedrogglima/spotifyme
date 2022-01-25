@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class LikesCounterComponent < ViewComponent::Base
-  def initialize(counter:)
+  def initialize(counter:, style: "h-5 w-5")
     @counter = counter
+    @style = style
   end
 
   def render?

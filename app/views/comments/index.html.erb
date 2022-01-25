@@ -1,13 +1,13 @@
 <%= turbo_frame_tag "comments_#{@resource.polymorphic_class_name}_#{@resource.commentable_id}_entry" do %>
-  <div class="bg-white px-5 py-6">
+  <div class="bg-white px-8 py-6">
     <div class="flex items-start space-x-4">
       <div class="min-w-0 flex-1">
         <%= render partial: "comments/form", locals: { comment: @resource } %>
       </div>
     </div>
     
-    <div class="mt-6 bg-white">
-      <%= turbo_frame_tag "comments_#{@resource.polymorphic_class_name}_#{@resource.commentable_id}", class: "flex flex-col space-y-4" do %>
+    <div class="mt-4 bg-white">
+      <%= turbo_frame_tag "comments_#{@resource.polymorphic_class_name}_#{@resource.commentable_id}", class: "flex flex-col space-y-2" do %>
         <%= render(@resources, ar: true) %>
       <% end %>
     </div>

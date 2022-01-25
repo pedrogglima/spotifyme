@@ -1,10 +1,10 @@
 <% if gte_three %>
-  <%= render(LikesHeartComponent.new) %>
-  <%= render(LikesHeartComponent.new(margin: "margin-left: -0.75rem")) %>
-  <%= render(LikesHeartComponent.new(margin: "margin-left: -0.75rem")) %>
+  <%= render(LikesHeartComponent.new(style: @style)) %>
+  <%= render(LikesHeartComponent.new(margin: "margin-left: -0.75rem", style: @style)) %>
+  <%= render(LikesHeartComponent.new(margin: "margin-left: -0.75rem", style: @style)) %>
 <% elsif eq_two %>
-  <%= render(LikesHeartComponent.new) %>
-  <%= render(LikesHeartComponent.new(margin: "margin-left: -0.75rem")) %>
+  <%= render(LikesHeartComponent.new(style: @style)) %>
+  <%= render(LikesHeartComponent.new(margin: "margin-left: -0.75rem", style: @style)) %>
 <% elsif eq_one %>
-  <%= render(LikesHeartComponent.new) %>
+  <%= render(LikesHeartComponent.new(style: @style)) %>
 <% end %>

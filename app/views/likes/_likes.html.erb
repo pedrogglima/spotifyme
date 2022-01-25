@@ -1,3 +1,3 @@
 <%= turbo_frame_tag "likes_#{resource.polymorphic_class_name}_#{resource.likeable_id}" do %>
-  <%= render(LikesCounterComponent.new(counter: resource.likeable.counter_likeable)) %>
+  <%= render(LikesCounterComponent.new(counter: resource.likeable.counter_likeable, style: resource.polymorphic_class_name == 'comment' ? 'h-4 w-4' : 'h-5 w-5')) %>
 <% end %>
