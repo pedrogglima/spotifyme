@@ -16,7 +16,7 @@ u = User.create!(
 u.avatar = File.open(Rails.root.join('app', 'assets', 'images', 'avatars', 'example-0-avatar.jpeg'), 'rb')
 u.save!
 
-users = 30
+users = 15
 
 users.times do |index|
   unique_name = "#{Faker::Name.unique.name}#{index}"

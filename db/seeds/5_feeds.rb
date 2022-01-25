@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 User.all.each do |user|
-  user_posts = user.posts.sample(rand(1..3))
+  user_posts = user.posts.sample(rand(1..10))
   invitations = FollowInvitation.where(follower: user, status: :accepted)
 
   invitations.each do |invitation|
