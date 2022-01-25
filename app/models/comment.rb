@@ -6,7 +6,7 @@ class Comment < ApplicationRecord
   belongs_to :commentable, polymorphic: true
   belongs_to :user
 
-  ALLOWED_TYPES = %w[Posts::User].freeze
+  ALLOWED_TYPES = %w[Posts::User Posts::Track].freeze
 
   validates :commentable_id, presence: true
   validates :commentable_type, presence: true, inclusion: { in: ALLOWED_TYPES }

@@ -28,7 +28,7 @@ class Like < ApplicationRecord
     end
   end
 
-  ALLOWED_TYPES = %w[Posts::User Comment].freeze
+  ALLOWED_TYPES = %w[Posts::User Posts::Track Comment].freeze
 
   validates :user_id, presence: true
   validates :likeable_id, presence: true
@@ -46,6 +46,8 @@ class Like < ApplicationRecord
     case likeable_type
     when 'Posts::User'
       "user_#{follower.id}:posts_users"
+    when 'Posts::Track'
+      "user_#{follower.id}:posts_tracks"
     when 'Comment'
       "user_#{follower.id}:comments"
     end

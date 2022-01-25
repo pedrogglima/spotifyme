@@ -13,7 +13,7 @@ class Post < ApplicationRecord
   # has_many :comments, through: post, source: :commentable, source_type: 'Posts::User'
   # has_many :likes, through: post, source: :likeable, source_type: 'Posts::User'
 
-  ALLOWED_TYPES = %w[Posts::User].freeze
+  ALLOWED_TYPES = %w[Posts::User Posts::Track].freeze
 
   validates :user_id, presence: true
   validates :postable, presence: true
