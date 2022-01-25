@@ -31,9 +31,9 @@ Rails.application.routes.draw do
   end
 
   namespace :posts do
-    resources :albums, only: %i[index]
-    resources :tracks, only: %i[index]
-    resources :users, only: %i[create edit update destroy]
+    # resources :albums, only: %i[index]
+    resources :tracks, only: %i[destroy]
+    resources :users, only: %i[index create edit update destroy]
   end
 
   case Rails.configuration.upload_server
@@ -50,5 +50,7 @@ Rails.application.routes.draw do
     mount Shrine.upload_endpoint(:cache) => '/upload'
   end
 
+  mount AlbumUploader.derivation_endpoint => '/derivations/album'
   mount AvatarUploader.derivation_endpoint => '/derivations/avatar'
+  mount TrackUploader.derivation_endpoint => '/derivations/track'
 end

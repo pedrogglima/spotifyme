@@ -2,8 +2,20 @@
 
 module Posts
   class TracksController < PrivateApplicationController
-    def index
-      @posts_tracks = nil
+    before_action :set_resource, only: %i[destroy]
+
+    def destroy
+      @resource.destroy
+
+      respond_to do |format|
+        format.turbo_stream
+      end
+    end
+
+    private
+
+    def set_resource
+      @resource = Posts::User.find(params[:id])
     end
   end
 end

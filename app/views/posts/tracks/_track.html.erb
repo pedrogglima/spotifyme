@@ -1,0 +1,72 @@
+<%= turbo_frame_tag "posts_track_#{posts_track.id}" do %>
+  <% if ar %>
+    <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
+  <% else %>
+    <div
+      data-controller="list-new-item"
+      class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5"
+    >
+  <% end %>
+    <div class="p-4">
+      <div class="flex items-start">
+
+        <div class="flex-shrink-0 pt-0.5">
+          <% if ar %>
+            <%= render(AvatarComponent.new(user: posts_track.user_avatar, username: posts_track.user_name)) %>
+          <% else %>
+            <%= render(AvatarComponent.new(user: posts_track.user, username: posts_track.user.username)) %>
+          <% end %>
+        </div>
+
+        <div class="ml-3 flex-1 ">
+          <div class="flex flex-col flex-wrap">
+            <div class="mb-3">
+              <div class="flex flex-col flex-wrap">
+                <p class="font-medium text-gray-900">
+                  <%= ar ? posts_track.user_nickname : posts_track.user.nickname %>
+                </p>
+                <p class="text-sm font-medium text-gray-700">
+                  <%= ar ? posts_track.user_name : posts_track.user.username %> - <%= distance_of_time_in_words(Time.now, posts_track.created_at) %>
+                </p>
+              </div>
+            </div>
+            <div class="flex flex-row space-x-2 mx-3">
+              <%= render(TrackImageComponent.new(track: posts_track.image_data, trackname: posts_track.name, style: 'w-120 h-120 inline-block shadow-lg')) %>
+              <div>
+                <span class="block text-lg font-bold text-gray-700"><%= posts_track.name %></span>
+                <span class="block text-sm mb-1 font-medium text-gray-600"><%= posts_track.album_name %></span>
+                <span class="block text-xs font-medium text-gray-500"><%= posts_track.artists_name if posts_track.artists_name.present? %></span>
+                <span class="block"><%= link_to "Listen on Spotify", posts_track.track_url, class: "px-2 py-1 bg-spotify-green text-xs font-bold text-spotify-black rounded-md hover:bg-spotify-green2" %></span>
+              </div>
+            </div>
+            <div>
+              <div class="flex min-h-min h-4 mb-3">
+                <%= turbo_frame_tag "likes_#{posts_track.polymorphic_class_name}_#{posts_track.id}" do %>
+                  <%= render(LikesCounterComponent.new(counter: posts_track.counter_likeable)) %>
+                <% end %>
+              </div>
+              <div class="flex pt-2 border-t">
+                <%= turbo_frame_tag "like_#{posts_track.polymorphic_class_name}_#{posts_track.id}" do %>
+                  <% if (ar ? posts_track.posts_track_like_id : posts_track.like_id) %>
+                    <%= render partial: "likes/dislike", locals: { resource_id: (ar ? posts_track.posts_track_like_id : posts_track.like_id), likeable: posts_track } %>
+                  <% else %>
+                    <%= render partial: "likes/like", locals: { likeable_type: posts_track.class.name, likeable_id: posts_track.id } %>
+                  <% end %>
+                <% end %>
+                <%= link_to "comments", comments_path(commentable_type: posts_track.class.name, commentable_id: posts_track.id),  data: { turbo: false }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-shrink-0 pt-0.5">
+          <% if current_user_profile? %>
+            <%= render(VerticalMenuComponent.new(links: [
+              { link: button_to("delete", posts_track_path(posts_track.id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "block px-4 py-2 text-sm text-gray-700", form_class: "hover:bg-gray-100") }
+            ])) %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,9 +1,16 @@
-<%= turbo_frame_tag "posts_tracks", class: "flex flex-col space-y-4" do %>
-  <% if @posts_tracks.present? %>
-    <%#= render(partial: 'posts/tracks/track', collection: @posts_tracks, as: :posts_track, locals: { ar: true }) %>
-  <% else %>
-    <%= render(InformativeComponent.new(title: 'No tracks', 
-                                          text: "Get started by listening music on Spotify",
-                                        )) %>
-  <% end %>
+<%= turbo_frame_tag "posts_tracks_entry" do %>
+  <div class="mt-6 bg-white rounded-lg shadow px-5 py-6 sm:px-6">
+    <div 
+      data-controller="infinite-scroll list"
+      data-action="scroll@window->infinite-scroll#scroll addListItem->list#removeEmptyMessageOnList"
+    >
+      <div 
+        data-infinite-scroll-target="entries">
+        <%= render 'posts/tracks/entries' %>
+      </div>
+      <div data-infinite-scroll-target="pagination" class="hidden">
+        <%== pagy_nav(@pagy) %>
+      </div>
+    </div>
+  </div>
 <% end %>
