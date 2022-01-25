@@ -1,56 +1,131 @@
-<%= turbo_frame_tag "feeds_#{feed.id}:post_#{feed.post_id}" do %>
-  <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
-    <div class="p-4">
-      <div class="flex items-start">
+<% if feed.postable_type == 'Posts::User' %>
+  <%= turbo_frame_tag "posts_user_#{feed.posts_user_id}" do %>
+    <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
+      <div class="p-4">
+        <div class="flex items-start">
 
-        <div class="flex-shrink-0 pt-0.5">
-          <% if ar %>
+          <div class="flex-shrink-0 pt-0.5">
             <%= render(AvatarComponent.new(user: feed.user_avatar, username: feed.user_name)) %>
-          <% else %>
-            <%= render(AvatarComponent.new(user: feed.user, username: feed.user.username)) %>
-          <% end %>
-        </div>
+          </div>
 
-        <div class="ml-3 flex-1 ">
-          <div class="flex flex-col flex-wrap">
-            <div class="mb-3">
-              <div class="flex flex-col flex-wrap">
-                <p class="font-medium text-gray-900">
-                  <%= ar ? feed.user_nickname : feed.user.nickname %>
-                </p>
-                <p class="text-sm font-medium text-gray-700">
-                  <%= ar ? feed.user_name : feed.user.username %> - <%= distance_of_time_in_words(Time.now, feed.post.created_at) %>
-                </p>
+          <div class="ml-3 flex-1 ">
+            <div class="flex flex-col flex-wrap">
+              <div class="mb-3">
+                <div class="flex flex-col flex-wrap">
+                  <p class="font-medium text-gray-900">
+                    <%= feed.user_nickname %>
+                  </p>
+                  <p class="text-sm font-medium text-gray-700">
+                    <%= feed.user_name %> - <%= distance_of_time_in_words(Time.now, feed.created_at) %>
+                  </p>
+                </div>
               </div>
-            </div>
-            <div class="mx-3 break-all">
-              <p><%= ar ? feed.posts_user_content : feed.post.postable.content %></p>
-            </div>
-            <div>
-              <div class="flex min-h-min h-4 mb-3">
-                <%= turbo_frame_tag "likes_#{feed.post_id}" do %>
-                  <%= render(LikesCounterComponent.new(counter: ar ? feed.posts_user_counter_likeable : feed.post.postable.counter_likeable)) %>
-                <% end %>
+              <div class="mx-3 break-all">
+                <p><%= feed.posts_user_content %></p>
               </div>
-              <div class="flex pt-2 border-t">
-                <%= turbo_frame_tag "like_user_#{ar ? feed.posts_user_id : feed.post.postable.id}" do %>
-                  <% if (ar ? feed.like_id : feed.post.postable.like_id).present? %>
-                    <%= render partial: "likes/dislike", locals: { resource: feed.post } %>
-                  <% else %>
-                    <%= render partial: "likes/like", locals: { likeable_type: feed.post.postable_type, likeable_id: feed.postable_id } %>
+              <div>
+                <div class="flex min-h-min h-4 mb-3">
+                  <%= turbo_frame_tag "likes_#{feed.polymorphic_class_name(feed.postable_type)}_#{feed.posts_user_id}" do %>
+                    <%= render(LikesCounterComponent.new(counter: feed.posts_user_counter_likeable)) %>
                   <% end %>
-                <% end %>
-                <%= link_to "comments", comments_path(commentable_type: feed.postable_type, commentable_id: feed.postable_id),  data: { turbo: false }, class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                </div>
+                <div class="flex pt-2 border-t">
+                  <%= turbo_frame_tag "like_#{feed.polymorphic_class_name(feed.postable_type)}_#{feed.posts_user_id}" do %>
+                    <% if feed.like_id %>
+                      <%= render partial: "likes/dislike", locals: { resource_id: feed.like_id, likeable_type: 'Posts::User', likeable_id: feed.posts_user_id } %>
+                    <% else %>
+                      <%= render partial: "likes/like", locals: { likeable_type: 'Posts::User', likeable_id: feed.posts_user_id } %>
+                    <% end %>
+                  <% end %>
+                  <%= link_to "comments", 
+                              comments_path(commentable_type: 'Posts::User', commentable_id: feed.posts_user_id),
+                              data: { 'turbo-frame': "comments_#{feed.polymorphic_class_name((feed.postable_type))}_#{feed.posts_user_id}_entry" }, 
+                              class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" %>
+                </div>
               </div>
             </div>
           </div>
+
+          <div class="flex-shrink-0 pt-0.5">
+            <% if current_user_profile? %>
+              <%= render(VerticalMenuComponent.new(links: [
+                { link: link_to("edit", edit_posts_user_path(feed.posts_user_id), class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100") },
+                { link: button_to("delete", posts_user_path(feed.posts_user_id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "block px-4 py-2 text-sm text-gray-700", form_class: "hover:bg-gray-100") }
+              ])) %>
+            <% end %>
+          </div>
         </div>
-        <div class="flex-shrink-0 pt-0.5">
-          <%= render(VerticalMenuComponent.new(links: [
-            { link: button_to("delete", posts_user_path(ar ? feed.posts_user_id : feed.post.postable.id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "block px-4 py-2 text-sm text-gray-700", form_class: "hover:bg-gray-100") }
-          ])) %>
-        </div>
+        <%= turbo_frame_tag "comments_#{feed.polymorphic_class_name(feed.postable_type)}_#{feed.posts_user_id}_entry" do %>
+        <% end %>
       </div>
     </div>
-  </div>
+  <% end %>
+<% else %>
+  <%= turbo_frame_tag "posts_track_#{feed.track_id}" do %>
+    <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
+      <div class="p-4">
+        <div class="flex items-start">
+
+          <div class="flex-shrink-0 pt-0.5">
+            <%= render(AvatarComponent.new(user: feed.user_avatar, username: feed.user_name)) %>
+          </div>
+
+          <div class="ml-3 flex-1 ">
+            <div class="flex flex-col flex-wrap">
+              <div class="mb-3">
+                <div class="flex flex-col flex-wrap">
+                  <p class="font-medium text-gray-900">
+                    <%= feed.user_nickname %>
+                  </p>
+                  <p class="text-sm font-medium text-gray-700">
+                    <%= feed.user_name %> - <%= distance_of_time_in_words(Time.now, feed.created_at) %>
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-row space-x-2 mx-3">
+                <%= render(TrackImageComponent.new(track: feed.track_image_data, trackname: feed.track_name, style: 'w-120 h-120 inline-block shadow-lg')) %>
+                <div>
+                  <span class="block text-lg font-bold text-gray-700"><%= feed.track_name %></span>
+                  <span class="block text-sm mb-1 font-medium text-gray-600"><%= feed.track_album_name %></span>
+                  <span class="block text-xs font-medium text-gray-500"><%= feed.track_artists_name if feed.track_artists_name.present? %></span>
+                  <span class="block"><%= link_to "Listen on Spotify", feed.track_url, class: "px-2 py-1 bg-spotify-green text-xs font-bold text-spotify-black rounded-md hover:bg-spotify-green2" %></span>
+                </div>
+              </div>
+              <div>
+                <div class="flex min-h-min h-4 mb-3">
+                  <%= turbo_frame_tag "likes_#{feed.polymorphic_class_name(feed.postable_type)}_#{feed.track_id}" do %>
+                    <%= render(LikesCounterComponent.new(counter: feed.track_counter_likeable)) %>
+                  <% end %>
+                </div>
+                <div class="flex pt-2 border-t">
+                  <%= turbo_frame_tag "like_#{feed.polymorphic_class_name(feed.postable_type)}_#{feed.track_id}" do %>
+                    <% if feed.like_id %>
+                      <%= render partial: "likes/dislike", locals: { resource_id: feed.like_id, likeable_type: 'Posts::Track', likeable_id: feed.track_id } %>
+                    <% else %>
+                      <%= render partial: "likes/like", locals: { likeable_type: 'Posts::Track', likeable_id: feed.track_id } %>
+                    <% end %>
+                  <% end %>
+                  <%= link_to "comments", 
+                              comments_path(commentable_type: 'Posts::Track', commentable_id: feed.track_id), 
+                              data: { 'turbo-frame': "comments_#{feed.polymorphic_class_name(feed.postable_type)}_#{feed.track_id}_entry" }, 
+                              class: "ml-3 py-1 px-2 uppercase inline-flex shadow-md font-semibold text-sm text-gray-700 border rounded-lg hover:text-gray-900 hover:shadow-xl" 
+                  %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-shrink-0 pt-0.5">
+            <% if current_user_profile? %>
+              <%= render(VerticalMenuComponent.new(links: [
+                { link: button_to("delete", posts_track_path(feed.track_id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "block px-4 py-2 text-sm text-gray-700", form_class: "hover:bg-gray-100") }
+              ])) %>
+            <% end %>
+          </div>
+        </div>
+        <%= turbo_frame_tag "comments_#{feed.polymorphic_class_name(feed.postable_type)}_#{feed.track_id}_entry" do %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 <% end %>

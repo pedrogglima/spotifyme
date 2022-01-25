@@ -14,7 +14,6 @@ module PostsTrackQuery
       posts_tracks.id,
       posts_tracks.name,
       posts_tracks.played_at,
-      posts_tracks.album_name,
       posts_tracks.duration_ms,
       posts_tracks.popularity,
       posts_tracks.track_url,
