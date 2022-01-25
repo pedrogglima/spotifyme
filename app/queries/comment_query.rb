@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 module CommentQuery
-  def by_posts_user(posts_user_id)
+  def by_posts_user(commentable_type, commentable_id)
     select(stringify_comments)
       .joins(:user)
-      .where(commentable_type: 'Posts::User', commentable_id: posts_user_id)
+      .joins("LEFT JOIN likes AS likes ON likes.likeable_type = 'Comment' AND likes.likeable_id = comments.id AND likes.user_id = users.id")
+      .where(commentable_type: commentable_type, commentable_id: commentable_id)
       .order(created_at: :desc)
   end
 
@@ -20,7 +21,8 @@ module CommentQuery
       comments.created_at,
       users.uid as user_name,
       users.nickname as user_nickname,
-      users.avatar_data as user_avatar
+      users.avatar_data as user_avatar,
+      likes.id as comment_like_id
     ".squish.freeze
   end
 end
