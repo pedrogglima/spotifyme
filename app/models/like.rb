@@ -9,7 +9,7 @@ class Like < ApplicationRecord
   after_create_commit do
     if likeable.counter_likeable <= 3
       broadcast_replace_to(
-        broadcast_channel,
+        "user_#{user_id}:all",
         target: "likes_#{polymorphic_class_name}_#{likeable_id}",
         partial: 'likes/likes',
         locals: { resource: self }
@@ -20,7 +20,7 @@ class Like < ApplicationRecord
   after_destroy_commit do
     if likeable.counter_likeable <= 3
       broadcast_replace_to(
-        broadcast_channel,
+        "user_#{user_id}:all",
         target: "likes_#{polymorphic_class_name}_#{likeable_id}",
         partial: 'likes/likes',
         locals: { resource: self }
@@ -34,22 +34,7 @@ class Like < ApplicationRecord
   validates :likeable_id, presence: true
   validates :likeable_type, presence: true, inclusion: { in: ALLOWED_TYPES }
 
-  def self.new_with_defaults(posts_user_id:, user_id:)
-    new(likeable_id: posts_user_id, likeable_type: 'Posts::User', user_id: user_id)
-  end
-
   def polymorphic_class_name
     likeable_type.demodulize.downcase
-  end
-
-  def broadcast_channel
-    case likeable_type
-    when 'Posts::User'
-      "user_#{follower.id}:posts_users"
-    when 'Posts::Track'
-      "user_#{follower.id}:posts_tracks"
-    when 'Comment'
-      "user_#{follower.id}:comments"
-    end
   end
 end
