@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 module FeedQuery
-  def by_user(user_id)
+  def by_user(current_user_id)
     select(stringify_feeds)
       .joins(post: :user)
       .joins("LEFT JOIN posts_users ON posts.postable_type = 'Posts::User' AND posts_users.id = posts.postable_id")
       .joins("LEFT JOIN posts_tracks ON posts.postable_type = 'Posts::Track' AND posts_tracks.id = posts.postable_id")
-      .joins('LEFT JOIN likes AS likes ON likes.likeable_type = posts.postable_type AND likes.likeable_id = posts.postable_id AND likes.user_id = users.id')
-      .where(user_id: user_id, visiable: true)
+      .joins("LEFT JOIN likes AS likes ON likes.likeable_type = posts.postable_type AND likes.likeable_id = posts.postable_id AND likes.user_id = #{current_user_id}")
+      .where(user_id: current_user_id, visiable: true)
       .order(created_at: :desc)
   end
 

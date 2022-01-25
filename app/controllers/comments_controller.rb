@@ -5,7 +5,9 @@ class CommentsController < PrivateApplicationController
 
   def index
     @resource = Comment.new(commentable_id: params[:commentable_id], commentable_type: params[:commentable_type])
-    @pagy, @resources = pagy(Comment.by_posts_user(@resource.commentable_type, @resource.commentable_id))
+    @pagy, @resources = pagy(Comment.by_posts_user(current_user.id,
+                                                   @resource.commentable_type,
+                                                   @resource.commentable_id))
 
     render :index
   end

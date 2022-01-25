@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module CommentQuery
-  def by_posts_user(commentable_type, commentable_id)
+  def by_posts_user(current_user_id, commentable_type, commentable_id)
     select(stringify_comments)
       .joins(:user)
-      .joins("LEFT JOIN likes AS likes ON likes.likeable_type = 'Comment' AND likes.likeable_id = comments.id AND likes.user_id = users.id")
+      .joins("LEFT JOIN likes AS likes ON likes.likeable_type = 'Comment' AND likes.likeable_id = comments.id AND likes.user_id = #{current_user_id}")
       .where(commentable_type: commentable_type, commentable_id: commentable_id)
       .order(created_at: :desc)
   end
