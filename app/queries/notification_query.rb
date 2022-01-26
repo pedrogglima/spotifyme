@@ -50,6 +50,7 @@ module NotificationQuery
       notifications.destinatary_id,
       notifications.notificable_id,
       notifications.notificable_type,
+      notifications.created_at,
       of_likes.id as of_like_id,
       of_likes.post_id as of_like_post_id,
       of_likes.content as of_like_content,

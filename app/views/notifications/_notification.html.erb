@@ -1,11 +1,10 @@
-<div class="w-full bg-gray-50 border-t first:border-0 last:border-b">
-  <div class="p-4">
-    <span class="text-gray-700">
-      <% if notification.notificable_type == Notifications::OfLike.to_s %>
-        <%= notification.of_like_content %>
-      <% else %>
-        <%= notification.of_invite_content %>
-      <% end %>
-    </span>
-  </div>
+<div class="flex flex-col pt-2 pb-4 px-4 w-full bg-gray-50 border-t first:border-0 last:border-b space-y-2">
+  <span class="block text-right text-sm text-gray-500"><%= l(notification.created_at, format: :short) %></span>
+  <span class="block text-sm text-gray-700">
+    <% if notification.notificable_type == Notifications::OfLike.to_s %>
+      <%= notification.of_like_content %>
+    <% else %>
+      <%= notification.of_invite_content %>
+    <% end %>
+  </span>
 </div>
