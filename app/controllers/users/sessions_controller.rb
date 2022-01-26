@@ -2,6 +2,8 @@
 
 module Users
   class SessionsController < Devise::SessionsController
+    layout 'site'
+
     # before_action :configure_sign_in_params, only: [:create]
     before_action :if_sign_in_redirect_to, only: [:show]
 
