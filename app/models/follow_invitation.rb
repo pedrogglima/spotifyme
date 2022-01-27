@@ -6,6 +6,8 @@ class FollowInvitation < ApplicationRecord
   belongs_to :follower, class_name: 'User', foreign_key: 'follower_id', counter_cache: :counter_follower
   belongs_to :following, class_name: 'User', foreign_key: 'following_id', counter_cache: :counter_following
 
+  scope :followers_from, ->(user_id) { where(following_id: user_id, status: :accepted) }
+
   after_create_commit { ::Notifications::InviteWorker.perform_async(follower_id, following_id) }
 
   before_create :set_status
