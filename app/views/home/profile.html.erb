@@ -15,13 +15,13 @@
     %>
 
     <%= link_to "Posts", 
-      posts_users_path(params[:user_id]),
+      posts_users_path(user_id: params[:user_id]),
       class: "w-full text-center border-transparent text-gray-300 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap pb-5 border-b-2 font-medium text-sm",
       data: { 'action': 'selected-navbar-link#select', 'selected-navbar-link-target': 'links', 'index': '1', 'turbo-frame': 'posts_users_entry' }
     %>
   </nav>
 
-  <%= turbo_frame_tag 'posts_tracks_entry', class: 'hidden', data: { 'selected-navbar-link-target': 'contents', 'downloaded': 'false' } do %>
+  <%= turbo_frame_tag 'posts_tracks_entry', class: 'hidden', data: { 'selected-navbar-link-target': 'contents', 'downloaded': 'true' } do %>
     <div class="mt-6 bg-white rounded-lg shadow px-5 py-6 sm:px-6">
       <div 
         data-controller="infinite-scroll list"
