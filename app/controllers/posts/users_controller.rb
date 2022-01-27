@@ -30,6 +30,8 @@ module Posts
       @resource = Posts::User.build_with_post(resource_params, current_user)
       @resource.save
 
+      Feed::CreateWorker.perform_async(@resource.post.id) if @resource.valid?
+
       respond_to do |format|
         format.turbo_stream
       end
