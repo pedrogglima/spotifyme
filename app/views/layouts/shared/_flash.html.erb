@@ -28,18 +28,18 @@
           <p class="text-sm font-medium text-gray-900">
             <% case key.to_sym %>
             <% when :notice %>
-              Successfully saved!
+              <%= value.present? ? value : "Successfully saved!" %>
             <% when :error %>
-              Something went wrong!
+              <%= value.present? ? value : "Something went wrong!" %>
             <% when :alert %>
-              Something went wrong!
+              <%= value.present? ? value : "Something went wrong!" %>
             <% end %>
           </p>
-          <% if value.present? %>
-            <p class="mt-1 text-sm text-gray-500">
-              <%= value %>
-            </p>
-          <% end %>
+          <%# if detail.present? %>
+            <!-- <p class="mt-1 text-sm text-gray-500"> -->
+              <%#= detail %>
+            <!-- </p> --> 
+          <%# end %>
         </div>
         <div class="ml-4 flex-shrink-0 flex">
           <button data-action="flash#dismiss" 
