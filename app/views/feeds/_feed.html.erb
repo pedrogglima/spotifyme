@@ -47,12 +47,7 @@
           </div>
 
           <div class="flex-shrink-0 pt-0.5">
-            <% if current_user_profile? %>
-              <%= render(VerticalMenuComponent.new(links: [
-                { link: link_to("edit", edit_posts_user_path(feed.posts_user_id), class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100") },
-                { link: button_to("delete", posts_user_path(feed.posts_user_id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "block px-4 py-2 text-sm text-gray-700", form_class: "hover:bg-gray-100") }
-              ])) %>
-            <% end %>
+            <!-- Vertical Menu -->
           </div>
         </div>
         <%= turbo_frame_tag "comments_#{feed.polymorphic_class_name(feed.postable_type)}_#{feed.posts_user_id}_entry" do %>
@@ -116,11 +111,7 @@
           </div>
 
           <div class="flex-shrink-0 pt-0.5">
-            <% if current_user_profile? %>
-              <%= render(VerticalMenuComponent.new(links: [
-                { link: button_to("delete", posts_track_path(feed.track_id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "block px-4 py-2 text-sm text-gray-700", form_class: "hover:bg-gray-100") }
-              ])) %>
-            <% end %>
+            <!-- Vertical Menu -->
           </div>
         </div>
         <%= turbo_frame_tag "comments_#{feed.polymorphic_class_name(feed.postable_type)}_#{feed.track_id}_entry" do %>
