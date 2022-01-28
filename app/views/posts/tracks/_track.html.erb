@@ -66,7 +66,7 @@
         <div class="flex-shrink-0 pt-0.5">
           <% if current_user_profile? %>
             <%= render(VerticalMenuComponent.new(links: [
-              { link: button_to("delete", posts_track_path(posts_track.id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "block px-4 py-2 text-sm text-gray-700", form_class: "hover:bg-gray-100") }
+              { link: button_to("delete", posts_track_path(posts_track.id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "block w-full text-left px-4 py-2 text-sm text-gray-700", form_class: "hover:bg-gray-100") }
             ])) %>
           <% end %>
         </div>

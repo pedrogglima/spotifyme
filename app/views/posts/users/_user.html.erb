@@ -60,7 +60,7 @@
           <% if current_user_profile? %>
             <%= render(VerticalMenuComponent.new(links: [
               { link: link_to("edit", edit_posts_user_path(posts_user.id), class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100") },
-              { link: button_to("delete", posts_user_path(posts_user.id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "block px-4 py-2 text-sm text-gray-700", form_class: "hover:bg-gray-100") }
+              { link: button_to("delete", posts_user_path(posts_user.id), method: :delete, data: { controller:  "confirmation", "confirmation-message-value": "Are you sure?", action: "click->confirmation#confirm" }, class: "block w-full text-left px-4 py-2 text-sm text-gray-700", form_class: "hover:bg-gray-100") }
             ])) %>
           <% end %>
         </div>
