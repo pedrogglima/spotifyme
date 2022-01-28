@@ -5,7 +5,9 @@ module Posts
     before_action :set_resource, only: %i[destroy]
 
     def destroy
-      @resource.destroy
+      @resource.update(deleted: true)
+
+      Feed::DestroyWorker.perform_async(@resource.post.id)
 
       respond_to do |format|
         format.turbo_stream

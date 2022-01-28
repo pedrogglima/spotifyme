@@ -5,7 +5,7 @@ module PostsUserQuery
     select(stringify_profile)
       .joins(:user)
       .joins("LEFT JOIN likes AS likes ON likes.likeable_type = 'Posts::User' AND likes.likeable_id = posts_users.id AND likes.user_id = #{user_id}")
-      .where(user_id: user_id)
+      .where(user_id: user_id, deleted: false)
       .order(created_at: :desc)
   end
 

@@ -1,4 +1,4 @@
-<% if feed.postable_type == 'Posts::User' %>
+<% if feed.postable_type == 'Posts::User' && feed.posts_user_id %>
   <%= turbo_frame_tag "posts_user_#{feed.posts_user_id}" do %>
     <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
       <div class="p-4">
@@ -55,7 +55,7 @@
       </div>
     </div>
   <% end %>
-<% else %>
+<% elsif feed.postable_type == 'Posts::Track' && feed.track_id %>
   <%= turbo_frame_tag "posts_track_#{feed.track_id}" do %>
     <div class="w-full bg-white shadow-md rounded-lg ring-1 ring-black ring-opacity-5">
       <div class="p-4">

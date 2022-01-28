@@ -2,7 +2,7 @@
 
 class Notifications::OfLike < ApplicationRecord
   has_one :notification, as: :notificable, dependent: :destroy
-  belongs_to :post
+  belongs_to :post, optional: true
 
   after_create_commit do
     broadcast_replace_to(

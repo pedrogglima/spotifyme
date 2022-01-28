@@ -46,7 +46,11 @@ module Posts
     end
 
     def destroy
-      @resource.destroy
+      @resource.update(deleted: true)
+
+      @resource.post.destroy
+
+      # Feed::DestroyWorker.perform_async(@resource.post.id)
 
       respond_to do |format|
         format.turbo_stream

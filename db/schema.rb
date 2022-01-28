@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_23_223913) do
+ActiveRecord::Schema.define(version: 2022_01_28_015408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,9 +41,9 @@ ActiveRecord::Schema.define(version: 2022_01_23_223913) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["follower_id", "following_id", "status"], name: "index_follow_invitations_on_follower_id_following_id_status"
+    t.index ["follower_id", "following_id", "status", "created_at"], name: "index_follow_inv_on_follower_id_following_id_status_created_at"
     t.index ["follower_id", "following_id"], name: "index_follow_invitations_on_follower_id_and_following_id", unique: true
-    t.index ["following_id", "follower_id", "status"], name: "index_follow_invitations_on_following_id_follower_id_status"
+    t.index ["following_id", "follower_id", "status", "created_at"], name: "index_follow_inv_on_following_id_follower_id_status_created_at"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 2022_01_23_223913) do
     t.bigint "likeable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["likeable_type", "likeable_id", "user_id"], name: "index_likes_on_likeable_type_and_likeable_id_and_user_id"
     t.index ["likeable_type", "likeable_id"], name: "index_post_likes_on_likeable"
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
@@ -75,7 +76,7 @@ ActiveRecord::Schema.define(version: 2022_01_23_223913) do
   end
 
   create_table "notifications_of_likes", force: :cascade do |t|
-    t.bigint "post_id", null: false
+    t.bigint "post_id"
     t.string "content", null: false
     t.boolean "seen", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
@@ -90,7 +91,6 @@ ActiveRecord::Schema.define(version: 2022_01_23_223913) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["postable_type", "postable_id"], name: "index_posts_on_postable"
-    t.index ["user_id", "created_at"], name: "index_posts_on_user_id_and_created_at"
   end
 
   create_table "posts_albums", force: :cascade do |t|
@@ -104,7 +104,8 @@ ActiveRecord::Schema.define(version: 2022_01_23_223913) do
     t.integer "counter_likeable", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_posts_albums_on_user_id"
+    t.boolean "deleted", default: false
+    t.index ["user_id", "deleted", "created_at"], name: "index_posts_albums_on_user_id_and_deleted_and_played_at"
   end
 
   create_table "posts_tracks", force: :cascade do |t|
@@ -122,9 +123,9 @@ ActiveRecord::Schema.define(version: 2022_01_23_223913) do
     t.integer "counter_likeable", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id", "created_at"], name: "index_posts_tracks_on_user_id_and_created_at"
-    t.index ["user_id", "played_at"], name: "index_posts_tracks_on_user_id_and_played_at"
-    t.index ["user_id"], name: "index_posts_tracks_on_user_id"
+    t.boolean "deleted", default: false
+    t.index ["user_id", "deleted", "created_at"], name: "index_posts_tracks_on_user_id_and_deleted_and_created_at"
+    t.index ["user_id", "deleted", "played_at"], name: "index_posts_tracks_on_user_id_and_deleted_and_played_at"
   end
 
   create_table "posts_users", force: :cascade do |t|
@@ -133,7 +134,8 @@ ActiveRecord::Schema.define(version: 2022_01_23_223913) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "counter_likeable", default: 0
     t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_posts_users_on_user_id"
+    t.boolean "deleted", default: false
+    t.index ["user_id", "deleted", "created_at"], name: "index_posts_users_on_user_id_and_deleted_and_created_at"
   end
 
   create_table "users", force: :cascade do |t|
@@ -176,7 +178,6 @@ ActiveRecord::Schema.define(version: 2022_01_23_223913) do
   add_foreign_key "follow_invitations", "users", column: "following_id"
   add_foreign_key "likes", "users"
   add_foreign_key "notifications", "users", column: "destinatary_id"
-  add_foreign_key "notifications_of_likes", "posts"
   add_foreign_key "posts", "users"
   add_foreign_key "posts_albums", "users"
   add_foreign_key "posts_tracks", "users"
