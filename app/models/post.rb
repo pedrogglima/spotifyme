@@ -7,8 +7,8 @@ class Post < ApplicationRecord
   belongs_to :postable, polymorphic: true, dependent: :destroy
   has_many :feeds, dependent: :destroy
   has_many :like_notifications,
-           class_name: 'Notifications::OfLike',
-           dependent: :destroy
+           class_name: 'Notifications::OfLike'
+
   # TODO: fix queries
   # has_many :comments, through: post, source: :commentable, source_type: 'Posts::User'
   # has_many :likes, through: post, source: :likeable, source_type: 'Posts::User'
