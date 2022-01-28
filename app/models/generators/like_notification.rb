@@ -4,16 +4,22 @@ module Generators
   class LikeNotification < Base
     def initialize(args)
       @post = ::Post.find_by(id: args[:post_id])
-      @last_notification = if @post.present?
-                             ::Notification.of_like_last_notification(@post.user_id,
-                                                                      @post.id).first
-                           end
     end
 
     def deliver_from(follower_id)
-      return unless @post.present? && past_period_of_waiting_for_next_notification
+      # do nothing if @post is already deleted
+      return if @post.nil?
 
       follower = ::User.find(follower_id)
+
+      # don't notificate if current user liked his own post
+      return if follower.id == @post.user_id
+
+      @last_notification = ::Notification.of_like_last_notification(@post.user_id,
+                                                                    @post.id).first
+
+      # don't notificate if user already got a notification in the last x hours
+      return unless past_period_of_waiting_for_next_notification
 
       ::Notifications::OfLike.build_with_notification(
         {
