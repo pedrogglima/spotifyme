@@ -20,14 +20,14 @@ module Track
       spotify_recently_played = @user.recently_played
 
       # avoid posting music that was played a long time ago
-      delete_if_past_period_last_played!(spotify_recently_played) unless spotify_recently_played.nil?
+      # delete_if_past_period_last_played!(spotify_recently_played) unless spotify_recently_played.nil?
 
       return unless spotify_recently_played.present?
 
       recently_played = ::Posts::Track.recently_played(@user_id)
 
       # avoid posting multiple musics in short period of time
-      return unless past_period_new_post?(recently_played.first)
+      # return unless past_period_new_post?(recently_played.first)
 
       # reduce duplicated tracks for reducing comparison time
       uniq_spotify_played = spotify_recently_played.uniq(&:name)
@@ -53,8 +53,8 @@ module Track
         duration_ms: track.duration_ms,
         popularity: track.popularity,
         track_url: track.external_urls['spotify'],
-        artists_name: track.artists.map(&:name).join(', '),
-        artists_url: track.artists.map { |a| a.external_urls['spotify'] }.join(', '),
+        artists_name: track.artists.map(&:name),
+        artists_url: track.artists.map { |a| a.external_urls['spotify'] },
         album_name: track.album.name,
         album_url: track.album.external_urls['spotify'],
         spotify_image_urls: format_image_urls(track.album.images)
