@@ -3,4 +3,5 @@ notifications:
     like: 10800
 posts:
   min_period:
-    track: 3600
+    last_track: 300
+    last_played: 3600

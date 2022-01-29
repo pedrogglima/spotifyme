@@ -13,9 +13,9 @@ module Posts
 
     after_create_commit :download_image
 
-    scope :recently_tracks, lambda { |user_id, quantity = 20|
+    scope :recently_played, lambda { |user_id, quantity = 20|
                               where(user_id: user_id, deleted: false)
-                                .order(created_at: :desc)
+                                .order(played_at: :desc)
                                 .limit(quantity)
                             }
 

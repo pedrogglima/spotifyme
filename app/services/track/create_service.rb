@@ -16,20 +16,27 @@ module Track
     def call
       return if @user.nil?
 
+      # spotify_recently_played.first is the most recent played track
       spotify_recently_played = @user.recently_played
 
-      return if spotify_recently_played.empty?
+      # avoid posting music that was played a long time ago
+      delete_if_past_period_last_played!(spotify_recently_played) unless spotify_recently_played.nil?
 
-      recently_tracks = Posts::Track.recently_tracks(@user_id)
+      return unless spotify_recently_played.present?
 
-      return unless past_period_for_new_post?(recently_tracks.first)
+      recently_played = ::Posts::Track.recently_played(@user_id)
 
+      # avoid posting multiple musics in short period of time
+      return unless past_period_new_post?(recently_played.first)
+
+      # reduce duplicated tracks for reducing comparison time
       uniq_spotify_played = spotify_recently_played.uniq(&:name)
-      uniq_tracks = recently_tracks.map.uniq(&:name)
+      uniq_played = recently_played.map.uniq(&:name)
 
-      new_uniq_tracks = find_new_uniq_tracks(uniq_spotify_played, uniq_tracks)
+      # avoid posting repeated tracks
+      new_uniq_tracks = find_new_uniq_tracks(uniq_spotify_played, uniq_played)
 
-      return if new_uniq_tracks.empty?
+      return if new_uniq_tracks.blank?
 
       popular_track = new_uniq_tracks.max_by(&:popularity)
 
@@ -54,20 +61,29 @@ module Track
       )
     end
 
+    # avoid posting repeated tracks
     def find_new_uniq_tracks(spotify_tracks, user_tracks)
-      spotify_tracks.select do |track|
-        res = user_tracks.any? { |user_track| user_track.name == track.name }
-
-        res.nil? ? false : true
+      spotify_tracks.delete_if do |track|
+        user_tracks.any? { |user_track| user_track.name == track.name }
       end
     end
 
-    def past_period_for_new_post?(track)
+    # avoid posting music that was played a long time ago
+    def delete_if_past_period_last_played!(recently_played)
+      min_period = Settings.posts.min_period.last_played.seconds
+
+      recently_played.delete_if do |track|
+        track.played_at.to_datetime < min_period.ago
+      end
+    end
+
+    # avoid posting multiple musics in short period of time
+    def past_period_new_post?(track)
       return true if track.nil?
 
-      min_period = Settings.posts.min_period.track.seconds
+      min_period = Settings.posts.min_period.last_track.seconds
 
-      track.created_at.to_datetime < min_period.ago
+      track.created_at < min_period.ago
     end
 
     def format_image_urls(images_info)
