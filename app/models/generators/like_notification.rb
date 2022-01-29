@@ -41,7 +41,9 @@ module Generators
     private
 
     def past_period_of_waiting_for_next_notification
-      @last_notification.nil? || @last_notification.created_at < 6.hours.ago
+      min_period = Settings.notifications.min_period.like.seconds
+
+      @last_notification.nil? || @last_notification.created_at < min_period.ago
     end
   end
 end

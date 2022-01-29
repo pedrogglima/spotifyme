@@ -1,3 +1,6 @@
+notifications:
+  min_period:
+    like: 10800
 posts:
   min_period:
     track: 3600
