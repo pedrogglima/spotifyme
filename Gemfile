@@ -62,6 +62,7 @@ gem 'omniauth-rails_csrf_protection'
 # Wrapper for Spotify API & define Oauth2 Strategy for devise
 gem 'rspotify'
 
+gem 'config', '~> 3.1', '>= 3.1.1'
 gem 'pagy'
 gem 'requestjs-rails'
 gem 'view_component'
