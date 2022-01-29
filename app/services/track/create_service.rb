@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spotify
-  class RecentlyPlayedService < ApplicationService
+module Track
+  class CreateService < ApplicationService
     def initialize(user_id, user_uid)
       @user_id = user_id
       @user = ::RSpotify::User.find(user_uid)
@@ -65,7 +65,9 @@ module Spotify
     def past_period_for_new_post?(track)
       return true if track.nil?
 
-      track.created_at.to_datetime < Time.now - Settings.posts.min_period.track.seconds
+      min_period = Settings.posts.min_period.track.seconds
+
+      track.created_at.to_datetime < min_period.ago
     end
 
     def format_image_urls(images_info)
