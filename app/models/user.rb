@@ -73,6 +73,8 @@ class User < ApplicationRecord
     @follow ||= FollowInvitation.find_by(follower: self, following: user)
   end
 
+  after_create_commit :download_avatar
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   # devise :database_authenticatable, :registerable,
@@ -154,5 +156,9 @@ class User < ApplicationRecord
     elsif country.present?
       country.to_s
     end
+  end
+
+  def download_avatar
+    DownloadAvatarWorker.perform_async(id)
   end
 end
