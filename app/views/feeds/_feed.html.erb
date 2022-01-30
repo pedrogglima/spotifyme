@@ -82,7 +82,7 @@
                 <div>
                   <span class="block text-lg font-bold text-gray-700"><%= feed.track_name %></span>
                   <span class="block text-sm mb-1 font-medium text-gray-600"><%= feed.track_album_name %></span>
-                  <span class="block text-xs font-medium text-gray-500"><%= feed.track_artists_name if feed.track_artists_name.present? %></span>
+                  <span class="block text-xs mb-1 font-medium text-gray-500"><%= feed.track_artists_name.join(', ') if feed.track_artists_name.present? %></span>
                   <span class="block"><%= link_to "Listen on Spotify", feed.track_url, class: "px-2 py-1 bg-spotify-green text-xs font-bold text-spotify-black rounded-md hover:bg-spotify-green2" %></span>
                 </div>
               </div>
