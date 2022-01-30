@@ -21,6 +21,8 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :posts_users, through: :posts, source: :postable, source_type: 'Posts::User'
 
+  scope :actives_in_last_hour, -> { where(last_active_at: 1.hour.ago..) }
+
   scope :followers, lambda {
                       joins(:follow_invitations)
                         .where(follow_invitations: { status: FollowInvitation.statuses[:accepted] })
