@@ -167,8 +167,9 @@ ActiveRecord::Schema.define(version: 2022_01_30_192700) do
     t.string "profile_url"
     t.string "country"
     t.string "state"
-    t.datetime "last_active_at", precision: 6, default: "2022-01-30 19:29:42"
+    t.datetime "last_active_at", precision: 6, default: "2022-01-30 20:16:30"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["last_active_at"], name: "index_users_on_last_active_at"
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
