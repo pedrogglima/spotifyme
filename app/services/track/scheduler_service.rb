@@ -6,7 +6,7 @@ module Track
       active_users = ::User.actives_in_last_hour
 
       active_users.each do |user|
-        CreateService.new(user.id, user.uid).call
+        CreateService.call(user.id)
       end
     end
   end

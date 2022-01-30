@@ -4,8 +4,8 @@ module Track
   class CreateWorker < BaseWorker
     include Sidekiq::Worker
 
-    def perform(user_id, user_uid)
-      CreateService.call(user_id, user_uid)
+    def perform(user_id)
+      CreateService.call(user_id)
     end
   end
 end

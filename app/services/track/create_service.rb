@@ -2,29 +2,29 @@
 
 module Track
   class CreateService < ApplicationService
-    def initialize(user_id, user_uid)
-      @current_user = ::User.find(user_id)
-      @user = ::RSpotify::User.find(user_uid)
+    def initialize(user_id)
+      @user = ::User.find(user_id)
+      @spotify_user = ::RSpotify::User.new(@user.spotify_credentials)
     rescue RestClient::NotFound
-      @user = nil
+      @spotify_user = nil
     rescue RestClient::BadRequest
-      @user = nil
+      @spotify_user = nil
     rescue SocketError
-      @user = nil
+      @spotify_user = nil
     end
 
     def call
-      return if @user.nil?
+      return if @spotify_user.nil?
 
       # spotify_recently_played.first is the most recent played track
-      spotify_recently_played = @user.recently_played
+      spotify_recently_played = @spotify_user.recently_played
 
       # avoid posting music that was played a long time ago
       delete_if_past_period_last_played!(spotify_recently_played) unless spotify_recently_played.nil?
 
       return unless spotify_recently_played.present?
 
-      recently_played = ::Posts::Track.recently_played(@current_user.id)
+      recently_played = ::Posts::Track.recently_played(@user.id)
 
       # avoid posting multiple musics in short period of time
       return unless past_period_new_post?(recently_played.first)
@@ -49,7 +49,7 @@ module Track
 
     def new_track(track)
       resource_params = {
-        user_id: @current_user.id,
+        user_id: @user.id,
         name: track.name,
         played_at: track.played_at,
         duration_ms: track.duration_ms,
@@ -62,13 +62,13 @@ module Track
         spotify_image_urls: format_image_urls(track.album.images)
       }
 
-      ::Posts::Track.build_with_post(resource_params, @current_user)
+      ::Posts::Track.build_with_post(resource_params, @user)
     end
 
     # avoid posting repeated tracks
     def find_new_uniq_tracks(spotify_tracks, user_tracks)
-      spotify_tracks.delete_if do |track|
-        user_tracks.any? { |user_track| user_track.name == track.name }
+      spotify_tracks.delete_if do |spotify_track|
+        user_tracks.any? { |user_track| user_track.name == spotify_track.name }
       end
     end
 
