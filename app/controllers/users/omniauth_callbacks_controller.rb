@@ -4,8 +4,9 @@ module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     def spotify
       @user = User.from_omniauth(from_provider_params)
+      @user.spotify_credentials = { "credentials": auth.credentials.to_h }
 
-      if @user.valid?
+      if @user.save
         sign_out_all_scopes
         flash_message_success
         sign_in_and_redirect @user, event: :authentication
@@ -45,7 +46,8 @@ module Users
         account_country: auth.country,
         account_product: auth.product,
         account_images: user_avatar,
-        current_sign_in_ip: request.remote_ip
+        current_sign_in_ip: request.remote_ip,
+        spotify_credentials: auth.to_hash
       }
     end
 

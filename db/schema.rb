@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_30_192700) do
+ActiveRecord::Schema.define(version: 2022_01_30_213801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,6 +168,7 @@ ActiveRecord::Schema.define(version: 2022_01_30_192700) do
     t.string "country"
     t.string "state"
     t.datetime "last_active_at", precision: 6, default: "2022-01-30 20:16:30"
+    t.json "spotify_credentials", default: {}
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["last_active_at"], name: "index_users_on_last_active_at"
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
