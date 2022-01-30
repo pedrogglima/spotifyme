@@ -1,0 +1,4 @@
+create_track_posts:
+  cron: "*/5 * * * *"
+  class: Track::SchedulerWorker
+  queue: default
