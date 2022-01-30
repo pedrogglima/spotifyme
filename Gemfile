@@ -65,6 +65,7 @@ gem 'rspotify'
 gem 'config', '~> 3.1', '>= 3.1.1'
 gem 'pagy'
 gem 'requestjs-rails'
+gem 'sidekiq-cron', '~> 1.2'
 gem 'view_component'
 
 # Use by shrine
