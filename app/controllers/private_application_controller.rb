@@ -19,6 +19,9 @@ class PrivateApplicationController < ApplicationController
   private
 
   def record_user_activity
+    # margin error of 5 minutes for last actived - reduce indexing/computation
+    return unless current_user.last_active_at < 5.minutes.ago
+
     current_user.touch :last_active_at
   end
 
