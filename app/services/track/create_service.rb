@@ -3,7 +3,7 @@
 module Track
   class CreateService < ApplicationService
     def initialize(user_id, user_uid)
-      @user_id = user_id
+      @current_user = ::User.find(user_id)
       @user = ::RSpotify::User.find(user_uid)
     rescue RestClient::NotFound
       @user = nil
@@ -20,14 +20,14 @@ module Track
       spotify_recently_played = @user.recently_played
 
       # avoid posting music that was played a long time ago
-      # delete_if_past_period_last_played!(spotify_recently_played) unless spotify_recently_played.nil?
+      delete_if_past_period_last_played!(spotify_recently_played) unless spotify_recently_played.nil?
 
       return unless spotify_recently_played.present?
 
-      recently_played = ::Posts::Track.recently_played(@user_id)
+      recently_played = ::Posts::Track.recently_played(@current_user.id)
 
       # avoid posting multiple musics in short period of time
-      # return unless past_period_new_post?(recently_played.first)
+      return unless past_period_new_post?(recently_played.first)
 
       # reduce duplicated tracks for reducing comparison time
       uniq_spotify_played = spotify_recently_played.uniq(&:name)
@@ -43,11 +43,13 @@ module Track
       track = new_track(popular_track)
 
       track.save!
+
+      ::Feed::CreateWorker.perform_async(track.post.id)
     end
 
     def new_track(track)
-      Posts::Track.new(
-        user_id: @user_id,
+      resource_params = {
+        user_id: @current_user.id,
         name: track.name,
         played_at: track.played_at,
         duration_ms: track.duration_ms,
@@ -58,7 +60,9 @@ module Track
         album_name: track.album.name,
         album_url: track.album.external_urls['spotify'],
         spotify_image_urls: format_image_urls(track.album.images)
-      )
+      }
+
+      ::Posts::Track.build_with_post(resource_params, @current_user)
     end
 
     # avoid posting repeated tracks
@@ -70,7 +74,7 @@ module Track
 
     # avoid posting music that was played a long time ago
     def delete_if_past_period_last_played!(recently_played)
-      min_period = Settings.posts.min_period.last_played.seconds
+      min_period = ::Settings.posts.min_period.last_played.seconds
 
       recently_played.delete_if do |track|
         track.played_at.to_datetime < min_period.ago
@@ -81,7 +85,7 @@ module Track
     def past_period_new_post?(track)
       return true if track.nil?
 
-      min_period = Settings.posts.min_period.last_track.seconds
+      min_period = ::Settings.posts.min_period.last_track.seconds
 
       track.created_at < min_period.ago
     end
