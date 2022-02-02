@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # README
 
 This README would normally document whatever steps are necessary to get the
@@ -22,3 +23,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+=======
+# spotifyme
+Social media based on Spotify API
+>>>>>>> 2db0bc90154d6e437e32dd995275ddbba5337ee0
